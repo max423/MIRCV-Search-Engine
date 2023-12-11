@@ -1,4 +1,5 @@
 package it.unipi.dii.aide.mircv.text_processing;
+import ca.rmen.porterstemmer.PorterStemmer;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 import it.unipi.dii.aide.mircv.models.Configuration;
 
@@ -6,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class TextProcessing {
@@ -21,11 +23,11 @@ public class TextProcessing {
     // Regex for removing 4 or more consecutive characters
     private static final String CONSECUTIVE_REGEX = "(.)\\1{3,}";
 
-    private static final ste
+    // stemmer
+    private static final PorterStemmer stemmer = new PorterStemmer();
 
-    // we use a hashset because contains() is O(1)
+    // stopword in hashset O(1) lookup
     private static final HashSet<String> stopWords;
-
 
     static {
         try {
@@ -40,12 +42,12 @@ public class TextProcessing {
      * @param doc document to process
      * @return array of tokens
      */
-    public static ArrayList<String> DocumentProcessing(String doc) throws IOException{
+    public static String[] DocumentProcessing(String doc) throws IOException{
         // 1) preprocessing document
         doc = cleanText(doc);
 
         // 2) tokenization
-        ArrayList<String> tokens = tokenize(doc);
+        String[] tokens = tokenize(doc);
 
         // 3) stemming + stopword removal
         if (Configuration.isStemming_stopwordON()) {
@@ -57,7 +59,7 @@ public class TextProcessing {
 
     private static String cleanText(String doc) {
         // remove html tags
-        doc = doc.replaceAll(HTML_REGEX, "");
+        doc = doc.replaceAll(HTML_REGEX, " ");
 
         // remove punctuation and strange characters
         doc = doc.replaceAll(CharREGEX, " ");
@@ -79,16 +81,12 @@ public class TextProcessing {
      * @param Doc the string to tokenize
      * @return an array of tokens
      */
-    public static ArrayList<String> tokenize(String Doc) {
+    public static String[] tokenize(String Doc) {
         String[] tokens = Doc.split(SPLIT_REGEX);
-        ArrayList<String> tokensList = new ArrayList<>();
-        for (String token : tokens) {
-            token = trouncateToken(token);
-            if (!token.isEmpty()) { // CHECK
-                tokensList.add(token);
-            }
+        for(int i = 0; i < tokens.length; i++) {
+            tokens[i] = trouncateToken(tokens[i]);
         }
-        return tokensList;
+        return tokens;
     }
 
     // Trocare i token piu lunghi di MAX_TERM_LENGTH
@@ -99,21 +97,18 @@ public class TextProcessing {
         return token;
     }
 
-    private static ArrayList<String> stemming(ArrayList<String> tokens) {
-    }
-
-    private static ArrayList<String> removeStopWords(ArrayList<String> tokens) {
-        ArrayList<String> tokensList = new ArrayList<>();
-        for (String token : tokens) {
-            if (!stopWords.contains(token)) {
-                tokensList.add(token);
-            }
+    private static String[] stemming(String[] tokens) {
+        //replace each word with its stem
+        for (int i = 0; i < tokens.length; i++) {
+            tokens[i] = stemmer.stemWord(tokens[i]);
         }
-        return tokensList;
+        return tokens;
     }
 
-
-
-
-
+    private static String[] removeStopWords(String[] tokens) {
+        //remove stop words
+        ArrayList<String> tokensList = new ArrayList<>(Arrays.asList(tokens));
+        tokensList.removeIf(stopWords::contains);
+        return tokensList.toArray(new String[0]);
+    }
 }

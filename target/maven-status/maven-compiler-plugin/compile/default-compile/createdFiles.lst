@@ -1,0 +1,9 @@
+it/unipi/dii/aide/mircv/Main.class
+it/unipi/dii/aide/mircv/utils/FileUtils.class
+it/unipi/dii/aide/mircv/text_processing/TextProcessing.class
+it/unipi/dii/aide/mircv/models/CollectionStatistics.class
+it/unipi/dii/aide/mircv/models/Configuration.class
+it/unipi/dii/aide/mircv/models/Vocabulary.class
+it/unipi/dii/aide/mircv/models/DocumentIndexElem.class
+it/unipi/dii/aide/mircv/models/Posting.class
+it/unipi/dii/aide/mircv/models/PostingList.class

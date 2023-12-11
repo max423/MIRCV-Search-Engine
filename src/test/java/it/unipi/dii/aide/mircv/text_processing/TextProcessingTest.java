@@ -1,5 +1,7 @@
-package it.unipi.dii.aide.mircv.utils;
-
+package it.unipi.dii.aide.mircv.text_processing;
+import it.unipi.dii.aide.mircv.utils.FileUtils;
+import it.unipi.dii.aide.mircv.models.Configuration;
+import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
@@ -7,17 +9,26 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
-public class FileUtils {
-    public static final int MAX_TERM_LENGTH = 20; // in bytes
-    // path stop words
-    public static final String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
-    // path Uncompressed collection
-    public static final String Path_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
-    // path Compressed collection
-    public static final String Path_Compressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+import static org.junit.jupiter.api.Assertions.*;
 
+class TextProcessingTest {
+
+    @org.junit.jupiter.api.Test
+    void documentProcessing() throws IOException {
+        BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON()) ;
+        String line;
+
+        
+    }
+
+    @org.junit.jupiter.api.Test
+    void tokenize() {
+    }
+
+    @org.junit.jupiter.api.Test
+    void trouncateToken() {
+    }
 
     public static BufferedReader initBuffer(boolean compressed) throws IOException {
 
@@ -39,5 +50,6 @@ public class FileUtils {
         //read from uncompressed collection
         return Files.newBufferedReader(Paths.get(FileUtils.Path_Uncompressed_Collection), StandardCharsets.UTF_8);
     }
+
 
 }
