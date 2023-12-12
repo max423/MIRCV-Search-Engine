@@ -16,7 +16,7 @@ public class FileUtils {
     // path Uncompressed collection
     public static final String Path_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
     // path Compressed collection
-    public static final String Path_Compressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+    public static final String Path_Compressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection.tar.gz";
 
 
     public static BufferedReader initBuffer(boolean compressed) throws IOException {

@@ -2,9 +2,9 @@ package it.unipi.dii.aide.mircv.models;
 
 public class Configuration {
     // compression
-    private static boolean compressionON;
+    private static boolean compressionON = true;
     // stemming
-    private static boolean stemming_stopwordON;
+    private static boolean stemming_stopwordON = false;
 
     public Configuration(boolean compressionON, boolean stemming_stopwordON) {
         this.compressionON = compressionON;
