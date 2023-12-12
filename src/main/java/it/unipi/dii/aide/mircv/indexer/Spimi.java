@@ -25,7 +25,7 @@ public class Spimi {
     protected final LinkedHashMap<Integer, DocumentIndexElem> documentIndex = new LinkedHashMap<>();
 
 
-    public void index() throws IOException {
+    public void startIndexer() throws IOException {
         System.out.println("Indexing...");
 
         // read collection according to the compression flag
@@ -65,33 +65,9 @@ public class Spimi {
             DocumentIndexElem doc = new DocumentIndexElem(docid,docno,documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
 
-
-            // update vocabulary
-            for (String token : tokens) {
-                // check if the term is already in the vocabulary
-                if (vocabulary.containsKey(token)) { // O(1)
-                    // update vocabulary element
-
-                } else {
-                    // New element in the vocabulary
-                    vocabulary.put(token, new VocabularyElem(token, 1,1));
-
-                }
-            }
-
-
-
-
-
             docid ++;
-
-
         }
 
-
-
-
     }
-
 
 }

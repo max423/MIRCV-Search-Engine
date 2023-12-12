@@ -24,14 +24,19 @@ public class FileUtils {
     // path to the configuration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
     // path to the document index
-    public static String Path_DocumentIndex = "src/main/java/it/unipi/dii/aide/mircv/resources/document_index";
+    public static String Path_DocumentIndex = "src/main/resources/document_index";
     public static RandomAccessFile docIndex_RAF;
 
 
+
     // inizialize the docIndex_RAF
-    public static void initDocIndex_RAF() throws FileNotFoundException {
-        docIndex_RAF = new RandomAccessFile(new File(Path_DocumentIndex), "rw");
+    public static void initDocIndex_RAF() throws IOException {
+        //docIndex_RAF = new RandomAccessFile(Path_DocumentIndex, "rw");
+        docIndex_RAF = new RandomAccessFile(new File("/Users/massimo/Desktop/MIRCV-Project/MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/document_index"), "rw");
+
+
     }
+
 
 
     // read the collection according to the compression flag
