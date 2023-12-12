@@ -18,17 +18,41 @@ class TextProcessingTest {
     void documentProcessing() throws IOException {
         BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON()) ;
         String line;
+        int tab;
+        while((line = bufferedReader.readLine())!= null) {
+            // split on tab
+            tab = line.indexOf("\t");
 
-        
+            // check malformed line
+            if(tab == -1) {  // tab not found
+                continue;}
+
+            // extract
+            String docid = line.substring(0, tab);
+            String text = line.substring(tab + 1);
+
+            // check empty doc
+            if (text.isEmpty())
+                continue;
+
+            // process text
+            String[] tokens = TextProcessing.DocumentProcessing(text);
+
+
+
+            System.out.println("docid: " + docid);
+            System.out.println("text: " + text);
+            System.out.println("tokens: " + String.join(" ", tokens));
+            System.out.println("tokens length: " + tokens.length);
+
+
+
+
+        }
+
     }
 
-    @org.junit.jupiter.api.Test
-    void tokenize() {
-    }
 
-    @org.junit.jupiter.api.Test
-    void trouncateToken() {
-    }
 
     public static BufferedReader initBuffer(boolean compressed) throws IOException {
 
@@ -51,5 +75,11 @@ class TextProcessingTest {
         return Files.newBufferedReader(Paths.get(FileUtils.Path_Uncompressed_Collection), StandardCharsets.UTF_8);
     }
 
+    @org.junit.jupiter.api.Test
+    void tokenize() {
+    }
 
+    @org.junit.jupiter.api.Test
+    void trouncateToken() {
+    }
 }

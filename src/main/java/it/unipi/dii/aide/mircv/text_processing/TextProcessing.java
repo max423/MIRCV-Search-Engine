@@ -21,7 +21,7 @@ public class TextProcessing {
     private static final String SPLIT_REGEX = "\\s+";
 
     // Regex for removing 4 or more consecutive characters
-    private static final String CONSECUTIVE_REGEX = "(.)\\1{3,}";
+    // private static final String CONSECUTIVE_REGEX = "(.)\\1{3,}";
 
     // stemmer
     private static final PorterStemmer stemmer = new PorterStemmer();
@@ -60,16 +60,10 @@ public class TextProcessing {
     private static String cleanText(String doc) {
         // remove html tags
         doc = doc.replaceAll(HTML_REGEX, " ");
-
         // remove punctuation and strange characters
         doc = doc.replaceAll(CharREGEX, " ");
-
         // remove multiple spaces
         doc = doc.replaceAll("\\s+", " ");
-
-        // remove 3+ consecutive characters
-        doc = doc.replaceAll(CONSECUTIVE_REGEX, "");
-
         // lowercase
         doc = doc.toLowerCase();
 
