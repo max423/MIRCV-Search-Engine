@@ -16,9 +16,14 @@ public class FileUtils {
     // path stop words
     public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
     // path Uncompressed collection
-    public static String Path_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+    public static String Path_Uncompressed_Collection = "/Users/massimo/Desktop/collection.tsv";
     // path Compressed collection
-    public static String Path_Compressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection.tar.gz";
+    public static String Path_Compressed_Collection = "/Users/massimo/Desktop/collection.tar.gz";
+
+    public static String Path_Test_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+
+
+
     // path to the cofiguration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
 
