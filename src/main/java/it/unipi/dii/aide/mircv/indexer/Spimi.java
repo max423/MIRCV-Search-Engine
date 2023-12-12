@@ -1,45 +1,39 @@
 package it.unipi.dii.aide.mircv.indexer;
 import it.unipi.dii.aide.mircv.models.Configuration;
+import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
+import it.unipi.dii.aide.mircv.models.VocabularyElem;
 import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import static it.unipi.dii.aide.mircv.utils.FileUtils.initBuffer;
 
 public class Spimi {
 
-    // lexicon
-    HashMap<String, Integer> lexicon = new HashMap<>();
-    // block size
-    private int blockSize;
-    // number of blocks
-    private int blockNum;
-    // number of documents
-    private int docNum;
-    // number of terms
-    private int termNum;
-    // number of tokens
-    private int tokenNum;
+    // docId counter
+    protected int docid = 1;
 
-    public Spimi(int blockSize) {
-        this.blockSize = blockSize;
-        this.blockNum = 0;
-        this.docNum = 0;
-        this.termNum = 0;
-        this.tokenNum = 0;
-    }
+    // vocabulary = hash map to store the terms and their posting list
+    protected final HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
+
+    // document index = linked hash map to preserve insertion order
+    protected final LinkedHashMap<Integer, DocumentIndexElem> documentIndex = new LinkedHashMap<>();
+
 
     public void index() throws IOException {
-        // start timer
-        long startTime = System.currentTimeMillis();
+        System.out.println("Indexing...");
 
         // read collection according to the compression flag
         BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON()) ;
         String line;
         int tab;
+
+
+
         while((line = bufferedReader.readLine())!= null) {
             // split on tab
             tab = line.indexOf("\t");
@@ -50,7 +44,7 @@ public class Spimi {
             }
 
             // extract
-            String docid = line.substring(0, tab);
+            String docno = line.substring(0, tab);
             String text = line.substring(tab + 1);
 
             // check empty doc
@@ -60,18 +54,37 @@ public class Spimi {
             // process text
             String[] tokens = TextProcessing.DocumentProcessing(text);
 
+            int documnetLength = tokens.length;
 
-            System.out.println("docid: " + docid);
-            System.out.println("text: " + text);
-            System.out.println("tokens: " + String.join(" ", tokens));
-            System.out.println("tokens length: " + tokens.length);
+            // update document index
+            documentIndex.put(docid, new DocumentIndexElem(docid,docno,documnetLength));        // preserve insertion order
+
+
+
+            // update vocabulary
+            for (String token : tokens) {
+                // check if the term is already in the vocabulary
+                if (vocabulary.containsKey(token)) { // O(1)
+                    // update vocabulary element
+
+                } else {
+                    // New element in the vocabulary
+                    int df = 1;
+                    int cf = 1;
+                    vocabulary.put(token, new VocabularyElem(token, df,cf));
+                }
+            }
+
+
+
+            docid ++;
+
+
         }
 
 
 
 
-        // end timer
-        long endTime = System.currentTimeMillis();
     }
 
 

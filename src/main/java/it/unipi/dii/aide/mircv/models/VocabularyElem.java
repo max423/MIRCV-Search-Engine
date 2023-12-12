@@ -1,13 +1,13 @@
 package it.unipi.dii.aide.mircv.models;
 
-public class Vocabulary {
+public class VocabularyElem {
     private String term;
     // number of documents in which the term appears
     private int DocFreq;
     // number of occurrences of the term in the collection
     private int CollFreq;
 
-    public Vocabulary(String term, int docFreq, int collFreq) {
+    public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
         DocFreq = docFreq;
         CollFreq = collFreq;
