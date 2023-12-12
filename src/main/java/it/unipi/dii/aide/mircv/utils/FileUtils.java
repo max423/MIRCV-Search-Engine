@@ -19,15 +19,22 @@ public class FileUtils {
     public static String Path_Uncompressed_Collection = "/Users/massimo/Desktop/collection.tsv";
     // path Compressed collection
     public static String Path_Compressed_Collection = "/Users/massimo/Desktop/collection.tar.gz";
-
+    // path to the collection for testing
     public static String Path_Test_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
-
-
-
-    // path to the cofiguration json file
+    // path to the configuration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
+    // path to the document index
+    public static String Path_DocumentIndex = "src/main/java/it/unipi/dii/aide/mircv/resources/document_index";
+    public static RandomAccessFile docIndex_RAF;
 
 
+    // inizialize the docIndex_RAF
+    public static void initDocIndex_RAF() throws FileNotFoundException {
+        docIndex_RAF = new RandomAccessFile(new File(Path_DocumentIndex), "rw");
+    }
+
+
+    // read the collection according to the compression flag
     public static BufferedReader initBuffer(boolean compressed) throws IOException {
 
         if(compressed) {

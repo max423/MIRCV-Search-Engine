@@ -1,5 +1,7 @@
 package it.unipi.dii.aide.mircv.models;
 
+import java.nio.channels.FileChannel;
+
 public class DocumentIndexElem {
     private int docId;
     private String docNo;   // dalla collection
@@ -33,4 +35,9 @@ public class DocumentIndexElem {
     }
 
 
+    public void writeToDisk(FileChannel channel) {
+        // 30 (doc_no) + 4 (docId) + 4 (length) = 38 bytes
+
+
+    }
 }

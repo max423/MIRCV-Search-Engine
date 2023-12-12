@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static it.unipi.dii.aide.mircv.utils.FileUtils.docIndex_RAF;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.initBuffer;
 
 public class Spimi {
@@ -29,10 +30,14 @@ public class Spimi {
 
         // read collection according to the compression flag
         BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON()) ;
+        // init docIndex_RAF
+        FileUtils.initDocIndex_RAF();
+
         String line;
+        String docno;
+        String text;
         int tab;
-
-
+        int documnetLength;
 
         while((line = bufferedReader.readLine())!= null) {
             // split on tab
@@ -44,8 +49,8 @@ public class Spimi {
             }
 
             // extract
-            String docno = line.substring(0, tab);
-            String text = line.substring(tab + 1);
+            docno = line.substring(0, tab);
+            text = line.substring(tab + 1);
 
             // check empty doc
             if (text.isEmpty())
@@ -54,11 +59,11 @@ public class Spimi {
             // process text
             String[] tokens = TextProcessing.DocumentProcessing(text);
 
-            int documnetLength = tokens.length;
+            documnetLength = tokens.length;
 
-            // update document index
-            documentIndex.put(docid, new DocumentIndexElem(docid,docno,documnetLength));        // preserve insertion order
-
+            // new document index elem
+            DocumentIndexElem doc = new DocumentIndexElem(docid,docno,documnetLength);
+            doc.writeToDisk(docIndex_RAF.getChannel());
 
 
             // update vocabulary
@@ -69,11 +74,12 @@ public class Spimi {
 
                 } else {
                     // New element in the vocabulary
-                    int df = 1;
-                    int cf = 1;
-                    vocabulary.put(token, new VocabularyElem(token, df,cf));
+                    vocabulary.put(token, new VocabularyElem(token, 1,1));
+
                 }
             }
+
+
 
 
 
