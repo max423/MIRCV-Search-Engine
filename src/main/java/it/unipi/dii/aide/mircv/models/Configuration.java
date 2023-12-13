@@ -10,15 +10,14 @@ import java.io.IOException;
 
 public class Configuration {
     // compression
-    private static boolean compressionON = false;
+    private static boolean compressionON;
     // stemming
-    private static boolean stemming_stopwordON = false;
+    private static boolean stemming_stopwordON;
 
-
-    /*
     static {
 
         try {
+            System.out.println("Reading configuration...");
             // read json configuration file
             JsonObject jsonObject = JsonParser.parseReader(new FileReader("src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json")).getAsJsonObject();
             compressionON = jsonObject.get("compressionON").getAsBoolean();
@@ -28,7 +27,9 @@ public class Configuration {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+    public Configuration() {
+    }
     public Configuration(boolean compressionON, boolean stemming_stopwordON) {
         this.compressionON = compressionON;
         this.stemming_stopwordON = stemming_stopwordON;
