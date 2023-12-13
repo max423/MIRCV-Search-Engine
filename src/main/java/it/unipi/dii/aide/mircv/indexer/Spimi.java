@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import static it.unipi.dii.aide.mircv.utils.FileUtils.docIndex_RAF;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.initBuffer;
 
 public class Spimi {
+
+    // block number
+    protected int blockNum = 0;
 
     // docId counter
     protected int docid = 1;
@@ -42,6 +44,7 @@ public class Spimi {
         String text;
         int tab;
         int documnetLength;
+
 
         while((line = bufferedReader.readLine())!= null) {
             // split on tab
@@ -115,6 +118,32 @@ public class Spimi {
             docid ++;
         }
 
+        // save block on the disk
+        WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem);
+        blockNum++ ;
+
     }
+
+    private void WriteBlockOnDisk(int blockNum, ArrayList<String> termList, HashMap<String, VocabularyElem> vocabulary, HashMap<String, PostingList> postingListElem) {
+
+        // create RAF and temp file
+        FileUtils.createTempFile(blockNum);
+
+        // sort the term list
+        Collections.sort(termList);
+
+        // write the block on the disk
+        for (String term : termList) {
+            // get the vocabulary element
+            VocabularyElem vocElem = vocabulary.get(term);
+            // get the posting list
+            PostingList postList = postingListElem.get(term);
+            // write the term list
+            WriteTermList(term, vocElem, postList);
+        }
+
+
+    }
+
 
 }
