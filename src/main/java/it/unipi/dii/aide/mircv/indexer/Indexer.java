@@ -19,8 +19,6 @@ public class Indexer {
 
     public static void main(String[] args) throws IOException {
 
-
-
     }
 
 
@@ -31,7 +29,8 @@ public class Indexer {
 
         FileChannel DocIndexFC = new RandomAccessFile(FileUtils.Path_DocumentIndex, "rw").getChannel();
 
-        while (position < Files.size(Path.of(FileUtils.Path_DocumentIndex))){
+        while (position < (int)(DocIndexFC.size())) {
+            System.out.println("Position: " + position);
             doc_elem = new DocumentIndexElem();
             doc_elem.readFromDisk(DocIndexFC, position);
             System.out.println(doc_elem.toString());

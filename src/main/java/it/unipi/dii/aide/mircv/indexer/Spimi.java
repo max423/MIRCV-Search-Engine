@@ -29,7 +29,6 @@ public class Spimi {
 
 
 
-
     public void startIndexer() throws IOException {
         System.out.println("Indexing...");
 
@@ -71,30 +70,48 @@ public class Spimi {
             doc.writeToDisk(docIndex_RAF.getChannel());
 
             for (String token : tokens) {
+
                 // compute term frequency in the document
                 int tf = Collections.frequency(java.util.Arrays.asList(tokens), token);
 
                 // check if token is already in the vocabulary
                 if (vocabulary.containsKey(token)) {
-                    // retrive posting list
-                    PostingList postingList = postingListElem.get(token);
-                    // get posting
-                    ArrayList<Posting> posting = postingList.getPostingList();
 
+                    // termine è presente nel dizionario
+                    // se è nello stesso docuemnto -> fine
+                    // altrimenti dobbiamo :
+                    // 1) aggiungere alla posting list ?
+                    // 2) aggiurnare lexicon -> docFreq + colFreq
 
+                    // get the vocabulary element
+                    VocabularyElem vocElem = vocabulary.get(token);
+                    // check if the term is in another document
+                    if (vocElem.getLastDocIdInserted() != docid) {
+
+                        // update the document frequency
+                        vocElem.incDocFreq();
+                        // update the collection frequency
+                        vocElem.updateCollFreq(tf);
+                        // update the last document id inserted
+                        vocElem.setLastDocIdInserted(docid);
+
+                        // add the posting list
+                        postingListElem.get(token).addPosting(new Posting(docid, tf));
+                    }
 
                 } else {
                     // add new term in the vocabulary
-                    vocabulary.put(token, new VocabularyElem(token, 1, tf));
+                    VocabularyElem NewVocElem = new VocabularyElem(token, 1, tf);
+                    NewVocElem.setLastDocIdInserted(docid);
+                    vocabulary.put(token, NewVocElem);
 
                     // add new posting list
                     postingListElem.put(token, new PostingList(token, new Posting(docid, tf)));
 
-                    // add new term in the sorted list
+                    // add new term in the list
                     termList.add(token);
                 }
             }
-
             docid ++;
         }
 

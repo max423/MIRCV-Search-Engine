@@ -7,6 +7,9 @@ public class VocabularyElem {
     // number of occurrences of the term in the collection
     private int CollFreq;
 
+    // used only in the indexer
+    private int lastDocIdInserted;
+
     public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
         DocFreq = docFreq;
@@ -24,6 +27,22 @@ public class VocabularyElem {
     public int getCollFreq() {
         return CollFreq;
     }
+
+    public int getLastDocIdInserted() {
+        return lastDocIdInserted;
+    }
+
+    public void setLastDocIdInserted(int lastDocIdInserted) {
+        this.lastDocIdInserted = lastDocIdInserted;
+    }
+
+    public void incDocFreq() {
+        this.DocFreq++;
+    }
+    public void updateCollFreq(int AnotherCollFreq) {
+        this.CollFreq += AnotherCollFreq;
+    }
+
 
     @Override
     public String toString() {

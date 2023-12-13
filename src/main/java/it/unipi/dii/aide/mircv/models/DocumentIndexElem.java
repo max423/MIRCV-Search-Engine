@@ -82,8 +82,6 @@ public class DocumentIndexElem {
             while (buffer.hasRemaining())
                 channel.write(buffer);
 
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
