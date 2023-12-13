@@ -1,12 +1,12 @@
 package it.unipi.dii.aide.mircv.indexer;
-import it.unipi.dii.aide.mircv.models.Configuration;
-import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
-import it.unipi.dii.aide.mircv.models.VocabularyElem;
+import it.unipi.dii.aide.mircv.models.*;
 import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -18,11 +18,16 @@ public class Spimi {
     // docId counter
     protected int docid = 1;
 
-    // vocabulary = hash map to store the terms and their posting list
+    // vocabulary = hash map in memory
     protected final HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
 
-    // document index = linked hash map to preserve insertion order
-    protected final LinkedHashMap<Integer, DocumentIndexElem> documentIndex = new LinkedHashMap<>();
+    // list of sorted term
+    public static ArrayList<String> termList = new ArrayList<>();
+
+    // posting list in memory
+    public static HashMap<String, PostingList> postingListElem = new HashMap<>();
+
+
 
 
     public void startIndexer() throws IOException {
@@ -64,6 +69,31 @@ public class Spimi {
             // new document index elem
             DocumentIndexElem doc = new DocumentIndexElem(docid,docno,documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
+
+            for (String token : tokens) {
+                // compute term frequency in the document
+                int tf = Collections.frequency(java.util.Arrays.asList(tokens), token);
+
+                // check if token is already in the vocabulary
+                if (vocabulary.containsKey(token)) {
+                    // retrive posting list
+                    PostingList postingList = postingListElem.get(token);
+                    // get posting
+                    ArrayList<Posting> posting = postingList.getPostingList();
+
+
+
+                } else {
+                    // add new term in the vocabulary
+                    vocabulary.put(token, new VocabularyElem(token, 1, tf));
+
+                    // add new posting list
+                    postingListElem.put(token, new PostingList(token, new Posting(docid, tf)));
+
+                    // add new term in the sorted list
+                    termList.add(token);
+                }
+            }
 
             docid ++;
         }
