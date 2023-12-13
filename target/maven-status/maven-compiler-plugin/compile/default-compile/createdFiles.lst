@@ -3,7 +3,10 @@ it/unipi/dii/aide/mircv/utils/FileUtils.class
 it/unipi/dii/aide/mircv/text_processing/TextProcessing.class
 it/unipi/dii/aide/mircv/models/CollectionStatistics.class
 it/unipi/dii/aide/mircv/models/Configuration.class
-it/unipi/dii/aide/mircv/models/Vocabulary.class
+it/unipi/dii/aide/mircv/indexer/Indexer.class
+it/unipi/dii/aide/mircv/indexer/Merger.class
+it/unipi/dii/aide/mircv/indexer/Spimi.class
 it/unipi/dii/aide/mircv/models/DocumentIndexElem.class
+it/unipi/dii/aide/mircv/models/VocabularyElem.class
 it/unipi/dii/aide/mircv/models/Posting.class
 it/unipi/dii/aide/mircv/models/PostingList.class

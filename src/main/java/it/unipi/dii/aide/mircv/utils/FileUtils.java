@@ -1,5 +1,7 @@
 package it.unipi.dii.aide.mircv.utils;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
@@ -10,15 +12,34 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class FileUtils {
-    public static final int MAX_TERM_LENGTH = 20; // in bytes
+    public static int MAX_TERM_LENGTH = 20; // in bytes
     // path stop words
-    public static final String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
+    public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
     // path Uncompressed collection
-    public static final String Path_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+    public static String Path_Uncompressed_Collection = "/Users/massimo/Desktop/collection.tsv";
     // path Compressed collection
-    public static final String Path_Compressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection.tar.gz";
+    public static String Path_Compressed_Collection = "/Users/massimo/Desktop/collection.tar.gz";
+    // path to the collection for testing
+    public static String Path_Test_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+    // path to the configuration json file
+    public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
+    // path to the document index
+    public static String Path_DocumentIndex = "src/main/resources/document_index";
+    public static RandomAccessFile docIndex_RAF;
 
 
+
+    // inizialize the docIndex_RAF
+    public static void initDocIndex_RAF() throws IOException {
+        //docIndex_RAF = new RandomAccessFile(Path_DocumentIndex, "rw");
+        docIndex_RAF = new RandomAccessFile(new File("/Users/massimo/Desktop/MIRCV-Project/MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/document_index"), "rw");
+
+
+    }
+
+
+
+    // read the collection according to the compression flag
     public static BufferedReader initBuffer(boolean compressed) throws IOException {
 
         if(compressed) {
