@@ -124,7 +124,7 @@ public class Spimi {
 
     }
 
-    private void WriteBlockOnDisk(int blockNum, ArrayList<String> termList, HashMap<String, VocabularyElem> vocabulary, HashMap<String, PostingList> postingListElem) {
+    private void WriteBlockOnDisk(int blockNum, ArrayList<String> termList, HashMap<String, VocabularyElem> Pvocabulary, HashMap<String, PostingList> PpostingListElem) throws IOException {
 
         // create RAF and temp file
         FileUtils.createTempFile(blockNum);
@@ -134,12 +134,21 @@ public class Spimi {
 
         // write the block on the disk
         for (String term : termList) {
-            // get the vocabulary element
-            VocabularyElem vocElem = vocabulary.get(term);
-            // get the posting list
-            PostingList postList = postingListElem.get(term);
-            // write the term list
-            WriteTermList(term, vocElem, postList);
+
+            // get the posting list of the term
+            PostingList postList = PpostingListElem.get(term);
+
+            // get the vocabulary element of the term
+            VocabularyElem vocElem = Pvocabulary.get(term);
+
+            // set the offset of the DocId posting list in the vocabulary element
+            vocElem.setDocIdsOffset(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel().size());
+
+            // set the offset of the TermFreq posting list in the vocabulary element
+            vocElem.setTermFreqOffset(FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel().size());
+
+
+
         }
 
 
