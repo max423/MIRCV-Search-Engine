@@ -1,5 +1,7 @@
 package it.unipi.dii.aide.mircv.models;
 
+import java.nio.channels.FileChannel;
+
 public class Posting {
     private final int docID;
     // term frequency in the document
@@ -25,4 +27,6 @@ public class Posting {
                 ", termFreq=" + termFreq +
                 '}';
     }
+
+
 }

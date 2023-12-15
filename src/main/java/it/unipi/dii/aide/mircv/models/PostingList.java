@@ -1,4 +1,7 @@
 package it.unipi.dii.aide.mircv.models;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class PostingList {
@@ -41,5 +44,38 @@ public class PostingList {
                 '}';
     }
 
+
+    public void writeToDisk(FileChannel channelDocID, FileChannel channelTermFreq) throws IOException {
+
+        ByteBuffer docsByteBuffer;
+        ByteBuffer freqsByteBuffer;
+
+        channelDocID.position(channelDocID.size());
+        channelTermFreq.position(channelTermFreq.size());
+
+        docsByteBuffer = ByteBuffer.allocate(this.postingList.size() * 4);
+        freqsByteBuffer = ByteBuffer.allocate(this.postingList.size() * 4);
+
+        // write docIds and termFreqs to the buffers
+        for (Posting posting : this.postingList) {
+            docsByteBuffer.putInt(posting.getDocID());
+            freqsByteBuffer.putInt(posting.getTermFreq());
+        }
+
+        docsByteBuffer = ByteBuffer.wrap(docsByteBuffer.array());
+        freqsByteBuffer = ByteBuffer.wrap(freqsByteBuffer.array());
+
+        // write buffers to the channels
+        while (docsByteBuffer.hasRemaining())
+            channelDocID.write(docsByteBuffer);
+
+        while (freqsByteBuffer.hasRemaining())
+            channelTermFreq.write(freqsByteBuffer);
+
+
+        // TO DO : check if this is necessary
+        // 1) skipElement
+
+    }
 
 }
