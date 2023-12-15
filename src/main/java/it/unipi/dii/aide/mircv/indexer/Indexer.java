@@ -1,5 +1,6 @@
 package it.unipi.dii.aide.mircv.indexer;
 
+
 import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 import it.unipi.dii.aide.mircv.indexer.Spimi;
@@ -18,21 +19,18 @@ public class Indexer {
 
     public static void main(String[] args) throws IOException {
 
-        Spimi spimi = new Spimi();
-        spimi.startIndexer();
-        printDocumentIndex();
-
     }
 
 
 
     public static void printDocumentIndex() throws IOException {
         int position = 0;
-        DocumentIndexElem doc_elem;
+        DocumentIndexElem doc_elem = new DocumentIndexElem();
 
         FileChannel DocIndexFC = new RandomAccessFile(FileUtils.Path_DocumentIndex, "rw").getChannel();
 
-        while (position < Files.size(Path.of(FileUtils.Path_DocumentIndex))){
+        while (position < (int)(DocIndexFC.size())) {
+            System.out.println("Position: " + position);
             doc_elem = new DocumentIndexElem();
             doc_elem.readFromDisk(DocIndexFC, position);
             System.out.println(doc_elem.toString());

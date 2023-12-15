@@ -13,6 +13,7 @@ public class DocumentIndexElem {
 
     public DocumentIndexElem(){
     }
+
     public DocumentIndexElem(int docId, String docno, int length) {
         int diffLength = 20 - docno.length();
 
@@ -80,8 +81,6 @@ public class DocumentIndexElem {
             // writing into channel
             while (buffer.hasRemaining())
                 channel.write(buffer);
-
-
 
         } catch (IOException e) {
             e.printStackTrace();

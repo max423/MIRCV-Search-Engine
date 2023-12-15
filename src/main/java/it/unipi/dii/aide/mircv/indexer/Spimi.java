@@ -1,28 +1,34 @@
 package it.unipi.dii.aide.mircv.indexer;
-import it.unipi.dii.aide.mircv.models.Configuration;
-import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
-import it.unipi.dii.aide.mircv.models.VocabularyElem;
+import it.unipi.dii.aide.mircv.models.*;
 import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import static it.unipi.dii.aide.mircv.utils.FileUtils.docIndex_RAF;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.initBuffer;
 
 public class Spimi {
 
+    // block number
+    protected int blockNum = 0;
+
     // docId counter
     protected int docid = 1;
 
-    // vocabulary = hash map to store the terms and their posting list
+    // vocabulary = hash map in memory
     protected final HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
 
-    // document index = linked hash map to preserve insertion order
-    protected final LinkedHashMap<Integer, DocumentIndexElem> documentIndex = new LinkedHashMap<>();
+    // list of sorted term
+    public static ArrayList<String> termList = new ArrayList<>();
+
+    // posting list in memory
+    public static HashMap<String, PostingList> postingListElem = new HashMap<>();
+
 
 
     public void startIndexer() throws IOException {
@@ -38,6 +44,7 @@ public class Spimi {
         String text;
         int tab;
         int documnetLength;
+
 
         while((line = bufferedReader.readLine())!= null) {
             // split on tab
@@ -65,9 +72,87 @@ public class Spimi {
             DocumentIndexElem doc = new DocumentIndexElem(docid,docno,documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
 
+            for (String token : tokens) {
+
+                // compute term frequency in the document
+                int tf = Collections.frequency(java.util.Arrays.asList(tokens), token);
+
+                // check if token is already in the vocabulary
+                if (vocabulary.containsKey(token)) {
+
+                    // termine è presente nel dizionario
+                    // se è nello stesso docuemnto -> fine
+                    // altrimenti dobbiamo :
+                    // 1) aggiungere alla posting list ?
+                    // 2) aggiurnare lexicon -> docFreq + colFreq
+
+                    // get the vocabulary element
+                    VocabularyElem vocElem = vocabulary.get(token);
+                    // check if the term is in another document
+                    if (vocElem.getLastDocIdInserted() != docid) {
+
+                        // update the document frequency
+                        vocElem.incDocFreq();
+                        // update the collection frequency
+                        vocElem.updateCollFreq(tf);
+                        // update the last document id inserted
+                        vocElem.setLastDocIdInserted(docid);
+
+                        // add the posting list
+                        postingListElem.get(token).addPosting(new Posting(docid, tf));
+                    }
+
+                } else {
+                    // add new term in the vocabulary
+                    VocabularyElem NewVocElem = new VocabularyElem(token, 1, tf);
+                    NewVocElem.setLastDocIdInserted(docid);
+                    vocabulary.put(token, NewVocElem);
+
+                    // add new posting list
+                    postingListElem.put(token, new PostingList(token, new Posting(docid, tf)));
+
+                    // add new term in the list
+                    termList.add(token);
+                }
+            }
             docid ++;
         }
 
+        // save block on the disk
+        WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem);
+        blockNum++ ;
+
     }
+
+    private void WriteBlockOnDisk(int blockNum, ArrayList<String> termList, HashMap<String, VocabularyElem> Pvocabulary, HashMap<String, PostingList> PpostingListElem) throws IOException {
+
+        // create RAF and temp file
+        FileUtils.createTempFile(blockNum);
+
+        // sort the term list
+        Collections.sort(termList);
+
+        // write the block on the disk
+        for (String term : termList) {
+
+            // get the posting list of the term
+            PostingList postList = PpostingListElem.get(term);
+
+            // get the vocabulary element of the term
+            VocabularyElem vocElem = Pvocabulary.get(term);
+
+            // set the offset of the DocId posting list in the vocabulary element
+            vocElem.setDocIdsOffset(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel().size());
+
+            // set the offset of the TermFreq posting list in the vocabulary element
+            vocElem.setTermFreqOffset(FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel().size());
+
+
+
+        }
+
+
+    }
+
 
 }
