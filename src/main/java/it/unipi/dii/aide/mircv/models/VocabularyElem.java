@@ -35,6 +35,16 @@ public class VocabularyElem {
         CollFreq = collFreq;
     }
 
+    public VocabularyElem() {
+
+    }
+
+    public VocabularyElem(String term) {
+        this.term = term;
+        DocFreq = 0;
+        CollFreq = 0;
+    }
+
     public String getTerm() {
         return term;
     }
