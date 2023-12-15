@@ -28,7 +28,7 @@ public class Spimi {
 
     // posting list in memory
     public static HashMap<String, PostingList> postingListElem = new HashMap<>();
-
+    private long MEMORYFree_THRESHOLD;
 
 
     public boolean startIndexer() throws IOException {
@@ -44,12 +44,15 @@ public class Spimi {
         String text;
         int tab;
         int documnetLength;
-        // long MEMORY_THRESHOLD = Runtime.getRuntime().totalMemory() * 20 / 100; // leave 20% of memory free
 
-
-        // while (Runtime.getRuntime().freeMemory() > MEMORY_THRESHOLD ) { //build index until 80% of total memory is used
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() * 20 / 100; // leave 20% of memory free
+        System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
         while ((line = bufferedReader.readLine()) != null) {
+
+            // checking if the used memory has reached the threshold
+            checkMemory();
+            
             // split on tab
             tab = line.indexOf("\t");
 
@@ -118,22 +121,55 @@ public class Spimi {
                     termList.add(token);
                 }
             }
+
+            if (docid % 50000 == 0)
+                System.out.println("< current docId: " + docid +" >");
+
             docid++;
         }
 
-
-        // error during data structures creation. Rollback previous operations and end algorithm
+        // write the last block on the disk
         if (!WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem)) {
-            System.out.println("Couldn't write index to disk.");
+            System.out.println("Couldn't write block "+ blockNum + " to disk.");
             rollback();
-            return false;
+            System.exit(-1);
         }
-        clearDataStructure();
+        System.out.println("Block " + blockNum + " written on disk.");
 
-        blockNum++;
+        // close the docIndex_RAF
+        docIndex_RAF.close();
+
+        // clear data structure
+        clearDataStructure();
 
 
         return true;
+    }
+
+    private void checkMemory() {
+        // check if the used memory has reached the threshold and write on disk
+        if (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD) {
+            System.out.println("Memory full..");
+            System.out.println("Writing block " + blockNum + " on disk..");
+
+            if (!WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem)) {
+                System.out.println("Couldn't write block "+ blockNum + " to disk.");
+                rollback();
+                System.exit(-1);
+            }
+
+            System.out.println("Block " + blockNum + " written on disk.");
+
+            clearDataStructure();
+            blockNum++;
+
+            // force garbage collection to free memory
+            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2 ){
+                System.out.println("Waiting for memory to be freed..");
+                // wait for memory to be freed
+                System.gc();
+            }
+        }
     }
 
     private void clearDataStructure() {
