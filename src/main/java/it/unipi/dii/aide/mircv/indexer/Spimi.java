@@ -28,14 +28,14 @@ public class Spimi {
 
     // posting list in memory
     public static HashMap<String, PostingList> postingListElem = new HashMap<>();
+    private long MEMORYFree_THRESHOLD;
 
 
-
-    public void startIndexer() throws IOException {
+    public boolean startIndexer() throws IOException {
         System.out.println("Indexing...");
 
         // read collection according to the compression flag
-        BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON()) ;
+        BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON());
         // init docIndex_RAF
         FileUtils.initDocIndex_RAF();
 
@@ -45,8 +45,14 @@ public class Spimi {
         int tab;
         int documnetLength;
 
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() * 20 / 100; // leave 20% of memory free
+        System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
-        while((line = bufferedReader.readLine())!= null) {
+        while ((line = bufferedReader.readLine()) != null) {
+
+            // checking if the used memory has reached the threshold
+            checkMemory();
+            
             // split on tab
             tab = line.indexOf("\t");
 
@@ -69,7 +75,7 @@ public class Spimi {
             documnetLength = tokens.length;
 
             // new document index elem
-            DocumentIndexElem doc = new DocumentIndexElem(docid,docno,documnetLength);
+            DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
 
             for (String token : tokens) {
@@ -115,44 +121,111 @@ public class Spimi {
                     termList.add(token);
                 }
             }
-            docid ++;
+
+            if (docid % 50000 == 0)
+                System.out.println("< current docId: " + docid +" >");
+
+            docid++;
         }
 
-        // save block on the disk
-        WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem);
-        blockNum++ ;
+        // write the last block on the disk
+        if (!WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem)) {
+            System.out.println("Couldn't write block "+ blockNum + " to disk.");
+            rollback();
+            System.exit(-1);
+        }
+        System.out.println("Block " + blockNum + " written on disk.");
 
+        // close the docIndex_RAF
+        docIndex_RAF.close();
+
+        // clear data structure
+        clearDataStructure();
+
+
+        return true;
     }
 
-    private void WriteBlockOnDisk(int blockNum, ArrayList<String> termList, HashMap<String, VocabularyElem> Pvocabulary, HashMap<String, PostingList> PpostingListElem) throws IOException {
+    private void checkMemory() {
+        // check if the used memory has reached the threshold and write on disk
+        if (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD) {
+            System.out.println("Memory full..");
+            System.out.println("Writing block " + blockNum + " on disk..");
 
-        // create RAF and temp file
+            if (!WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem)) {
+                System.out.println("Couldn't write block "+ blockNum + " to disk.");
+                rollback();
+                System.exit(-1);
+            }
+
+            System.out.println("Block " + blockNum + " written on disk.");
+
+            clearDataStructure();
+            blockNum++;
+
+            // force garbage collection to free memory
+            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2 ){
+                System.out.println("Waiting for memory to be freed..");
+                // wait for memory to be freed
+                System.gc();
+            }
+        }
+    }
+
+    private void clearDataStructure() {
+        vocabulary.clear();
+        termList.clear();
+        postingListElem.clear();
+    }
+
+    private void rollback() {
+        FileUtils.clearDataFolder();
+    }
+
+    private boolean WriteBlockOnDisk(int blockNum, ArrayList<String> termList, HashMap<String, VocabularyElem> Pvocabulary, HashMap<String, PostingList> PpostingListElem) {
+
+        // create RAF and temp file for the block
         FileUtils.createTempFile(blockNum);
 
         // sort the term list
         Collections.sort(termList);
 
-        // write the block on the disk
-        for (String term : termList) {
+        // write on the disk
+         try {
+             for (String term : termList) {
 
-            // get the posting list of the term
-            PostingList postList = PpostingListElem.get(term);
+                 // get the posting list of the term
+                 PostingList postList = PpostingListElem.get(term);
 
-            // get the vocabulary element of the term
-            VocabularyElem vocElem = Pvocabulary.get(term);
+                 // get the vocabulary element of the term
+                 VocabularyElem vocElem = Pvocabulary.get(term);
 
-            // set the offset of the DocId posting list in the vocabulary element
-            vocElem.setDocIdsOffset(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel().size());
+                 // set the offset of the DocId posting list in the vocabulary element
+                 vocElem.setDocIdsOffset(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel().size());
 
-            // set the offset of the TermFreq posting list in the vocabulary element
-            vocElem.setTermFreqOffset(FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel().size());
+                 // set the offset of the TermFreq posting list in the vocabulary element
+                 vocElem.setTermFreqOffset(FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel().size());
 
+                 // write the posting list on the disk
+                 postList.writeToDisk(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel(), FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel());
 
+                 // update the vocabulary element
+                 vocElem.incFreqLen(postList.getPostingList().size()*4);
+                 vocElem.incDocLen(postList.getPostingList().size()*4);
 
-        }
+                 // TO DO  * update MAXTF
 
+                 // write the vocabulary element on the disk
+                 Pvocabulary.put(term, vocElem); // update the vocabulary
+                 vocElem.writeToDisk(FileUtils.skeleton_RAF.get(blockNum).get(0).getChannel());
 
+             }
+             return true;
+         }
+            catch (IOException e) {
+                System.out.println("I/O Error " + e);
+                return false;
+            }
     }
-
 
 }
