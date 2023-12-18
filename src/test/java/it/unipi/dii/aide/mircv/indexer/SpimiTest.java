@@ -1,149 +1,349 @@
 package it.unipi.dii.aide.mircv.indexer;
 
-import it.unipi.dii.aide.mircv.models.Posting;
-import it.unipi.dii.aide.mircv.models.PostingList;
-import it.unipi.dii.aide.mircv.models.VocabularyElem;
+import it.unipi.dii.aide.mircv.models.*;
+import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
+import static it.unipi.dii.aide.mircv.indexer.Spimi.postingListElem;
+import static it.unipi.dii.aide.mircv.utils.FileUtils.docIndex_RAF;
+import static it.unipi.dii.aide.mircv.utils.FileUtils.initBuffer;
 import static org.junit.jupiter.api.Assertions.*;
 
 // create a test for the method startIndexer() of the class Spimi
 class SpimiTest {
 
-    @Test
-    void startIndexer() throws IOException {
-        // create a Spimi object
-        Spimi spimi = new Spimi();
+    protected static final HashMap<String, VocabularyElem> vocabularyT = new HashMap<>();   // LinkedHashMap to preserve the order of insertion
+    protected static final HashMap<String, VocabularyElem> vocabulary = new HashMap<>();    // LinkedHashMap to preserve the order of insertion
 
-        // create a BufferedReader object
-        BufferedReader bufferedReader = new BufferedReader(new StringReader("doc1\tterm1 term2 term3\ndoc2\tterm1 term2\ndoc3\tterm1"));
+    // list of sorted term
+    public static ArrayList<String> termList = new ArrayList<>();
 
-        // create a MappedByteBuffer object
-        MappedByteBuffer mappedByteBuffer = FileUtils.docIndex_RAF. ()
-        (FileChannel.MapMode.READ_WRITE, 0, FileUtils.docIndex_RAF.size());
+    public static HashMap<String, PostingList> invIdexT = new HashMap<>();
+    public static HashMap<String, PostingList> invIdex = new HashMap<>();
 
-        // create a HashMap object
-        HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
+    static ArrayList<DocumentIndexElem> docIndex = new ArrayList<>();
 
-        // create an ArrayList object
-        ArrayList<String> termList = new ArrayList<>();
+    ArrayList<DocumentIndexElem> docIndexT = new ArrayList<>();
 
-        // create a HashMap object
-        HashMap<String, PostingList> postingListElem = new HashMap<>();
+    private static BufferedReader bufferedReader;
 
-        // create a String object
-        String line;
 
-        // create an int object
-        int tab;
 
-        // create a String object
-        String docno;
 
-        // create a String object
-        String text;
 
-        // create an int object
-        int documentLength;
+    @BeforeAll
+    public static void init() {
+        // tree ,ocean, sunshine, whisper, tree, harmony
+        // Sunshine, ball, house
 
-        // create a long object
-        long MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() * 20 / 100;
+        DocumentIndexElem doc1 = new DocumentIndexElem(1, "1", 6);
+        DocumentIndexElem doc2 = new DocumentIndexElem(2, "2", 3);
+        docIndex.add(doc1);
+        docIndex.add(doc2);
 
-        // create a String object
-        String[] terms;
+        bufferedReader = new BufferedReader(new StringReader("1\ttree ocean sunshine whisper tree harmony\n" + "2\tsunshine ball house"));
 
-        // create a String object
-        String term;
+        VocabularyElem VocElem1 = new VocabularyElem("tree", 1, 2);
+        vocabularyT.put("tree", VocElem1);
+        VocabularyElem VocElem2 = new VocabularyElem("ocean", 1, 1);
+        vocabularyT.put("ocean", VocElem2);
+        VocabularyElem VocElem3 = new VocabularyElem("sunshine", 2, 2);
+        vocabularyT.put("sunshine", VocElem3);
+        VocabularyElem VocElem4 = new VocabularyElem("whisper", 1, 1);
+        vocabularyT.put("whisper", VocElem4);
+        VocabularyElem VocElem5 = new VocabularyElem("harmony", 1, 1);
+        vocabularyT.put("harmony", VocElem5);
+        VocabularyElem VocElem6 = new VocabularyElem("ball", 1, 1);
+        vocabularyT.put("ball", VocElem6);
+        VocabularyElem VocElem7 = new VocabularyElem("house", 1, 1);
+        vocabularyT.put("house", VocElem7);
 
-        // create a PostingList object
-        PostingList postingList;
-
-        // create a Posting object
-        Posting posting;
-
-        // create a VocabularyElem object
-        VocabularyElem vocabularyElem;
-
-        // create a String object
-        String[] docnos = {"doc1", "doc2", "doc3"};
-
-        // create a String object
-        String[] texts = {"term1 term2 term3", "term1 term2", "term1"};
-
-        // create an int object
-        int[] documentLengths = {3, 2, 1};
-
-        // create a String object
-        String[] terms1 = {"term1", "term2", "term3"};
-
-        // create a String object
-        String[] terms2 = {"term1", "term2"};
-
-        // create a String object
-        String[] terms3 = {"term1"};
-
-        // create a String object
-        String[] terms4 = {"term1", "term2", "term3"};
-
-        // create a String object
-        String[] terms5 = {"term1", "term2"};
-
-        // create a String object
-        String[] terms6 = {"term1"};
-
-        // do the test
-        
-
+        invIdex.put("harmony", new PostingList("harmony", new Posting(1, 1)));
+        invIdex.put("house", new PostingList("house", new Posting(2, 1)));
+        invIdex.put("ball", new PostingList("ball", new Posting(2, 1)));
+        invIdex.put("ocean", new PostingList("ocean", new Posting(1, 1)));
+        invIdex.put("sunshine", new PostingList("sunshine", new Posting(1, 1)));
+        invIdex.get("sunshine").addPosting(new Posting(2, 1));
+        invIdex.put("tree", new PostingList("tree", new Posting(1, 2)));
+        invIdex.put("whisper", new PostingList("whisper", new Posting(1, 1)));
 
     }
 
-    public static ArrayList<VocabularyElem> vocabularyElem(HashMap<String, PostingList> index) throws IOException {
-        // Given inverted index generate vocabulary
-        int numPostings = 0;
-        for (PostingList pl : index.values())
-            numPostings += pl.getPostingList().size();
+    @Test
+    public void Vocabulary_Equal() throws IOException {
+        // build vocabulary
+        HashMap<String, VocabularyElem> vocabularyT = buildVocaulary(bufferedReader);
 
-        ArrayList<VocabularyElem> voc = new ArrayList<>(index.size());
+        // check if the two vocabulary have the same size
+        assertEquals(vocabularyT.size(), vocabulary.size());
 
-        // instantiation of MappedByteBuffer for integer list of docids
-        MappedByteBuffer docsBuffer = FileUtils.skeleton_RAF.get(0).get(1).getChannel().map(FileChannel.MapMode.READ_WRITE, 0, numPostings * 4L);
+        // check if the two vocabulary have the same terms
+        for (String term : vocabulary.keySet()) {
+            assertTrue(vocabulary.containsKey(term));
+        }
 
-        // instantiation of MappedByteBuffer for integer list of freqs
-        MappedByteBuffer freqsBuffer = FileUtils.skeleton_RAF.get(0).get(2).getChannel().map(FileChannel.MapMode.READ_WRITE, 0, numPostings * 4L);
+        // check if the two vocabulary have the same docFreq
+        for (String term : vocabulary.keySet()) {
+            assertEquals(vocabulary.get(term).getDocFreq(),vocabularyT.get(term).getDocFreq());
+        }
 
-        // check if MappedByteBuffers are correctly instantiated
-        if (docsBuffer != null && freqsBuffer != null) {
-            for (PostingList list : index.values()) {
-                //create vocabulary entry
-                VocabularyElem vocEntry = new VocabularyElem(list.getTerm());
-                vocEntry.setDocIdsOffset(docsBuffer.position());
-                vocEntry.setTermFreqOffset(docsBuffer.position());
+        // check if the two vocabulary have the same collFreq
+        for (String term : vocabulary.keySet()) {
+            assertEquals(vocabulary.get(term).getDocFreq(),vocabularyT.get(term).getDocFreq());
+        }
+    }
 
-                // write postings to file
-                for (Posting posting : list.getPostingList()) {
-                    // docid
-                    docsBuffer.putInt(posting.getDocID());
-                    // freq
-                    freqsBuffer.putInt(posting.getTermFreq());
-                }
+    @Test
+    public void PostingList_Equal() throws IOException {
+        // build posting
+        HashMap<String, PostingList> invIdexT = buildPosting(bufferedReader);
 
-                vocEntry.setDocIdsLen((numPostings * 4));
-                vocEntry.setTermFreqLen((numPostings * 4));
+        // check if the two posting have the same size
+        assertEquals(invIdexT.size(), invIdex.size());
 
-                voc.add(vocEntry);
+        // check if the two posting have the same terms
+        for (String term : invIdex.keySet()) {
+            assertEquals(invIdexT.containsKey(term), invIdex.containsKey(term));
+        }
+
+        // per ogni chiave del hashmap
+        // controllo che il posting list sia uguale
+        // controllo che il term sia uguale
+        for (String term : invIdex.keySet()) {
+            // assertEquals(invIdexT.get(term).getPostingList(), invIdex.get(term).getPostingList()); // TODO SIMO !
+            assertEquals(invIdexT.get(term).getTerm(), invIdex.get(term).getTerm());
+        }
+    }
+
+    @Test
+    public void DocumentIndex_Equal() throws IOException {
+        // build document index
+        ArrayList<DocumentIndexElem> docIndexT = buildDocumentIndexElem(bufferedReader);
+
+        // check if the two document index have the same size
+        assertEquals(docIndex.size(), docIndexT.size());
+
+        // check if the two document index have the same docid
+        for (int i = 0; i < docIndex.size(); i++) {
+            assertEquals(docIndex.get(i).getDocId(), docIndexT.get(i).getDocId());
+        }
+
+        // check if the two document index have the same docno
+        for (int i = 0; i < docIndex.size(); i++) {
+            assertEquals(docIndex.get(i).getDocno(), docIndexT.get(i).getDocno());
+        }
+
+        // check if the two document index have the same documnetLength
+        for (int i = 0; i < docIndex.size(); i++) {
+            assertEquals(docIndex.get(i).getLength(), docIndexT.get(i).getLength());
+        }
+    }
+
+
+
+    private ArrayList<DocumentIndexElem> buildDocumentIndexElem(BufferedReader bufferedReader) throws IOException {
+
+        int docid = 1;
+        String line;
+        String docno;
+        String text;
+        int tab;
+        int documnetLength;
+
+        while ((line = bufferedReader.readLine()) != null) {
+
+            // split on tab
+            tab = line.indexOf("\t");
+
+            // check malformed line
+            if (tab == -1) {  // tab not found
+                continue;
             }
 
-        }
-        return voc;
-    }
-}
+            // extract
+            docno = line.substring(0, tab);
+            text = line.substring(tab + 1);
 
+            // check empty doc
+            if (text.isEmpty())
+                continue;
+
+            // process text
+            String[] tokens = text.split(" ");
+
+            documnetLength = tokens.length;
+
+            // new document index elem
+            DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
+            docIndexT.add(doc);
+
+            docid++;
+        }
+        return docIndexT;
+    }
+
+
+
+    private HashMap<String, PostingList> buildPosting(BufferedReader bufferedReader) throws IOException {
+
+        // init docIndex_RAF
+        FileUtils.initDocIndex_RAF();
+
+        int docid = 1;
+        String line;
+        String docno;
+        String text;
+        int tab;
+        int documnetLength;
+
+        while ((line = bufferedReader.readLine()) != null) {
+
+            // split on tab
+            tab = line.indexOf("\t");
+
+
+            // extract
+            docno = line.substring(0, tab);
+            text = line.substring(tab + 1);
+
+            String[] tokens = text.split(" ");
+
+            documnetLength = tokens.length;
+
+            for (String token : tokens) {
+
+                // compute term frequency in the document
+                int tf = Collections.frequency(java.util.Arrays.asList(tokens), token);
+
+                // check if token is already in the vocabulary
+                if (vocabulary.containsKey(token)) {
+
+                    // get the vocabulary element
+                    VocabularyElem vocElem = vocabulary.get(token);
+                    // check if the term is in another document
+                    if (vocElem.getLastDocIdInserted() != docid) {
+
+                        // update the document frequency
+                        vocElem.incDocFreq();
+                        // update the collection frequency
+                        vocElem.updateCollFreq(tf);
+                        // update the last document id inserted
+                        vocElem.setLastDocIdInserted(docid);
+
+                        // add the posting list
+                        invIdexT.get(token).addPosting(new Posting(docid, tf));
+                    }
+
+                } else {
+                    // add new term in the vocabulary
+                    VocabularyElem NewVocElem = new VocabularyElem(token, 1, tf);
+                    NewVocElem.setLastDocIdInserted(docid);
+                    vocabulary.put(token, NewVocElem);
+
+                    // add new posting list
+                    invIdexT.put(token, new PostingList(token, new Posting(docid, tf)));
+
+                    // add new term in the list
+                    termList.add(token);
+                }
+            }
+
+            if (docid % 50000 == 0)
+                System.out.println("< current docId: " + docid +" >");
+
+            docid++;
+        }
+
+        return invIdexT;
+    }
+
+
+
+
+    private HashMap<String, VocabularyElem> buildVocaulary(BufferedReader bufferedReader) throws IOException {
+
+        // init docIndex_RAF
+        FileUtils.initDocIndex_RAF();
+        int docid = 1;
+        String line;
+        String docno;
+        String text;
+        int tab;
+        int documnetLength;
+
+        while ((line = bufferedReader.readLine()) != null) {
+
+            // split on tab
+            tab = line.indexOf("\t");
+
+            // check malformed line
+            if (tab == -1) {  // tab not found
+                continue;
+            }
+
+            // extract
+            docno = line.substring(0, tab);
+            text = line.substring(tab + 1);
+
+            // check empty doc
+            if (text.isEmpty())
+                continue;
+
+            String[] tokens = text.split(" ");
+
+            documnetLength = tokens.length;
+
+            // new document index elem
+            DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
+            doc.writeToDisk(docIndex_RAF.getChannel());
+
+            for (String token : tokens) {
+
+                // compute term frequency in the document
+                int tf = Collections.frequency(java.util.Arrays.asList(tokens), token);
+
+                // check if token is already in the vocabulary
+                if (vocabulary.containsKey(token)) {
+
+                    // get the vocabulary element
+                    VocabularyElem vocElem = vocabulary.get(token);
+                    // check if the term is in another document
+                    if (vocElem.getLastDocIdInserted() != docid) {
+
+                        // update the document frequency
+                        vocElem.incDocFreq();
+                        // update the collection frequency
+                        vocElem.updateCollFreq(tf);
+                        // update the last document id inserted
+                        vocElem.setLastDocIdInserted(docid);
+
+                    }
+
+                } else {
+                    // add new term in the vocabulary
+                    VocabularyElem NewVocElem = new VocabularyElem(token, 1, tf);
+                    NewVocElem.setLastDocIdInserted(docid);
+                    vocabulary.put(token, NewVocElem);
+
+                    // add new term in the list
+                    termList.add(token);
+                }
+            }
+
+            docid++;
+        }
+        // sort the vocabulary
+        return vocabulary;
+    }
+
+}
