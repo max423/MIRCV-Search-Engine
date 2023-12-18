@@ -121,9 +121,13 @@ public class VocabularyElem {
                 "term='" + term + '\'' +
                 ", DocFreq=" + DocFreq +
                 ", CollFreq=" + CollFreq +
+                ", lastDocIdInserted=" + lastDocIdInserted +
+                ", docIdsOffset=" + docIdsOffset +
+                ", termFreqOffset=" + termFreqOffset +
+                ", docIdsLen=" + docIdsLen +
+                ", termFreqLen=" + termFreqLen +
                 '}';
     }
-
 
     public void writeToDisk(FileChannel channelVoc) throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(20 + 4 + 4 + 4 + 8 + 8 + 4 + 4); // stringa paddata 20 caratteri

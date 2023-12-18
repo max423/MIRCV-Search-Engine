@@ -16,9 +16,23 @@ import it.unipi.dii.aide.mircv.models.Configuration;
 
 
 public class Indexer {
+    static Integer blockNumber = 0;
 
     public static void main(String[] args) throws IOException {
 
+        System.out.println("> Start Indexing ...");
+
+        // delete old index files
+        FileUtils.clearDataFolder();
+
+        // start Spimi algorithm
+        Spimi spimi = new Spimi();
+        blockNumber= spimi.startIndexer();
+
+        Merger merger = new Merger();
+        merger.startMerger(blockNumber);
+
+        
     }
 
 
