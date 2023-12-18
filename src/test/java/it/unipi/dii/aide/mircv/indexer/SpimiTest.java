@@ -1,25 +1,18 @@
 package it.unipi.dii.aide.mircv.indexer;
 
 import it.unipi.dii.aide.mircv.models.*;
-import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.*;
 
-import static it.unipi.dii.aide.mircv.indexer.Spimi.postingListElem;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.docIndex_RAF;
-import static it.unipi.dii.aide.mircv.utils.FileUtils.initBuffer;
 import static org.junit.jupiter.api.Assertions.*;
 
-// create a test for the method startIndexer() of the class Spimi
+
 class SpimiTest {
 
     protected static final HashMap<String, VocabularyElem> vocabularyT = new HashMap<>();   // LinkedHashMap to preserve the order of insertion
@@ -36,9 +29,6 @@ class SpimiTest {
     ArrayList<DocumentIndexElem> docIndexT = new ArrayList<>();
 
     private static BufferedReader bufferedReader;
-
-
-
 
 
     @BeforeAll
@@ -120,7 +110,12 @@ class SpimiTest {
         // controllo che il posting list sia uguale
         // controllo che il term sia uguale
         for (String term : invIdex.keySet()) {
-            // assertEquals(invIdexT.get(term).getPostingList(), invIdex.get(term).getPostingList()); // TODO SIMO !
+            System.out.println("term: " + term);
+            PostingList postList = invIdex.get(term);
+            PostingList postListT = invIdexT.get(term);
+
+            assertEquals(postList.getTerm(), postListT.getTerm());
+
             assertEquals(invIdexT.get(term).getTerm(), invIdex.get(term).getTerm());
         }
     }

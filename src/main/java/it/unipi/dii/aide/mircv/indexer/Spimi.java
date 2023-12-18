@@ -31,8 +31,8 @@ public class Spimi {
     private long MEMORYFree_THRESHOLD;
 
 
-    public boolean startIndexer() throws IOException {
-        System.out.println("Indexing...");
+    public int startIndexer() throws IOException {
+        System.out.println("Start Spimi Alg ...");
 
         // read collection according to the compression flag
         BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON());
@@ -104,6 +104,7 @@ public class Spimi {
                         // update the last document id inserted
                         vocElem.setLastDocIdInserted(docid);
 
+
                         // add the posting list
                         postingListElem.get(token).addPosting(new Posting(docid, tf));
                     }
@@ -132,7 +133,7 @@ public class Spimi {
         if (!WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem)) {
             System.out.println("Couldn't write block "+ blockNum + " to disk.");
             rollback();
-            System.exit(-1);
+            return -1;
         }
         System.out.println("Block " + blockNum + " written on disk.");
 
@@ -142,8 +143,7 @@ public class Spimi {
         // clear data structure
         clearDataStructure();
 
-
-        return true;
+        return blockNum;
     }
 
     private void checkMemory() {
