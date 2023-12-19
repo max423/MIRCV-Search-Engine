@@ -16,9 +16,9 @@ import java.util.HashMap;
 public class FileUtils {
     public static int MAX_TERM_LENGTH = 20; // in bytes
     // path stop words
-    public static String Path_StopWords = "MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
+    public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
     // path Uncompressed collection
-    public static String Path_Uncompressed_Collection = "MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+    public static String Path_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
     // path Compressed collection
     public static String Path_Compressed_Collection = "/Users/massimo/Desktop/collection.tar.gz";
     // path to the configuration json file
@@ -27,17 +27,17 @@ public class FileUtils {
 
 
     // path to the document index
-    public static String Path_DocumentIndex = "MIRCV-Project/src/main/resources/document_index";
+    public static String Path_DocumentIndex = "src/main/resources/document_index";
 
     // path to the Partial Vocabulary
-    public static String Path_PartialVocabulary = "MIRCV-Project/src/main/resources/partial_vocabulary";
+    public static String Path_PartialVocabulary = "src/main/resources/partial_vocabulary";
     // path to the Partial Posting-DocId
-    public static String Path_PartialDocId = "MIRCV-Project/src/main/resources/partial_docid";
+    public static String Path_PartialDocId = "src/main/resources/partial_docid";
     // path to the Partial Postings-TermFreq
-    public static String Path_PartialTermFreq = "MIRCV-Project/src/main/resources/partial_termfreq";
+    public static String Path_PartialTermFreq = "src/main/resources/partial_termfreq";
 
     // path to the Final Vocabulary
-    public static String Path_FinalVocabulary = "MIRCV-Project/src/main/resources/final_vocabulary";
+    public static String Path_FinalVocabulary = "src/main/resources/final_vocabulary";
 
     public static RandomAccessFile docIndex_RAF;
 
@@ -46,7 +46,7 @@ public class FileUtils {
     // clear data folder
     public static void clearDataFolder() {
         System.out.println("Clearing data folder...");
-        File dataFolder = new File("MIRCV-Project/src/main/resources");
+        File dataFolder = new File("src/main/resources");
         if (dataFolder.exists()) {
             for (File file : dataFolder.listFiles()) {
                 file.delete();
@@ -58,7 +58,7 @@ public class FileUtils {
     // create final files
     public static void CreateFinalStructure() throws IOException {
         System.out.println("Creating final structure...");
-        File dataFolder = new File("MIRCV-Project/src/main/resources");
+        File dataFolder = new File("src/main/resources");
         if (dataFolder.exists()) {// add Path_FinalVocabulary
             File finalVocabulary = new File(Path_FinalVocabulary);
             finalVocabulary.createNewFile();
@@ -119,7 +119,7 @@ public class FileUtils {
 
     // retrive RAF of v,d,f corrispondig to the block i
     public static FileChannel GetCorrectChannel(int blockNum, int i) {
-        System.out.println("GetCorrectChannel: " + blockNum + " " + i);
+        //System.out.println("GetCorrectChannel: " + blockNum + " " + i);
         return skeleton_RAF.get(blockNum).get(i).getChannel();
     }
 }
