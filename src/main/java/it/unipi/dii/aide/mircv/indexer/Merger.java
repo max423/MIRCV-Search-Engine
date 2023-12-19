@@ -3,6 +3,8 @@ package it.unipi.dii.aide.mircv.indexer;
 import it.unipi.dii.aide.mircv.models.VocabularyElem;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
@@ -59,30 +61,70 @@ public class Merger {
                 FileChannel channelVocabulary = GetCorrectChannel(blockNumCorrent, 0);
                 mappedByteBuffer = channelVocabulary.map(FileChannel.MapMode.READ_ONLY, currentOffsetVocabulary[blockNumCorrent] + 56, 20);
 
-                currentOffsetVocabulary[blockNumCorrent] += vocabularyEntrySize; // update the offset of the current partial_vocabulary
-
                 if(mappedByteBuffer != null){
                     String[] term = StandardCharsets.UTF_8.decode(mappedByteBuffer).toString().split("\0");
                     heap.add(new AbstractMap.SimpleEntry<>(term[0], blockNumCorrent));
-                    System.out.println("Heap :" + heap);
                 }
             }
 
             // entry contains the next term to insert in the final_vocabulary
-            VocabularyElem vocabularyElem = readVocabularyFromPartialFile(entry);
+            VocabularyElem vocabularyElem = readVocabularyFromPartialFile( entry.getKey(),currentOffsetVocabulary[blockNumCorrent], GetCorrectChannel(blockNumCorrent, 0));
 
+            // update the offset of the current partial_vocabulary
+            currentOffsetVocabulary[blockNumCorrent] += vocabularyEntrySize;
+
+            // controllo se c'è almeno un altro termine uguale nell heap
+            // se si -> devo fare il merge
+            // se no -> scrivo il termine nel final_vocabulary
+            AbstractMap.SimpleEntry<String, Integer> head = heap.peek();
+            String headTerm = head.getKey();
+
+            if (headTerm.equals(entry.getKey())) {
+                // merge
+                // TODO
+            } else {
+                // write the term in the final_vocabulary
+                // TODO
+            }
 
         }
         }
 
-    private VocabularyElem readVocabularyFromPartialFile(AbstractMap.SimpleEntry<String, Integer> entry) {
-        FileChannel channelDictionary = GetCorrectChannel(entry.getValue(), 0);
-        long offset = 56 * entry.getValue(); // the size of each dictionary element is 56 bytes
+    // take all the information from the partial_vocabulary for 1 vocabularyElem
+    private VocabularyElem readVocabularyFromPartialFile(String t, long currentOffset, FileChannel channel) throws IOException {
+        // 20 (term) + 4 (df) + 4 (cf) + 4(lastDocIdInserted) + 8 (docIdsOffset) + 8 (termFreqOffset) + 4 (docIdsLen) + 4(termFreqLen) = 56 bytes
+        try {
+            // creating ByteBuffer for reading term
+            ByteBuffer buffer = ByteBuffer.allocate(20);
+            channel.position(currentOffset + 20 );  // evito di leggere il term , tanto è gia nell'heap
 
-        // read the dictionary element
+            String term = t;
 
+            // creating ByteBuffer for reading df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen
+            buffer = ByteBuffer.allocate(4 + 4 + 4 + 8 + 8 + 4 + 4);
+
+            while (buffer.hasRemaining())
+                channel.read(buffer);
+
+            buffer.rewind(); // reset the buffer position to 0
+            int df = buffer.getInt();                        // reading df from buffer
+            int cf = buffer.getInt();                        // reading cf from buffer
+            int lastDocIdInserted = buffer.getInt();         // reading lastDocIdInserted from buffe  // TODO SIMO
+            long docIdsOffset = buffer.getLong();            // reading docIdsOffset from buffer
+            long termFreqOffset = buffer.getLong();          // reading termFreqOffset from buffer
+            int docIdsLen = buffer.getInt();                 // reading docIdsLen from buffer
+            int termFreqLen = buffer.getInt();               // reading termFreqLen from buffer
+
+            // creating the vocabularyElem
+            VocabularyElem vocabularyElem = new VocabularyElem(term, df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen);
+            System.out.println("VocabularyElem :" + vocabularyElem);
+
+            return vocabularyElem;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
-
     }
 
 
