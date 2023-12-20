@@ -23,6 +23,8 @@ public class Merger {
 
     long vocabularyEntrySize= 56; // check
 
+    String headTerm;
+
 
 
     public void startMerger(Integer blockNumber) throws IOException {
@@ -77,14 +79,19 @@ public class Merger {
             // se si -> devo fare il merge
             // se no -> scrivo il termine nel final_vocabulary
             AbstractMap.SimpleEntry<String, Integer> head = heap.peek();
-            String headTerm = head.getKey();
+
+            try {
+                headTerm = head.getKey();
+            } catch (NullPointerException e){
+                headTerm= " ";  // ultimo termine
+            }
 
             if (headTerm.equals(entry.getKey())) {
                 // merge
                 // TODO
             } else {
                 // write the term in the final_vocabulary
-                // TODO
+                vocabularyElem.writeToDisk(GetCorrectChannel(-1, 0));
             }
 
         }
