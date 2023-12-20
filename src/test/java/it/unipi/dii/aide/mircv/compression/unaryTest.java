@@ -11,7 +11,7 @@ class unaryTest {
     @Test
     void compress() {
         // Test input array: [1, 2, 3, 1, 4, 1]
-        // Expected compressed binary: 10100110 00110000
+        // Expected compressed binary: 01011001 11001111
         ArrayList<Integer> input1 = new ArrayList<>();
         input1.add(1);
         input1.add(2);
@@ -21,12 +21,12 @@ class unaryTest {
         input1.add(1);
 
         // Test input array: [45]
-        // Expected compressed binary: 00000000 00000000 00000000 00000000 00000000 00001000
+        // Expected compressed binary: 11111111 11111111 11111111 11111111 11111111 11110111
         ArrayList<Integer> input2 = new ArrayList<>();
         input2.add(45);
 
         // Test input array: [1, 2, 3, 45, 1, 4, 1]
-        // Expected compressed binary: 10100100 00000000 00000000 00000000 00000000 00000000 00110001 10000000
+        // Expected compressed binary: 01011011 11111111 11111111 11111111 11111111 11111111 11001110 01111111
         ArrayList<Integer> input3 = new ArrayList<>();
         input3.add(1);
         input3.add(2);
@@ -37,10 +37,9 @@ class unaryTest {
         input3.add(1);
 
         // Expected compressed bytes
-        byte[] expectedCompressed1 = {(byte) 0b10100110, (byte) 0b00110000};
-        byte[] expectedCompressed2 = {(byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00001000};
-        byte[] expectedCompressed3 = {(byte) 0b10100100, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00110001, (byte) 0b10000000};
-
+        byte[] expectedCompressed1 = {(byte) 0b01011001, (byte) 0b11001111};
+        byte[] expectedCompressed2 = {(byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11110111};
+        byte[] expectedCompressed3 = {(byte) 0b01011011, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11001110, (byte) 0b01111111};
 
         // Compress the input
         byte[] compressed1 = unary.compress(input1);
@@ -56,8 +55,9 @@ class unaryTest {
 
     @Test
     void decompress() {
+
         // Test input array: [1, 2, 3, 1, 4, 1]
-        // Expected compressed binary: 10100110 00110000
+        // Expected compressed binary: 01011001 11001111
         ArrayList<Integer> expectedDecompressed1 = new ArrayList<>();
         expectedDecompressed1.add(1);
         expectedDecompressed1.add(2);
@@ -67,12 +67,12 @@ class unaryTest {
         expectedDecompressed1.add(1);
 
         // Test input array: [45]
-        // Expected compressed binary: 00000000 00000000 00000000 00000000 00000000 00001000
+        // Expected compressed binary: 11111111 11111111 11111111 11111111 11111111 11110111
         ArrayList<Integer> expectedDecompressed2 = new ArrayList<>();
         expectedDecompressed2.add(45);
 
         // Test input array: [1, 2, 3, 45, 1, 4, 1]
-        // Expected compressed binary: 10100100 00000000 00000000 00000000 00000000 00000000 00110001 10000000
+        // Expected compressed binary: 01011011 11111111 11111111 11111111 11111111 11111111 11001110 01111111
         ArrayList<Integer> expectedDecompressed3 = new ArrayList<>();
         expectedDecompressed3.add(1);
         expectedDecompressed3.add(2);
@@ -83,9 +83,9 @@ class unaryTest {
         expectedDecompressed3.add(1);
 
         // Compress the input
-        byte[] compressed1 = {(byte) 0b10100110, (byte) 0b00110000};
-        byte[] compressed2 = {(byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00001000};
-        byte[] compressed3 = {(byte) 0b10100100, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00000000, (byte) 0b00110001, (byte) 0b10000000};
+        byte[] compressed1 = {(byte) 0b01011001, (byte) 0b11001111};
+        byte[] compressed2 = {(byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11110111};
+        byte[] compressed3 = {(byte) 0b01011011, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11111111, (byte) 0b11001110, (byte) 0b01111111};
 
         // Decompress the compressed array
         ArrayList<Integer> decompressed1 = unary.decompress(compressed1);
