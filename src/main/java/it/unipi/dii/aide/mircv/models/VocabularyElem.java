@@ -31,8 +31,8 @@ public class VocabularyElem {
 
     public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
-        DocFreq = docFreq;
-        CollFreq = collFreq;
+        this.DocFreq = docFreq;
+        this.CollFreq = collFreq;
     }
 
     public VocabularyElem() {
@@ -41,8 +41,20 @@ public class VocabularyElem {
 
     public VocabularyElem(String term) {
         this.term = term;
-        DocFreq = 0;
-        CollFreq = 0;
+        this.DocFreq = 0;
+        this.CollFreq = 0;
+    }
+
+    // full constructor
+    public VocabularyElem(String term, int docFreq, int collFreq, int lastDocIdInserted, long docIdsOffset, long termFreqOffset, int docIdsLen, int termFreqLen) {
+        this.term = term;
+        this.DocFreq = docFreq;
+        this.CollFreq = collFreq;
+        this.lastDocIdInserted = lastDocIdInserted;
+        this.docIdsOffset = docIdsOffset;
+        this.termFreqOffset = termFreqOffset;
+        this.docIdsLen = docIdsLen;
+        this.termFreqLen = termFreqLen;
     }
 
     public String getTerm() {
@@ -142,7 +154,7 @@ public class VocabularyElem {
         buffer.put(StandardCharsets.UTF_8.encode(charBuffer));
         buffer.putInt(this.DocFreq);
         buffer.putInt(this.CollFreq);
-        buffer.putInt(this.lastDocIdInserted);
+        buffer.putInt(this.lastDocIdInserted); // TODO Simo
         buffer.putLong(this.docIdsOffset);
         buffer.putLong(this.termFreqOffset);
         buffer.putInt(this.docIdsLen);

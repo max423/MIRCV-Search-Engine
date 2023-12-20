@@ -21,8 +21,8 @@ PostingList
 
 VocabularyElem —> 56
 - term —> 20
-- DocFreq —> 4
-- CollFreq —> 4
+- DocFreq —> 4 update 
+- CollFreq —> 4 update
 - lastDocIdInserted —> 4
 - docIdsOffset —> 8
 - termFreqOffset —> 8
