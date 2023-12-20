@@ -38,6 +38,12 @@ public class FileUtils {
 
     // path to the Final Vocabulary
     public static String Path_FinalVocabulary = "src/main/resources/final_vocabulary";
+    // path to the Final Posting-DocId
+    public static String Path_FinalDocId = "src/main/resources/final_docid";
+    // path to the Final Postings-TermFreq
+    public static String Path_FinalTermFreq = "src/main/resources/final_termfreq";
+    // path to the Final Collection Statistics
+    public static String Path_FinalCollectionStatistics = "src/main/resources/final_collection_statistics";
 
     public static RandomAccessFile docIndex_RAF;
 
@@ -54,24 +60,6 @@ public class FileUtils {
 
         }
     }
-
-    // create final files
-    public static void CreateFinalStructure() throws IOException {
-        System.out.println("Creating final structure...");
-        File dataFolder = new File("src/main/resources");
-        if (dataFolder.exists()) {// add Path_FinalVocabulary
-            File finalVocabulary = new File(Path_FinalVocabulary);
-            finalVocabulary.createNewFile();
-
-            //File finalVocabulary = new File(Path_FinalVocabulary);
-            //finalVocabulary.createNewFile();
-
-            //File finalVocabulary = new File(Path_FinalVocabulary);
-            //finalVocabulary.createNewFile();
-        }
-
-    };
-
 
     // read the collection according to the compression flag
     public static BufferedReader initBuffer(boolean compressed) throws IOException {
@@ -116,6 +104,28 @@ public class FileUtils {
         skeleton_RAF.put(blockNum, array_RAF);
 
     }
+
+    // create final files
+    public static void CreateFinalStructure() throws IOException {
+        System.out.println("Creating final structure...");
+        File dataFolder = new File("src/main/resources");
+        if (dataFolder.exists()) {// add Path_FinalVocabulary
+
+            ArrayList<RandomAccessFile> array_RAF = new ArrayList<>();
+            try {
+                array_RAF.add(new RandomAccessFile(new File(Path_FinalVocabulary), "rw"));                      // i= 0 - vocabulary
+                array_RAF.add(new RandomAccessFile(new File(Path_FinalDocId), "rw"));                           // i= 1 - docid (posting list)
+                array_RAF.add(new RandomAccessFile(new File(Path_FinalTermFreq), "rw"));                        // i= 2 - termfreq (posting list)
+                array_RAF.add(new RandomAccessFile(new File(Path_FinalCollectionStatistics), "rw"));            // i= 3 - collection statistics
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            // add to the skeleton
+            skeleton_RAF.put(-1, array_RAF);    // position -1 for the final file
+        }
+    };
+
+
 
     // retrive RAF of v,d,f corrispondig to the block i
     public static FileChannel GetCorrectChannel(int blockNum, int i) {
