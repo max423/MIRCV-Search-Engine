@@ -11,7 +11,7 @@ class variableByteTest {
     @Test
     void compress() {
         // Test input array: [67822]
-        // Expected compressed binary: 00000100 00010001 11101110
+        // Expected compressed binary: 00000100 10010001 11101110
         ArrayList<Integer> input1 = new ArrayList<>();
         input1.add(67822);
 
@@ -23,7 +23,7 @@ class variableByteTest {
         input2.add(4);
 
         // Test input array: [1, 2, 67822, 4]
-        // Expected compressed binary: 00000001 00000010 00000100 00010001 11101110 00000100
+        // Expected compressed binary: 00000001 00000010 00000100 10010001 11101110 00000100
         ArrayList<Integer> input3 = new ArrayList<>();
         input3.add(1);
         input3.add(2);
