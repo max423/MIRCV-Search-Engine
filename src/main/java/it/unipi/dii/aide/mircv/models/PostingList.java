@@ -78,4 +78,69 @@ public class PostingList {
 
     }
 
+    public void readFromDisk( FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId , long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
+        try {
+            channelDocID.position(offsetDocId);
+            channelTermFreq.position(offsetTermFreq);
+
+            // creating ByteBuffer for reading docIds and termFreqs
+            ByteBuffer bufferDocId = ByteBuffer.allocate(docIdsLen);
+            ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen);
+
+            while (bufferDocId.hasRemaining())
+                channelDocID.read(bufferDocId);
+
+            while (bufferTermFreq.hasRemaining())
+                channelTermFreq.read(bufferTermFreq);
+
+            bufferDocId.rewind(); // reset the buffer position to 0
+            bufferTermFreq.rewind(); // reset the buffer position to 0
+
+            // reading docIds and termFreqs from buffer
+            for (int i = 0; i < docIdsLen / 4; i++) {
+                int docId = bufferDocId.getInt();
+                int termFreq = bufferTermFreq.getInt();
+
+                this.postingList.add(new Posting(docId, termFreq));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void addPostingFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long docIdsOffset, long termFreqOffset, int docIdsLen, int termFreqLen) throws IOException{
+        // devo aggiungere un posting alla posting list, usata nel merger per aggiungere i posting delle posting list parziali
+
+        try {
+            channelDocID.position(docIdsOffset);
+            channelTermFreq.position(termFreqOffset);
+
+            // creating ByteBuffer for reading docIds and termFreqs
+            ByteBuffer bufferDocId = ByteBuffer.allocate(docIdsLen);
+            ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen);
+
+            while (bufferDocId.hasRemaining())
+                channelDocID.read(bufferDocId);
+
+            while (bufferTermFreq.hasRemaining())
+                channelTermFreq.read(bufferTermFreq);
+
+            bufferDocId.rewind(); // reset the buffer position to 0
+            bufferTermFreq.rewind(); // reset the buffer position to 0
+
+            // reading docIds and termFreqs from buffer
+            for (int i = 0; i < docIdsLen / 4; i++) {
+                int docId = bufferDocId.getInt();
+                int termFreq = bufferTermFreq.getInt();
+
+                this.postingList.add(new Posting(docId, termFreq));     // mantengo i posting vecchi e aggiungo quelli nuovi
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

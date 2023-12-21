@@ -6,6 +6,12 @@ public class CollectionStatistics {
     // total number of terms
     private long totalLength;
 
+
+    public CollectionStatistics() {
+        this.docCount = 0;
+        this.totalLength = 0;
+    }
+
     public CollectionStatistics(long docCount, long totalLength) {
         this.docCount = docCount;
         this.totalLength = totalLength;
@@ -17,6 +23,16 @@ public class CollectionStatistics {
 
     public long getTotalLength() {
         return totalLength;
+    }
+
+    // incremento numero di termini
+    public void incrementTotalLength() {
+        this.totalLength += 1;
+    }
+
+    // incremento numero di documenti
+    public void incrementDocCount(int docCount) {
+        this.docCount += docCount;
     }
 
     @Override

@@ -2,6 +2,8 @@ package it.unipi.dii.aide.mircv.indexer;
 
 
 import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
+import it.unipi.dii.aide.mircv.models.PostingList;
+import it.unipi.dii.aide.mircv.models.VocabularyElem;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 import it.unipi.dii.aide.mircv.indexer.Spimi;
 
@@ -13,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 import it.unipi.dii.aide.mircv.models.Configuration;
+
+import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
 
 
 public class Indexer {
@@ -32,9 +36,49 @@ public class Indexer {
         Merger merger = new Merger();
         merger.startMerger(blockNumber);
 
-        
+        PlotFinalStructure();
+
     }
 
+    private static void PlotFinalStructure() throws IOException {
+        System.out.println("> Plotting final Structure ...");
+
+        // offset corrente
+        long currentOffset = 0;
+
+        // take channel
+        FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
+        FileChannel channelDocID = FileUtils.GetCorrectChannel(-1, 1);
+        FileChannel channelTermFreq = FileUtils.GetCorrectChannel(-1, 2);
+
+        // take the size of the file
+        while (true) {
+            try {
+                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // read the vocabulary element
+            VocabularyElem vocabularyElem = new VocabularyElem();
+            vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
+
+            // print the vocabulary element
+            System.out.println(vocabularyElem);
+            // update the offset
+            currentOffset += 56;
+
+            // read the posting list
+            PostingList postingList = new PostingList(vocabularyElem.getTerm());
+            postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+            // print the posting list
+            System.out.println(postingList);
+
+
+        }
+
+    }
 
 
     public static void printDocumentIndex() throws IOException {
