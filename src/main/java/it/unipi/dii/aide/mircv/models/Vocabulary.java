@@ -24,25 +24,4 @@ public class Vocabulary extends LinkedHashMap<String, VocabularyElem> {
         return instance;
     }
 
-    // get the vocabulary element with the given term
-    public VocabularyElem getVocabularyElem(String term) {
-        // check if the element is in the cache
-        if (elements.containsKey(term)) {
-            return elements.get(term);
-        }
-
-        // get the element from the disk
-        VocabularyElem elem = VocabularyElem.loadVocabularyElem(term);
-
-        // add the element to the cache
-        if (elem != null)
-            elements.put(term, elem);
-
-        return elem;
-    }
-
-    // load the vocabulary element from disk
-    public static VocabularyElem loadVocabularyElem(String term) {
-
-    }
 }

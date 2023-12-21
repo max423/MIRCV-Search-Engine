@@ -14,6 +14,7 @@ import java.util.AbstractMap;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import static it.unipi.dii.aide.mircv.indexer.Spimi.lastDocId;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.CreateFinalStructure;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
 
@@ -35,7 +36,7 @@ public class Merger {
 
 
 
-    public void startMerger(Integer blockNumber) throws IOException {
+    public void startMerger(int blockNumber) throws IOException {
         System.out.println("> Start Merging ...");
 
         // ogni posizione contiene l'offest del prossimo termine da prendere per ogni vocabolario parziale
@@ -130,12 +131,16 @@ public class Merger {
 
                 // update collection statistics
                 collectionStatistics.incrementTotalLength(); // +1 per il termine
-                collectionStatistics.incrementDocCount(vocabularyElem.getCollFreq()); // NO seve il numero massimo di doc Id genereato
 
             }
 
         }
-        }
+
+        collectionStatistics.setDocCount(lastDocId);
+        // write the collectionStatistics on the disk
+        collectionStatistics.writeToDisk(GetCorrectChannel(-1, 3));
+
+    }
 
     // take all the information from the partial_vocabulary for 1 vocabularyElem
     private VocabularyElem readVocabularyFromPartialFile(String t, long currentOffset, FileChannel channel) throws IOException {
@@ -175,23 +180,26 @@ public class Merger {
     }
 
 
-
-
     // populate the heap with the first term of each partial_vocabulary and blockNumber
-    private void populateHeap(Integer blockNumber, PriorityQueue<AbstractMap.SimpleEntry<String, Integer>> heap)
+    private void populateHeap(int blockNumber, PriorityQueue<AbstractMap.SimpleEntry<String, Integer>> heap)
             throws IOException {
         int i = 0;
         do {
             // read the first element of each partial_vocabulary
             // add it to the heap
             FileChannel channelVocabulary = GetCorrectChannel(i, 0);
-            mappedByteBuffer = channelVocabulary.map(FileChannel.MapMode.READ_ONLY, 0, 20);
-            String[] term = StandardCharsets.UTF_8.decode(mappedByteBuffer).toString().split("\0");
-            //System.out.println(term[0], i);
 
-            heap.add(new AbstractMap.SimpleEntry<>(term[0], i));
+            ByteBuffer buffer = ByteBuffer.allocate(20);
+            channelVocabulary.position(0);
+
+            while (buffer.hasRemaining())
+                channelVocabulary.read(buffer);
+
+            String term = new String(buffer.array(), StandardCharsets.UTF_8).trim();
+
+            heap.add(new AbstractMap.SimpleEntry<>(term, i));
             i++;
 
-        } while (i < blockNumber);
+        } while (i < blockNumber -2);   // do + inizia da 0
     }
 }

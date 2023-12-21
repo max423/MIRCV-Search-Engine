@@ -30,6 +30,8 @@ public class Spimi {
     public static HashMap<String, PostingList> postingListElem = new HashMap<>();
     private long MEMORYFree_THRESHOLD;
 
+    public static int lastDocId = 0; // save last docId for CollectionStatistics
+
 
     public int startIndexer() throws IOException {
         System.out.println("Start Spimi Alg ...");
@@ -45,7 +47,7 @@ public class Spimi {
         int tab;
         int documnetLength;
 
-        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() * 20 / 100; // leave 20% of memory free
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *38 / 100; // leave 20% of memory free
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
         while ((line = bufferedReader.readLine()) != null) {
@@ -137,6 +139,7 @@ public class Spimi {
         }
         System.out.println("Block " + blockNum + " written on disk.");
 
+        lastDocId = docid; // save last docId for CollectionStatistics
         // close the docIndex_RAF
         docIndex_RAF.close();
 
@@ -162,13 +165,15 @@ public class Spimi {
 
             clearDataStructure();
             blockNum++;
+            lastDocId = docid; // save last docId for CollectionStatistics
 
-            // force garbage collection to free memory
-            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2 ){
-                System.out.println("Waiting for memory to be freed..");
+            // try to force garbage collection to free memory  // TODO SIMO
+            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 1) {
                 // wait for memory to be freed
                 System.gc();
             }
+            System.out.println(Runtime.getRuntime().freeMemory() +  " <TH +" +MEMORYFree_THRESHOLD +"> Memory free again..");
+
         }
     }
 

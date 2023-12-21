@@ -1,4 +1,4 @@
 {
-  "compressionON":true,
-  "stemming_stopwordON":false
+  "compressionON":false,
+  "stemming_stopwordON":true
 }

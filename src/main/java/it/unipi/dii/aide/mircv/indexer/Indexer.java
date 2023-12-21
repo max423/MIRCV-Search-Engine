@@ -1,9 +1,7 @@
 package it.unipi.dii.aide.mircv.indexer;
 
 
-import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
-import it.unipi.dii.aide.mircv.models.PostingList;
-import it.unipi.dii.aide.mircv.models.VocabularyElem;
+import it.unipi.dii.aide.mircv.models.*;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 import it.unipi.dii.aide.mircv.indexer.Spimi;
 
@@ -14,7 +12,6 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
-import it.unipi.dii.aide.mircv.models.Configuration;
 
 import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
 
@@ -32,6 +29,7 @@ public class Indexer {
         // start Spimi algorithm
         Spimi spimi = new Spimi();
         blockNumber= spimi.startIndexer();
+        System.out.println("Number of blocks generated: " + blockNumber);
 
         Merger merger = new Merger();
         merger.startMerger(blockNumber);
@@ -75,9 +73,12 @@ public class Indexer {
             // print the posting list
             System.out.println(postingList);
 
-
         }
 
+        // print the collection statistics
+        CollectionStatistics collectionStatistics = new CollectionStatistics();
+        collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
+        System.out.println(collectionStatistics);
     }
 
 

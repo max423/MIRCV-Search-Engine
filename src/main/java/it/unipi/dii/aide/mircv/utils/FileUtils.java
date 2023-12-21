@@ -18,7 +18,7 @@ public class FileUtils {
     // path stop words
     public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
     // path Uncompressed collection
-    public static String Path_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+    public static String Path_Uncompressed_Collection = "/Users/massimo/Downloads/collection.tsv";
     // path Compressed collection
     public static String Path_Compressed_Collection = "/Users/massimo/Desktop/collection.tar.gz";
     // path to the configuration json file
@@ -48,6 +48,8 @@ public class FileUtils {
     public static RandomAccessFile docIndex_RAF;
 
     public static final HashMap<Integer, ArrayList<RandomAccessFile>> skeleton_RAF = new HashMap<>();
+
+
 
     // clear data folder
     public static void clearDataFolder() {

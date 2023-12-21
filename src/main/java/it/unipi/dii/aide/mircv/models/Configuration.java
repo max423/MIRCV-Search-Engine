@@ -17,13 +17,15 @@ public class Configuration {
     static {
 
         try {
-            System.out.println("Reading configuration...");
+            System.out.println("Reading configuration");
+            System.out.println("--------------------------------------------------");
             // read json configuration file
             JsonObject jsonObject = JsonParser.parseReader(new FileReader("/Users/massimo/Desktop/MIRCV-Project/MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json")).getAsJsonObject();
             compressionON = jsonObject.get("compressionON").getAsBoolean();
             stemming_stopwordON = jsonObject.get("stemming_stopwordON").getAsBoolean();
             // print configuration
-            System.out.println("Configuration: \n" + "compression = " + compressionON + "\n" + "stemming_stopword = " + stemming_stopwordON);
+            System.out.println("Compression = " + compressionON + "\n" + "Stemming & Stopword = " + stemming_stopwordON);
+            System.out.println("--------------------------------------------------");
         } catch (IOException e) {
             e.printStackTrace();
         }
