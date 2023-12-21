@@ -24,4 +24,16 @@ public class SkipElem {
         blockFreqLen = 0;
         offsetFreq = 0;
     }
+
+    public SkipElem(int docID, long offsetDocID, int blockDocIDLen, long offsetFreq, int blockFreqLen) {
+        this.docID = docID;
+        this.offsetDocID = offsetDocID;
+        this.blockDocIDLen = blockDocIDLen;
+        this.offsetFreq = offsetFreq;
+        this.blockFreqLen = blockFreqLen;
+    }
+
+    public void setDocID(int docID) {
+        this.docID = docID;
+    }
 }

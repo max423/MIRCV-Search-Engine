@@ -28,6 +28,9 @@ public class VocabularyElem {
     // number of bytes of the termFreqs posting list
     protected int termFreqLen;
 
+    // length of the skip information
+    private int skipLen;
+
 
     public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
@@ -166,5 +169,42 @@ public class VocabularyElem {
         while (buffer.hasRemaining())
             channelVoc.write(buffer);
 
+    }
+
+    public int getSkipLen() {
+        return skipLen;
+    }
+
+    public void readFromDisk(FileChannel channel, long currentOffset) throws IOException {
+        try {
+            // creating ByteBuffer for reading term
+            ByteBuffer buffer = ByteBuffer.allocate(20);
+            channel.position(currentOffset);
+
+            while (buffer.hasRemaining())
+                channel.read(buffer);
+
+            String term = new String(buffer.array(), StandardCharsets.UTF_8).trim();
+
+            // creating ByteBuffer for reading df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen
+            buffer = ByteBuffer.allocate(4 + 4 + 4 + 8 + 8 + 4 + 4);
+
+            while (buffer.hasRemaining())
+                channel.read(buffer);
+
+            buffer.rewind(); // reset the buffer position to 0
+            this.term = term;
+            this.DocFreq = buffer.getInt();
+            this.CollFreq = buffer.getInt();
+            this.lastDocIdInserted = buffer.getInt();       // TODO SIMO
+            this.docIdsOffset = buffer.getLong();
+            this.termFreqOffset = buffer.getLong();
+            this.docIdsLen = buffer.getInt();
+            this.termFreqLen =  buffer.getInt();
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
