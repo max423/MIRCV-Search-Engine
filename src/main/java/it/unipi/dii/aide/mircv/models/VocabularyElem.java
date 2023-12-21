@@ -28,8 +28,6 @@ public class VocabularyElem {
     // number of bytes of the termFreqs posting list
     protected int termFreqLen;
 
-    // length of the skip information
-    private int skipLen;
 
     public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
@@ -168,9 +166,5 @@ public class VocabularyElem {
         while (buffer.hasRemaining())
             channelVoc.write(buffer);
 
-    }
-
-    public int getSkipLen() {
-        return skipLen;
     }
 }

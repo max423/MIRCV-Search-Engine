@@ -28,3 +28,10 @@ VocabularyElem —> 56
 - termFreqOffset —> 8
 - docIdsLen —> 4
 - termFreqLen —> 4
+
+SkipElem -> 28
+- docID -> 4
+- blockDocIDLen -> 4
+- offsetDocID -> 8
+- blockFreqLen -> 4
+- offsetFreq -> 8

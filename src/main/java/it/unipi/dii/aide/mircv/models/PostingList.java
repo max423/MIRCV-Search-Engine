@@ -1,13 +1,8 @@
 package it.unipi.dii.aide.mircv.models;
-import it.unipi.dii.aide.mircv.utils.FileUtils;
-
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 
 public class PostingList {
     private String term;
@@ -27,40 +22,6 @@ public class PostingList {
     public PostingList(String term, ArrayList<Posting> postingList) {
         this.term = term;
         this.postingList = postingList;
-    }
-
-    // load the posting list given the term
-    public void getPostingList(String term) throws IOException {
-
-        // initialize the random access file
-        RandomAccessFile docId_RAF = new RandomAccessFile(FileUtils.Path_FinalDocId, "r");
-        RandomAccessFile termFreq_RAF = new RandomAccessFile(FileUtils.Path_FinalTermFreq, "r");
-
-        // initialize a variable to store the vocabularyElem
-        //HashMap<Integer, DocumentIndexElem> documentIndex = new HashMap<>();
-        HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
-        VocabularyElem vocabularyElem = vocabulary.get(term);
-
-        // check if the term is in the vocabulary
-        if (vocabularyElem == null) {
-            System.out.println("Term "+ term + " not found in the vocabulary");
-            return;
-        }
-
-        // read skipping info
-        RandomAccessFile skip_RAF = new RandomAccessFile(FileUtils.Path_Skipping, "r");
-
-        // get the number of blocks of term
-        ArrayList<SkipElem> blocks;
-        if (vocabularyElem.getSkipLen() == 0){
-
-            // initialize a new ArrayList of blocks
-            blocks = new ArrayList<>();
-
-        }
-
-
-
     }
 
     public void addPosting(Posting posting) {
@@ -117,7 +78,4 @@ public class PostingList {
 
     }
 
-    public void setTerm(String term) {
-        this.term = term;
-    }
 }

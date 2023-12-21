@@ -1,5 +1,7 @@
 package it.unipi.dii.aide.mircv.indexer;
 
+import it.unipi.dii.aide.mircv.models.CollectionStatistics;
+import it.unipi.dii.aide.mircv.models.PostingList;
 import it.unipi.dii.aide.mircv.models.VocabularyElem;
 
 import java.io.IOException;
@@ -24,6 +26,12 @@ public class Merger {
     long vocabularyEntrySize= 56; // check
 
     String headTerm;
+
+    PostingList postingList ;
+
+    VocabularyElem vocabularyElemApp;
+
+    CollectionStatistics collectionStatistics = new CollectionStatistics();
 
 
 
@@ -52,7 +60,7 @@ public class Merger {
         populateHeap(blockNumber, heap);
 
         while (!heap.isEmpty()) {
-            // Extract the entry <term,blocknum> from the heap heap
+            // Extract the entry <term,blocknum> from the heap
             AbstractMap.SimpleEntry<String, Integer> entry = heap.poll();
 
             int blockNumCorrent = entry.getValue(); // block num corrente
@@ -86,12 +94,44 @@ public class Merger {
                 headTerm= " ";  // ultimo termine
             }
 
-            if (headTerm.equals(entry.getKey())) {
-                // merge
-                // TODO
-            } else {
+            if(vocabularyElemApp == null){
+                // inizializzo vocabolario di appoggio
+                vocabularyElemApp = vocabularyElem;
+
+                // e prendo la posting list
+                postingList= new PostingList(vocabularyElem.getTerm());
+                postingList.readFromDisk(GetCorrectChannel(blockNumCorrent, 1), GetCorrectChannel(blockNumCorrent, 2), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+            }
+            else {
+                // termine doppione aggiorno i dati del vocabolario
+                vocabularyElemApp.incDocFreq(vocabularyElem.getDocFreq());
+                vocabularyElemApp.incCollFreq(vocabularyElem.getCollFreq());
+                vocabularyElemApp.incFreqLen(vocabularyElem.getTermFreqLen());
+                vocabularyElemApp.incDocLen(vocabularyElem.getDocIdsLen());
+
+                // aggiornare Max
+                vocabularyElem = vocabularyElemApp;
+
+                // leggere la posting di vocabularyElem (termine corrente) e aggiungere i soui posting alla posting list
+                postingList.addPostingFromDisk(GetCorrectChannel(blockNumCorrent, 1), GetCorrectChannel(blockNumCorrent, 2), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+            }
+
+            if (!headTerm.equals(entry.getKey())) {
+                // non ci sono altri termini uguali
                 // write the term in the final_vocabulary
                 vocabularyElem.writeToDisk(GetCorrectChannel(-1, 0));
+                vocabularyElemApp = null;
+
+                // write the posting list in the final_posting_list
+                postingList.writeToDisk(GetCorrectChannel(-1, 1), GetCorrectChannel(-1, 2));
+                postingList = null;
+
+                // update collection statistics
+                collectionStatistics.incrementTotalLength(); // +1 per il termine
+                collectionStatistics.incrementDocCount(vocabularyElem.getCollFreq()); // NO seve il numero massimo di doc Id genereato
+
             }
 
         }
@@ -124,7 +164,7 @@ public class Merger {
 
             // creating the vocabularyElem
             VocabularyElem vocabularyElem = new VocabularyElem(term, df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen);
-            System.out.println("VocabularyElem :" + vocabularyElem);
+            //System.out.println("VocabularyElem :" + vocabularyElem);
 
             return vocabularyElem;
 
@@ -133,6 +173,8 @@ public class Merger {
         }
         return null;
     }
+
+
 
 
     // populate the heap with the first term of each partial_vocabulary and blockNumber
