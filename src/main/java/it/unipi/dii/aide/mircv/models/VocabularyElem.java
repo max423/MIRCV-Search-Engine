@@ -32,6 +32,8 @@ public class VocabularyElem {
     private int skipLen;
 
 
+
+
     public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
         this.DocFreq = docFreq;
@@ -75,6 +77,11 @@ public class VocabularyElem {
     public int getDocIdsLen() {
         return docIdsLen;
     }
+
+    public void setSkipLen(int skipLen) {
+        this.skipLen = skipLen;
+    }
+
 
     public void setDocIdsLen(int docIdsLen) {
         this.docIdsLen = docIdsLen;
@@ -138,6 +145,10 @@ public class VocabularyElem {
         this.CollFreq += cf;
     }
 
+    public int getSkipLen() {
+        return skipLen;
+    }
+
 
     @Override
     public String toString() {
@@ -180,9 +191,6 @@ public class VocabularyElem {
 
     }
 
-    public int getSkipLen() {
-        return skipLen;
-    }
 
     public void readFromDisk(FileChannel channel, long currentOffset) throws IOException {
         try {
