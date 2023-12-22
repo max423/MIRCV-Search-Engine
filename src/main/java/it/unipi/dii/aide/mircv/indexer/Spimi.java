@@ -168,7 +168,7 @@ public class Spimi {
             lastDocId = docid; // save last docId for CollectionStatistics
 
             // try to force garbage collection to free memory  // TODO SIMO
-            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 1) {
+            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 3) {
                 // wait for memory to be freed
                 System.gc();
             }

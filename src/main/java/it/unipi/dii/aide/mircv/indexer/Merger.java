@@ -1,6 +1,7 @@
 package it.unipi.dii.aide.mircv.indexer;
 
 import it.unipi.dii.aide.mircv.models.CollectionStatistics;
+import it.unipi.dii.aide.mircv.models.Configuration;
 import it.unipi.dii.aide.mircv.models.PostingList;
 import it.unipi.dii.aide.mircv.models.VocabularyElem;
 
@@ -14,6 +15,8 @@ import java.util.AbstractMap;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import static it.unipi.dii.aide.mircv.compression.unary.writeTermFreqCompressed;
+import static it.unipi.dii.aide.mircv.compression.variableByte.writeDocIdCompressed;
 import static it.unipi.dii.aide.mircv.indexer.Spimi.lastDocId;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.CreateFinalStructure;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
@@ -31,6 +34,9 @@ public class Merger {
     PostingList postingList ;
 
     VocabularyElem vocabularyElemApp;
+
+    int termFreqNewLen;
+    int docIdNewLen;
 
     CollectionStatistics collectionStatistics = new CollectionStatistics();
 
@@ -120,13 +126,38 @@ public class Merger {
             }
 
             if (!headTerm.equals(entry.getKey())) {
-                // non ci sono altri termini uguali
+                // non ci sono altri termini uguali -> scrivo vocabolario e posting list nel final_vocabulary e final_posting_list
+
+                // controllo flag compressione, index_compressionON
+                if(Configuration.isIndex_compressionON()){
+                    // compressione abilitata
+                    System.out.println("OldvocabularyElem = " + vocabularyElem);
+
+
+                    // TermFreq -> Unary
+                    termFreqNewLen = writeTermFreqCompressed(postingList.getPostingList(), GetCorrectChannel(-1, 1));
+
+                    // DocId -> VByte
+                    docIdNewLen = writeDocIdCompressed(postingList.getPostingList(), GetCorrectChannel(-1, 2));
+
+                    // update the vocabularyElem with new len
+                    vocabularyElem.setDocIdsLen(docIdNewLen);
+                    vocabularyElem.setTermFreqLen(termFreqNewLen);
+
+                    System.out.println("NewvocabularyElem = " + vocabularyElem);
+
+                }
+                else {
+                    // compressione disabilitata
+                    // write the posting list in the final_posting_list
+                    postingList.writeToDisk(GetCorrectChannel(-1, 1), GetCorrectChannel(-1, 2));
+
+                }
+
                 // write the term in the final_vocabulary
                 vocabularyElem.writeToDisk(GetCorrectChannel(-1, 0));
-                vocabularyElemApp = null;
 
-                // write the posting list in the final_posting_list
-                postingList.writeToDisk(GetCorrectChannel(-1, 1), GetCorrectChannel(-1, 2));
+                vocabularyElemApp = null;
                 postingList = null;
 
                 // update collection statistics

@@ -1,8 +1,17 @@
 package it.unipi.dii.aide.mircv.compression;
 
+import it.unipi.dii.aide.mircv.models.Posting;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class unary { // -> termfreq
+
+
+
+
 
     // compress an array of integer
     public static byte[] compress(ArrayList<Integer> uncompressed) {
@@ -97,4 +106,50 @@ public class unary { // -> termfreq
         return decompressed;
     }
 
+
+    public static int writeTermFreqCompressed(ArrayList<Posting> postingList, FileChannel channelTermFreq) throws IOException {
+
+        ArrayList<Integer> TFlistUncompressed = new ArrayList<>();
+
+        // riempio la lista di interi
+        for (Posting posting : postingList) {
+            TFlistUncompressed.add(posting.getTermFreq());
+        }
+
+        // compress the list
+        byte[] compressed = compress(TFlistUncompressed);
+
+        channelTermFreq.position(channelTermFreq.size());
+        ByteBuffer freqsByteBuffer = ByteBuffer.wrap(compressed);
+
+        // write termFreqs to the buffers
+        while (freqsByteBuffer.hasRemaining())
+            channelTermFreq.write(freqsByteBuffer);
+
+        return compressed.length;
+    }
+
+    public static ArrayList<Integer> readTermFreqCompressed( FileChannel channelTermFreq , long offsetTermFreq, int termFreqLen) throws IOException {
+        try {
+            ArrayList<Integer> TFlistDecompressed = new ArrayList<>();
+            channelTermFreq.position(offsetTermFreq);
+
+            // creating ByteBuffer for reading termFreqs
+            ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen);
+
+            while (bufferTermFreq.hasRemaining())
+                channelTermFreq.read(bufferTermFreq);
+
+            bufferTermFreq.rewind(); // reset the buffer position to 0
+
+            // reading termFreqs from buffer
+
+            TFlistDecompressed = decompress(bufferTermFreq.array());
+
+            return TFlistDecompressed;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

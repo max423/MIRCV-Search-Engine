@@ -11,36 +11,53 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
+import static it.unipi.dii.aide.mircv.compression.unary.readTermFreqCompressed;
+import static it.unipi.dii.aide.mircv.compression.variableByte.readDocIdsCompressed;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
 
 
 public class Indexer {
     static Integer blockNumber = 0;
+    static long startTime,stopTime, elapsedTimeSpimi, elapsedTimeMerger;
 
     public static void main(String[] args) throws IOException {
-
         System.out.println("> Start Indexing ...");
 
         // delete old index files
         FileUtils.clearDataFolder();
+
+        // misura il tempo di esecuzione
+        startTime = System.currentTimeMillis();
 
         // start Spimi algorithm
         Spimi spimi = new Spimi();
         blockNumber= spimi.startIndexer();
         System.out.println("Number of blocks generated: " + blockNumber);
 
+        stopTime = System.currentTimeMillis();
+        elapsedTimeSpimi = stopTime - startTime;
+        startTime = System.currentTimeMillis();
+
         Merger merger = new Merger();
         merger.startMerger(blockNumber);
 
+        stopTime = System.currentTimeMillis();
+        elapsedTimeMerger = stopTime - startTime;
+
         PlotFinalStructure();
+        System.out.println("Time spimi execution: " + elapsedTimeSpimi + " ms");
+        System.out.println("Time spimi execution: " + elapsedTimeMerger + " ms");
+        System.out.println("Total time: " + (elapsedTimeSpimi + elapsedTimeMerger) + " ms");
 
     }
 
     private static void PlotFinalStructure() throws IOException {
         System.out.println("> Plotting final Structure ...");
-
+        int allert = 0;
         // offset corrente
         long currentOffset = 0;
 
@@ -63,15 +80,39 @@ public class Indexer {
 
             // print the vocabulary element
             System.out.println(vocabularyElem);
+
+            if(vocabularyElem.getTerm().equals(""))
+                allert =  1 ;
+
             // update the offset
             currentOffset += 56;
 
             // read the posting list
             PostingList postingList = new PostingList(vocabularyElem.getTerm());
-            postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+            if(Configuration.isIndex_compressionON()){
+                // read + decompress the posting list : docIds [Vbyte] and termFreqs [Unary]
+
+                // unary
+                ArrayList<Integer>  termFreqs = readTermFreqCompressed(channelTermFreq, vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
+                System.out.println("termFreqs = " + termFreqs);
+
+                // vbyte
+                ArrayList<Integer>  docIds = readDocIdsCompressed(channelDocID, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen());
+                System.out.println("docIds = " + docIds);
+
+                // assemble the posting list
+                for(int i = 0; i < docIds.size(); i++){
+                    Posting p = new Posting(docIds.get(i), termFreqs.get(i));
+                    postingList.addPosting(p);
+                }
+            }
+            else
+                postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
 
             // print the posting list
             System.out.println(postingList);
+
 
         }
 
@@ -79,6 +120,7 @@ public class Indexer {
         CollectionStatistics collectionStatistics = new CollectionStatistics();
         collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
         System.out.println(collectionStatistics);
+        System.out.println("dhe allora  " + allert + "\n");
     }
 
 

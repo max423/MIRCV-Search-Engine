@@ -1,4 +1,9 @@
 package it.unipi.dii.aide.mircv.compression;
+import it.unipi.dii.aide.mircv.models.Posting;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 
@@ -103,5 +108,53 @@ public class variableByte { // -> docid
 
         return decompressed;
     }
+
+    public static int writeDocIdCompressed(ArrayList<Posting> postingList, FileChannel channelDocId) throws IOException {
+        ArrayList<Integer> docIdsUncompressed = new ArrayList<>();
+
+        // get the docIds
+        for (Posting posting : postingList) {
+            docIdsUncompressed.add(posting.getDocID());
+            System.out.println(posting.getDocID());
+        }
+
+        // compress the docIds
+        byte[] compressed = compress(docIdsUncompressed);
+
+        channelDocId.position(channelDocId.size());
+        ByteBuffer DocIdByteBuffer = ByteBuffer.wrap(compressed);
+
+        // write buffers to the channels
+        while (DocIdByteBuffer.hasRemaining())
+            channelDocId.write(DocIdByteBuffer);
+
+        return compressed.length;
+    }
+
+    public static ArrayList<Integer> readDocIdsCompressed( FileChannel channelDocId, long offsetDocId, int DocIdLen) throws IOException {
+        try {
+            ArrayList<Integer> docIdsDecompressed = new ArrayList<>();
+            channelDocId.position(offsetDocId);
+
+            // create a buffer
+            ByteBuffer docsByteBuffer = ByteBuffer.allocate(DocIdLen);
+
+            while (docsByteBuffer.hasRemaining())
+                channelDocId.read(docsByteBuffer);
+
+            docsByteBuffer.rewind(); // reset the buffer position to 0
+
+            // reading DocIds from buffer
+            System.out.println(docsByteBuffer);
+            System.out.println(docsByteBuffer.array());
+            docIdsDecompressed = decompress(docsByteBuffer.array());
+
+            return docIdsDecompressed;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
