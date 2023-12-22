@@ -48,6 +48,7 @@ public class FileUtils {
     public static RandomAccessFile docIndex_RAF;
 
     public static final HashMap<Integer, ArrayList<RandomAccessFile>> skeleton_RAF = new HashMap<>();
+    public static String Path_Skipping = "src/main/resources/skip";
 
 
 

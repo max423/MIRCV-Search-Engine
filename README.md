@@ -20,7 +20,7 @@ PostingList
 - term —> 20
 - ArrayList<Posting> postingList
 
-VocabularyElem —> 56
+VocabularyElem —> 60
 - term —> 20
 - DocFreq —> 4 update 
 - CollFreq —> 4 update
@@ -29,6 +29,14 @@ VocabularyElem —> 56
 - termFreqOffset —> 8
 - docIdsLen —> 4
 - termFreqLen —> 4
+
+SkipElem -> 28
+- docID -> 4
+- blockDocIDLen -> 4
+- offsetDocID -> 8
+- blockFreqLen -> 4
+- offsetFreq -> 8
+- skipLen -> 4
 
 SkipElem -> 28
 - docID -> 4

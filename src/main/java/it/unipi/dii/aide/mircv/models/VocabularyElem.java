@@ -28,6 +28,9 @@ public class VocabularyElem {
     // number of bytes of the termFreqs posting list
     protected int termFreqLen;
 
+    // length of the skip information
+    private int skipLen;
+
 
     public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
@@ -117,16 +120,9 @@ public class VocabularyElem {
         this.termFreqOffset = termFreqOffset;
     }
 
-    public void incDocFreq(int docFreq) {
-        this.DocFreq += docFreq;
-    }
-
-    public void incCollFreq(int collFreq) {
-        this.CollFreq += collFreq;
-    }
 
     public void incFreqLen(int len) {
-        this.termFreqLen += len;
+        this.CollFreq += len;
     }
 
     public void incDocLen(int len) {
@@ -175,8 +171,10 @@ public class VocabularyElem {
 
     }
 
+    public int getSkipLen() {
+        return skipLen;
+    }
 
-    // read from final vocabulary
     public void readFromDisk(FileChannel channel, long currentOffset) throws IOException {
         try {
             // creating ByteBuffer for reading term
@@ -209,6 +207,4 @@ public class VocabularyElem {
             e.printStackTrace();
         }
     }
-
-
 }
