@@ -41,6 +41,10 @@ public class PostingList {
         return term;
     }
 
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
     public ArrayList<Posting> getPostingList() {
         return postingList;
     }
