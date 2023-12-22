@@ -14,8 +14,7 @@ DocumentIndexElem —> 28
 Posting —> 8 
 - docID —> 4
 - termFreq —> 4
-  203-292-256
-  81-788-928
+
 PostingList
 - term —> 20
 - ArrayList<Posting> postingList

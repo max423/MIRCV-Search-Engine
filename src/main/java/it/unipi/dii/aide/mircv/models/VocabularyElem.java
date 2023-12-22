@@ -122,11 +122,20 @@ public class VocabularyElem {
 
 
     public void incFreqLen(int len) {
-        this.CollFreq += len;
+        this.termFreqLen += len;
     }
+
 
     public void incDocLen(int len) {
         this.docIdsLen += len;
+    }
+
+    public void incDocFreq( int df) {
+        this.DocFreq += df;
+    }
+
+    public void incCollFreq( int cf) {
+        this.CollFreq += cf;
     }
 
 

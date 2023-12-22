@@ -2,7 +2,7 @@ package it.unipi.dii.aide.mircv.compression;
 
 import java.util.ArrayList;
 
-public class unary {
+public class unary { // -> termfreq
 
     // compress an array of integer
     public static byte[] compress(ArrayList<Integer> uncompressed) {

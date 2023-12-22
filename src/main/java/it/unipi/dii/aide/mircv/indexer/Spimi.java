@@ -47,7 +47,7 @@ public class Spimi {
         int tab;
         int documnetLength;
 
-        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *38 / 100; // leave 20% of memory free
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *35 / 100; // leave 20% of memory free
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
         while ((line = bufferedReader.readLine()) != null) {

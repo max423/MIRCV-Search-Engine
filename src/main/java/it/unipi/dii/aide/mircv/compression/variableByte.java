@@ -2,7 +2,7 @@ package it.unipi.dii.aide.mircv.compression;
 import java.util.ArrayList;
 
 
-public class variableByte {
+public class variableByte { // -> docid
 
     // compress an array of integer
     public static byte[] compress(ArrayList<Integer> uncompressed) {

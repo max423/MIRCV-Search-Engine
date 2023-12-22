@@ -106,8 +106,8 @@ public class Merger {
             }
             else {
                 // termine doppione aggiorno i dati del vocabolario
-                vocabularyElemApp.incDocFreq(vocabularyElem.getDocFreq());
-                vocabularyElemApp.incCollFreq(vocabularyElem.getCollFreq());
+                vocabularyElemApp.incDocFreq(vocabularyElem.getDocFreq()); // TODO
+                vocabularyElemApp.incCollFreq(vocabularyElem.getCollFreq());    // TODO
                 vocabularyElemApp.incFreqLen(vocabularyElem.getTermFreqLen());
                 vocabularyElemApp.incDocLen(vocabularyElem.getDocIdsLen());
 
