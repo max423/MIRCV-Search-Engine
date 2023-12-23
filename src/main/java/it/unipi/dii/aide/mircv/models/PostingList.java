@@ -15,6 +15,8 @@ public class PostingList {
 
     private static SkipElem skipBlock;
 
+    private Posting currentPostingList;
+
     public static Iterator<SkipElem> skipElemIterator = null;
 
     public PostingList(String term) {
@@ -204,4 +206,7 @@ public class PostingList {
 
     }
 
+    public Posting getCurrentPostingList() {
+        return currentPostingList;
+    }
 }

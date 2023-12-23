@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 public class CollectionStatistics {
     // # of documents = size of documnetIndex
-    private long docCount;
+    private static long docCount;
     // total number of terms
     private long totalLength;
 
@@ -23,7 +23,7 @@ public class CollectionStatistics {
         this.totalLength = totalLength;
     }
 
-    public long getDocCount() {
+    public static long getDocCount() {
         return docCount;
     }
 
