@@ -134,7 +134,6 @@ public class unary { // -> termfreq
             ArrayList<Integer> TFlistDecompressed = new ArrayList<>();
             channelTermFreq.position(offsetTermFreq);
 
-            System.out.println("TermFreqLen = " + termFreqLen);
             // creating ByteBuffer for reading termFreqs
             ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen );
 
@@ -146,7 +145,6 @@ public class unary { // -> termfreq
             // reading termFreqs from buffer
 
             TFlistDecompressed = decompress(bufferTermFreq.array());
-            System.out.println("TFlistDecompressed = " + TFlistDecompressed);
 
             return TFlistDecompressed;
         } catch (IOException e) {

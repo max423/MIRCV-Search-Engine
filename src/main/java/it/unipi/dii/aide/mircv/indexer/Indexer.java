@@ -81,25 +81,22 @@ public class Indexer {
             // print the vocabulary element
             System.out.println(vocabularyElem);
 
-            if(vocabularyElem.getTerm().equals(""))
-                allert =  1 ;
-
             // update the offset
             currentOffset += 56;
+
 
             // read the posting list
             PostingList postingList = new PostingList(vocabularyElem.getTerm());
 
             if(Configuration.isIndex_compressionON()){
+
                 // read + decompress the posting list : docIds [Vbyte] and termFreqs [Unary]
 
                 // unary
                 ArrayList<Integer> termFreqs = readTermFreqCompressed(channelTermFreq, vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
-                System.out.println("termFreqs = " + termFreqs);
 
                 // vbyte
                 ArrayList<Integer> docIds = readDocIdsCompressed(channelDocID, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen());
-                System.out.println("docIds = " + docIds);
 
                 // assemble the posting list
                 for(int i = 0; i < docIds.size(); i++){
@@ -111,18 +108,13 @@ public class Indexer {
                 postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
 
             // print the posting list
-            System.out.println(postingList);
-            System.out.println();
-
-            // aspetta input tastiera
-            System.in.read();
-        }
+            System.out.println(postingList + "\n");}
 
         // print the collection statistics
         CollectionStatistics collectionStatistics = new CollectionStatistics();
         collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
         System.out.println(collectionStatistics);
-        System.out.println("dhe allora  " + allert + "\n");
+
     }
 
 

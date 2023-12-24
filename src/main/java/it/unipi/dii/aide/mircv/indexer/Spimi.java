@@ -82,6 +82,9 @@ public class Spimi {
 
             for (String token : tokens) {
 
+                if (token.isEmpty())
+                    continue;
+
                 // compute term frequency in the document
                 int tf = Collections.frequency(java.util.Arrays.asList(tokens), token);
 
