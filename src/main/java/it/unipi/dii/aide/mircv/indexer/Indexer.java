@@ -94,11 +94,11 @@ public class Indexer {
                 // read + decompress the posting list : docIds [Vbyte] and termFreqs [Unary]
 
                 // unary
-                ArrayList<Integer>  termFreqs = readTermFreqCompressed(channelTermFreq, vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
+                ArrayList<Integer> termFreqs = readTermFreqCompressed(channelTermFreq, vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
                 System.out.println("termFreqs = " + termFreqs);
 
                 // vbyte
-                ArrayList<Integer>  docIds = readDocIdsCompressed(channelDocID, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen());
+                ArrayList<Integer> docIds = readDocIdsCompressed(channelDocID, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen());
                 System.out.println("docIds = " + docIds);
 
                 // assemble the posting list
@@ -112,8 +112,10 @@ public class Indexer {
 
             // print the posting list
             System.out.println(postingList);
+            System.out.println();
 
-
+            // aspetta input tastiera
+            System.in.read();
         }
 
         // print the collection statistics

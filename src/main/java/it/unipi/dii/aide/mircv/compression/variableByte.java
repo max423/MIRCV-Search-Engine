@@ -2,6 +2,7 @@ package it.unipi.dii.aide.mircv.compression;
 import it.unipi.dii.aide.mircv.models.Posting;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -115,7 +116,6 @@ public class variableByte { // -> docid
         // get the docIds
         for (Posting posting : postingList) {
             docIdsUncompressed.add(posting.getDocID());
-            System.out.println(posting.getDocID());
         }
 
         // compress the docIds
@@ -131,25 +131,23 @@ public class variableByte { // -> docid
         return compressed.length;
     }
 
-    public static ArrayList<Integer> readDocIdsCompressed( FileChannel channelDocId, long offsetDocId, int DocIdLen) throws IOException {
+    public static ArrayList<Integer> readDocIdsCompressed(FileChannel channelDocId, long offsetDocId, int DocIdLen) throws IOException {
         try {
-            ArrayList<Integer> docIdsDecompressed = new ArrayList<>();
-            channelDocId.position(offsetDocId);
-
             // create a buffer
             ByteBuffer docsByteBuffer = ByteBuffer.allocate(DocIdLen);
+
+            // set position
+            channelDocId.position(offsetDocId);
 
             while (docsByteBuffer.hasRemaining())
                 channelDocId.read(docsByteBuffer);
 
             docsByteBuffer.rewind(); // reset the buffer position to 0
 
-            // reading DocIds from buffer
-            System.out.println(docsByteBuffer);
-            System.out.println(docsByteBuffer.array());
-            docIdsDecompressed = decompress(docsByteBuffer.array());
+            ArrayList<Integer> docIdsDecompressed = decompress(docsByteBuffer.array());
 
             return docIdsDecompressed;
+
         } catch (IOException e) {
             e.printStackTrace();
         }

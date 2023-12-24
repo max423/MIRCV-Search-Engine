@@ -112,8 +112,8 @@ public class Merger {
             }
             else {
                 // termine doppione aggiorno i dati del vocabolario
-                vocabularyElemApp.incDocFreq(vocabularyElem.getDocFreq()); // TODO
-                vocabularyElemApp.incCollFreq(vocabularyElem.getCollFreq());    // TODO
+                vocabularyElemApp.incDocFreq(vocabularyElem.getDocFreq());
+                vocabularyElemApp.incCollFreq(vocabularyElem.getCollFreq());
                 vocabularyElemApp.incFreqLen(vocabularyElem.getTermFreqLen());
                 vocabularyElemApp.incDocLen(vocabularyElem.getDocIdsLen());
 
@@ -131,20 +131,21 @@ public class Merger {
                 // controllo flag compressione, index_compressionON
                 if(Configuration.isIndex_compressionON()){
                     // compressione abilitata
-                    System.out.println("OldvocabularyElem = " + vocabularyElem);
-
 
                     // TermFreq -> Unary
-                    termFreqNewLen = writeTermFreqCompressed(postingList.getPostingList(), GetCorrectChannel(-1, 1));
+                    termFreqNewLen = writeTermFreqCompressed(postingList.getPostingList(), GetCorrectChannel(-1, 2));
 
                     // DocId -> VByte
-                    docIdNewLen = writeDocIdCompressed(postingList.getPostingList(), GetCorrectChannel(-1, 2));
+                    docIdNewLen = writeDocIdCompressed(postingList.getPostingList(), GetCorrectChannel(-1, 1));
 
                     // update the vocabularyElem with new len
                     vocabularyElem.setDocIdsLen(docIdNewLen);
                     vocabularyElem.setTermFreqLen(termFreqNewLen);
 
-                    System.out.println("NewvocabularyElem = " + vocabularyElem);
+                    // update the vocabularyElem with new offset
+                    vocabularyElem.setDocIdsOffset(GetCorrectChannel(-1, 1).size() - docIdNewLen);
+                    vocabularyElem.setTermFreqOffset(GetCorrectChannel(-1, 2).size() - termFreqNewLen);
+
 
                 }
                 else {
@@ -152,6 +153,9 @@ public class Merger {
                     // write the posting list in the final_posting_list
                     postingList.writeToDisk(GetCorrectChannel(-1, 1), GetCorrectChannel(-1, 2));
 
+                    // update the vocabularyElem with new offset
+                    vocabularyElem.setDocIdsOffset(GetCorrectChannel(-1, 1).size() - vocabularyElem.getDocIdsLen());
+                    vocabularyElem.setTermFreqOffset(GetCorrectChannel(-1, 2).size() - vocabularyElem.getTermFreqLen());
                 }
 
                 // write the term in the final_vocabulary

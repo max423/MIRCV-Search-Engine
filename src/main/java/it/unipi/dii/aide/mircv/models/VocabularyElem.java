@@ -8,8 +8,10 @@ import java.nio.charset.StandardCharsets;
 
 public class VocabularyElem {
     private String term;
+
     // number of documents in which the term appears
     private int DocFreq;
+
     // number of occurrences of the term in the collection
     private int CollFreq;
 
