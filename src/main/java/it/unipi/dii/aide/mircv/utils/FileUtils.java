@@ -1,7 +1,4 @@
 package it.unipi.dii.aide.mircv.utils;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
@@ -24,7 +21,8 @@ public class FileUtils {
     // path to the configuration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
 
-
+    // log file per tempi di esecuzione indexer
+    public static String Path_Log = "src/main/resources/log.txt";
 
     // path to the document index
     public static String Path_DocumentIndex = "src/main/resources/document_index";
@@ -128,11 +126,26 @@ public class FileUtils {
         }
     };
 
-
-
     // retrive RAF of v,d,f corrispondig to the block i
     public static FileChannel GetCorrectChannel(int blockNum, int i) {
         //System.out.println("GetCorrectChannel: " + blockNum + " " + i);
         return skeleton_RAF.get(blockNum).get(i).getChannel();
+    }
+
+
+    // save the time of execution of spimi and merger
+    public static void saveLog(long elapsedTimeSpimi, long elapsedTimeMerger, Integer blockNumber) {
+    // save the log of the execution
+        try {
+            FileWriter myWriter = new FileWriter(Path_Log, true);
+            myWriter.write("Block number: " + blockNumber+1 + "\n");
+            myWriter.write("Spimi execution time: " + elapsedTimeSpimi + " ms\n");
+            myWriter.write("Merger execution time: " + elapsedTimeMerger + " ms\n");
+            myWriter.write("Total execution time: " + (elapsedTimeSpimi + elapsedTimeMerger) + " ms\n\n");
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import static it.unipi.dii.aide.mircv.compression.unary.readTermFreqCompressed;
+import static it.unipi.dii.aide.mircv.compression.variableByte.readDocIdsCompressed;
+
 public class PostingList {
     private String term;
     private final ArrayList<Posting> postingList;
@@ -194,11 +197,33 @@ public class PostingList {
             skipElemIterator = blocks.iterator();
             skipElemIterator.next();
 
-            // todo fare lettura con e senza compressione
-            //readPostingListFromDiskSkip(blocks.get(0), docId_RAF.getChannel(), termFreq_RAF.getChannel());
+            // TODO fare lettura con e senza compressione
+            // take channel
+            FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
+            FileChannel channelDocID = FileUtils.GetCorrectChannel(-1, 1);
+            FileChannel channelTermFreq = FileUtils.GetCorrectChannel(-1, 2);
+
+            if(Configuration.isIndex_compressionON()){
+                // compressione index On
+                // read + decompress the posting list : docIds [Vbyte] and termFreqs [Unary]
+                // unary
+                ArrayList<Integer> termFreqs = readTermFreqCompressed(channelTermFreq, vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
+                // vbyte
+                ArrayList<Integer> docIds = readDocIdsCompressed(channelDocID, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen());
+
+                // assemble the posting list
+                for(int i = 0; i < docIds.size(); i++){
+                    Posting p = new Posting(docIds.get(i), termFreqs.get(i));
+                    this.addPosting(p);
+                }
+            }
+            else {
+                // compressione index Off
+                readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+            }
 
             skipBlock.setDocID(this.getPostingList().get(this.getPostingList().size()-1).getDocID());
-
         }
         else{
             //vengono recuperate le informazioni di skipping dal file

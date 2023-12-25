@@ -1,24 +1,13 @@
 package it.unipi.dii.aide.mircv.indexer;
 
-
 import it.unipi.dii.aide.mircv.models.*;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
-import it.unipi.dii.aide.mircv.indexer.Spimi;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-
-import it.unipi.dii.aide.mircv.utils.FileUtils;
-
 import static it.unipi.dii.aide.mircv.compression.unary.readTermFreqCompressed;
 import static it.unipi.dii.aide.mircv.compression.variableByte.readDocIdsCompressed;
-import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
-
 
 public class Indexer {
     static Integer blockNumber = 0;
@@ -49,15 +38,15 @@ public class Indexer {
         elapsedTimeMerger = stopTime - startTime;
 
         PlotFinalStructure();
-        System.out.println("Time spimi execution: " + elapsedTimeSpimi + " ms");
-        System.out.println("Time spimi execution: " + elapsedTimeMerger + " ms");
-        System.out.println("Total time: " + (elapsedTimeSpimi + elapsedTimeMerger) + " ms");
+
+        // salva su log file tutti i tempi di esecuzione e il numero di blocchi
+        FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
+
 
     }
 
     private static void PlotFinalStructure() throws IOException {
         System.out.println("> Plotting final Structure ...");
-        int allert = 0;
         // offset corrente
         long currentOffset = 0;
 
@@ -83,7 +72,6 @@ public class Indexer {
 
             // update the offset
             currentOffset += 56;
-
 
             // read the posting list
             PostingList postingList = new PostingList(vocabularyElem.getTerm());
