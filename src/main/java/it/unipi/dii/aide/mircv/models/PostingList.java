@@ -1,4 +1,6 @@
 package it.unipi.dii.aide.mircv.models;
+import it.unipi.dii.aide.mircv.compression.unary;
+import it.unipi.dii.aide.mircv.compression.variableByte;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.IOException;
@@ -168,6 +170,70 @@ public class PostingList {
         }
     }
 
+    public void readPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+        // intialize one buffer for docIds and one for termFreqs
+        ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
+        ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
+
+        // get the position of the docIds and termFreqs
+        channelDocID.position(skip.getOffsetDocID());
+        channelTermFreq.position(skip.getOffsetFreq());
+
+        // read the docIds and termFreqs
+        while (bufferDocId.hasRemaining())
+            channelDocID.read(bufferDocId);
+
+        while (bufferTermFreq.hasRemaining())
+            channelTermFreq.read(bufferTermFreq);
+
+        // reset the buffer position to 0
+        bufferDocId.rewind();
+        bufferTermFreq.rewind();
+
+        // create the posting list
+        for (int i = 0; i < skip.getBlockDocIDLen() / 4; i++) {
+            int docId = bufferDocId.getInt();
+            int termFreq = bufferTermFreq.getInt();
+
+            this.postingList.add(new Posting(docId, termFreq));
+        }
+
+    }
+
+    public void readCompressedPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+        // intialize one buffer for docIds and one for termFreqs
+        ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
+        ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
+
+        // get the position of the docIds and termFreqs
+        channelDocID.position(skip.getOffsetDocID());
+        channelTermFreq.position(skip.getOffsetFreq());
+
+        // read the docIds and termFreqs
+        while (bufferDocId.hasRemaining())
+            channelDocID.read(bufferDocId);
+
+        while (bufferTermFreq.hasRemaining())
+            channelTermFreq.read(bufferTermFreq);
+
+        // reset the buffer position to 0
+        bufferDocId.rewind();
+        bufferTermFreq.rewind();
+
+        // decompress
+        ArrayList<Integer> docIds = variableByte.decompress(bufferDocId.array());
+        ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
+
+        // create the posting list
+        for (int i = 0; i < skip.getBlockDocIDLen() / 4; i++) {
+            int docId = bufferDocId.getInt();
+            int termFreq = bufferTermFreq.getInt();
+
+            this.postingList.add(new Posting(docId, termFreq));
+        }
+
+    }
+
 
     // load the posting list given the term
     public void getPostingList(String term) throws IOException {
@@ -201,33 +267,16 @@ public class PostingList {
             skipElemIterator = blocks.iterator();
             skipElemIterator.next();
 
-            // TODO fare lettura con e senza compressione
-            // take channel
-            FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
-            FileChannel channelDocID = FileUtils.GetCorrectChannel(-1, 1);
-            FileChannel channelTermFreq = FileUtils.GetCorrectChannel(-1, 2);
-
             if(Configuration.isIndex_compressionON()){
-                // compressione index On
-                // read + decompress the posting list : docIds [Vbyte] and termFreqs [Unary]
-                // unary
-                ArrayList<Integer> termFreqs = readTermFreqCompressed(channelTermFreq, vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
-                // vbyte
-                ArrayList<Integer> docIds = readDocIdsCompressed(channelDocID, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen());
-
-                // assemble the posting list
-                for(int i = 0; i < docIds.size(); i++){
-                    Posting p = new Posting(docIds.get(i), termFreqs.get(i));
-                    this.addPosting(p);
-                }
+                // compression On
+                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
             }
             else {
-
-                // compressione index Off
-                readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-
+                // compression Off
+                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
             }
 
+            // set the last docID
             skipBlock.setDocID(this.getPostingList().get(this.getPostingList().size()-1).getDocID());
         }
         else{
@@ -263,8 +312,10 @@ public class PostingList {
 
             if(Configuration.isIndex_compressionON()) {
                 // compressione index On
+                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
             }else{
                 // compressione index Off
+                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
             }
         }
 

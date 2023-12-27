@@ -82,4 +82,20 @@ public class SkipElem {
     private void setOffsetDocID(long offsetDocID) {
         this.offsetDocID = offsetDocID;
     }
+
+    public int getBlockDocIDLen() {
+        return blockDocIDLen;
+    }
+
+    public int getBlockFreqLen() {
+        return blockFreqLen;
+    }
+
+    public long getOffsetDocID() {
+        return offsetDocID;
+    }
+
+    public long getOffsetFreq() {
+        return offsetFreq;
+    }
 }
