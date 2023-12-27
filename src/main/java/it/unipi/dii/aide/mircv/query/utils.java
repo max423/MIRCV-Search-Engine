@@ -40,6 +40,7 @@ public class utils {
     }
 
 
+    //todo
     /*public static double updatePartialScore(double score, int pos) {
         // todo fare classe per gestire i flag?
         // check if flag is set
@@ -51,6 +52,19 @@ public class utils {
             score += TFIDF(queryHandler.orderedPostingList.get(pos).getTerm(), queryHandler.orderedPostingList.get(pos).getCurrentPostingList());
         }
     }*/
+
+    private static double TFIDF(String term, Posting currentPostingList) {
+        // term frequency weight
+        double tf = currentPostingList.getTermFreq();
+        double tfWeight = 1 + Math.log10(tf);
+
+        // inverse document frequency
+        double idf = FileUtils.vocabulary.get(term).getIdf();
+
+        double TFIDF = tfWeight * idf;
+
+        return TFIDF;
+    }
 
     private static double BM25(String term, Posting currentPostingList, double k, double b) {
         // get term frequency of the posting list
@@ -66,6 +80,14 @@ public class utils {
 
         return BM25;
     }
+
+    // todo MAXSCORE algorithm
+    /*public static PriorityQueue<scoreDoc> maxScore(int k) throws IOException {
+        // initialize the priority queue with score in descending order
+        PriorityQueue<scoreDoc> scoreDocs = new PriorityQueue<>(k, new scoreDocComparator());
+
+    }*/
+    
 
 
     // Demo interface for the search engine
@@ -95,4 +117,25 @@ public class utils {
         scanner.close();
 
     }
+
+    // todo conjunctive query
+    /*public static PriorityQueue<scoreDoc> conjunctiveQuery(int k) throws IOException {
+
+        // initialize the priority queue with score in descending order
+        PriorityQueue<scoreDoc> scoreDocs = new PriorityQueue<>(k, new scoreDocComparator());
+
+        // initialize the priority queue with score in increasing order
+        PriorityQueue<scoreDoc> scoreDocsIncreasing = new PriorityQueue<>(k, new scoreDocComparatorIncreasing());
+
+        // initialize the score
+
+        // initialize the score
+        double score = 0;
+
+        // position (current docID)
+        int pos;
+
+
+
+    }*/
 }
