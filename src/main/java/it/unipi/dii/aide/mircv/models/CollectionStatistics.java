@@ -8,7 +8,7 @@ public class CollectionStatistics {
     // # of documents = size of documnetIndex
     private static long docCount;
     // total number of terms
-    private long totalLength;
+    private static long totalLength;
 
 
     public CollectionStatistics() {
@@ -23,6 +23,10 @@ public class CollectionStatistics {
 
     public static long getDocCount() {
         return docCount;
+    }
+
+    public static double getAvgDocLen() {
+        return (double) totalLength / docCount;
     }
 
     public long getTotalLength() {

@@ -33,6 +33,9 @@ public class VocabularyElem {
     // length of the skip information
     private int skipLen;
 
+    // inverse document frequency
+    private double idf;
+
 
 
 
@@ -225,5 +228,9 @@ public class VocabularyElem {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public double getIdf() {
+        return idf;
     }
 }

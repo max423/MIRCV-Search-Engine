@@ -1,4 +1,6 @@
 package it.unipi.dii.aide.mircv.utils;
+import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
+import it.unipi.dii.aide.mircv.models.VocabularyElem;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
@@ -46,6 +48,13 @@ public class FileUtils {
     public static RandomAccessFile docIndex_RAF;
 
     public static final HashMap<Integer, ArrayList<RandomAccessFile>> skeleton_RAF = new HashMap<>();
+
+    // variable to store the vocabulary
+    public static HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
+
+    // variable to store the document index
+    public static HashMap<Integer, DocumentIndexElem> documentIndex = new HashMap<>();
+
     public static String Path_Skipping = "src/main/resources/skip";
 
 
