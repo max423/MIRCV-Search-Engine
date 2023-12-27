@@ -17,6 +17,9 @@ public class Configuration {
     // compressione index
     private static boolean index_compressionON;
 
+    // score
+    private static boolean scoreON;
+
     static {
 
         try {
@@ -53,6 +56,9 @@ public class Configuration {
 
     public static boolean isIndex_compressionON() {return index_compressionON;}
 
+    public static boolean isScoreON() {
+        return scoreON;
+    }
 
 
     @Override
