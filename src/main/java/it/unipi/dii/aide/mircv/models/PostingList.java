@@ -20,7 +20,14 @@ public class PostingList {
 
     private Posting currentPostingList;
 
+    // max BM25 score
+    private double BM25;
+
+    // max TF-IDF score
+    private double TFIDF;
+
     public static Iterator<SkipElem> skipElemIterator = null;
+    public static Iterator<Posting> postingListIterator = null;
 
     public PostingList(String term) {
         this.term = term;
@@ -169,10 +176,7 @@ public class PostingList {
         RandomAccessFile docId_RAF = new RandomAccessFile(FileUtils.Path_FinalDocId, "r");
         RandomAccessFile termFreq_RAF = new RandomAccessFile(FileUtils.Path_FinalTermFreq, "r");
 
-        // initialize a variable to store the vocabularyElem
-        //HashMap<Integer, DocumentIndexElem> documentIndex = new HashMap<>();
-        HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
-        VocabularyElem vocabularyElem = vocabulary.get(term);
+        VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
 
         // check if the term is in the vocabulary
         if (vocabularyElem == null) {
@@ -218,6 +222,7 @@ public class PostingList {
                 }
             }
             else {
+
                 // compressione index Off
                 readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
 
@@ -227,7 +232,54 @@ public class PostingList {
         }
         else{
             //vengono recuperate le informazioni di skipping dal file
+
+            // size of step
+            int step = 32;
+
+            // address to read the skip info
+            long skipAddress = vocabularyElem.getSkipOffset();
+
+            // number of blocks
+            int numBlocks = vocabularyElem.getSkipLen() / step;
+
+            // initialize a new ArrayList of blocks
+            blocks = new ArrayList<>();
+
+            // read the skip info
+            for (int i = 0; i < numBlocks; i++) {
+                SkipElem skipElem = new SkipElem();
+                // read skipping element from disk
+                skipElem.readFromDisk(skip_RAF.getChannel(), skipAddress + i * step);
+                // add the skip element to the list
+                blocks.add(skipElem);
+            }
+
+            // current block
+            skipBlock = blocks.get(0);
+
+            // initialize the iterator
+            skipElemIterator = blocks.iterator();
+            skipElemIterator.next();
+
+            if(Configuration.isIndex_compressionON()) {
+                // compressione index On
+            }else{
+                // compressione index Off
+            }
         }
+
+        // set posting list iterator
+        postingListIterator = postingList.iterator();
+        currentPostingList = postingListIterator.next();
+
+        if (Configuration.isScoreON()) {
+            // BM25
+            this.BM25 = vocabularyElem.getMaxBM25();
+        } else {
+            // TF-IDF
+            this.TFIDF = vocabularyElem.getMaxTFIDF();
+        }
+
 
     }
 
