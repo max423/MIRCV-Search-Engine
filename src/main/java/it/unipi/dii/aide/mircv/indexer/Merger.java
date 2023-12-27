@@ -21,8 +21,6 @@ import static it.unipi.dii.aide.mircv.indexer.Spimi.lastDocId;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.CreateFinalStructure;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
 
-
-
 public class Merger {
     MappedByteBuffer mappedByteBuffer;
     FileChannel channelVocabulary;
@@ -39,8 +37,6 @@ public class Merger {
     int docIdNewLen;
 
     CollectionStatistics collectionStatistics = new CollectionStatistics();
-
-
 
     public void startMerger(int blockNumber) throws IOException {
         System.out.println("> Start Merging ...");
@@ -62,7 +58,6 @@ public class Merger {
 
         // heap structure with the first term of each partial_vocabulary with blockNumber
         PriorityQueue<AbstractMap.SimpleEntry<String, Integer>> heap = new PriorityQueue<>(customComparator);
-
         // populate the heap
         populateHeap(blockNumber, heap);
 

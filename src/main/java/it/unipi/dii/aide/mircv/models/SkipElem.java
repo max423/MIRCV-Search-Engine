@@ -1,6 +1,6 @@
 package it.unipi.dii.aide.mircv.models;
 
-public class SkipElem {
+public class SkipElem { 
 
     // max docID of the block
     private int docID;

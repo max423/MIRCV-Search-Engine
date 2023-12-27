@@ -17,6 +17,9 @@ public class Configuration {
     // compressione index
     private static boolean index_compressionON;
 
+    // testing
+    private static boolean testing_ON ;
+
     static {
 
         try {
@@ -27,8 +30,9 @@ public class Configuration {
             compressionON = jsonObject.get("read_compressionON").getAsBoolean();
             stemming_stopwordON = jsonObject.get("stemming_stopwordON").getAsBoolean();
             index_compressionON = jsonObject.get("index_compressionON").getAsBoolean();
+            testing_ON = jsonObject.get("testing_ON").getAsBoolean();
             // print configuration
-            System.out.println("Compressed Reading = " + compressionON + "\n" + "Stemming & Stopword = " + stemming_stopwordON + "\n" + "Index Compression = " + index_compressionON);
+            System.out.println("Compressed Reading = " + compressionON + "\n" + "Stemming & Stopword = " + stemming_stopwordON + "\n" + "Index Compression = " + index_compressionON + "\n" + "Testing = " + testing_ON);
             System.out.println("--------------------------------------------------");
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,10 +40,11 @@ public class Configuration {
     }
     public Configuration() {
     }
-    public Configuration(boolean compressionON, boolean stemming_stopwordON, boolean index_compressionON) {
+    public Configuration(boolean compressionON, boolean stemming_stopwordON, boolean index_compressionON, boolean testing_ON) {
         this.compressionON = compressionON;
         this.stemming_stopwordON = stemming_stopwordON;
         this.index_compressionON = index_compressionON;
+        this.testing_ON = testing_ON;
     }
 
 
@@ -53,6 +58,7 @@ public class Configuration {
 
     public static boolean isIndex_compressionON() {return index_compressionON;}
 
+    public static boolean isTesting() { return testing_ON;}
 
 
     @Override
@@ -61,6 +67,7 @@ public class Configuration {
                 "read_compressionON=" + compressionON +
                 ", stemming_stopwordON=" + stemming_stopwordON +
                 ", index_compressionON=" + index_compressionON +
+                ", testing_ON=" + testing_ON +
                 '}';
     }
 }

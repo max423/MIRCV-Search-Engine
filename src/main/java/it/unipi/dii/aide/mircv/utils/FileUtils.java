@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class FileUtils {
     public static int MAX_TERM_LENGTH = 20; // in bytes
@@ -57,6 +58,9 @@ public class FileUtils {
 
     public static String Path_Skipping = "src/main/resources/skip";
 
+    // path to collection test
+    public static String Path_CollectionTest = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+
 
 
     // clear data folder
@@ -67,13 +71,17 @@ public class FileUtils {
             for (File file : dataFolder.listFiles()) {
                 file.delete();
             }
-
         }
     }
 
-    // read the collection according to the compression flag
-    public static BufferedReader initBuffer(boolean compressed) throws IOException {
 
+    // read the collection according to the compression flag
+    public static BufferedReader initBuffer(boolean compressed, boolean testing) throws IOException {
+
+        // for testing, read collection test
+        if(testing) {
+            return Files.newBufferedReader(Paths.get(FileUtils.Path_CollectionTest), StandardCharsets.UTF_8);
+        }
         if(compressed) {
             //read from compressed collection
             TarArchiveInputStream tarInput = null;

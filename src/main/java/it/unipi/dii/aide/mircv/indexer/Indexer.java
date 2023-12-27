@@ -45,7 +45,9 @@ public class Indexer {
 
     }
 
-    private static void PlotFinalStructure() throws IOException {
+
+    // used for tesing, read according to the compression flag the final structure : vocabulary, posting lists, collection statistics
+    public static void PlotFinalStructure() throws IOException {
         System.out.println("> Plotting final Structure ...");
         // offset corrente
         long currentOffset = 0;
@@ -105,7 +107,7 @@ public class Indexer {
 
     }
 
-
+    // used for testing, print the document index
     public static void printDocumentIndex() throws IOException {
         int position = 0;
         DocumentIndexElem doc_elem = new DocumentIndexElem();
@@ -121,6 +123,116 @@ public class Indexer {
 
             position += 28;
         }
+    }
+
+    // used for testing, given term , print the posting list and the vocabulary element
+    public static void printPostingList(String term) throws IOException {
+        // take channel
+        FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
+        FileChannel channelDocID = FileUtils.GetCorrectChannel(-1, 1);
+        FileChannel channelTermFreq = FileUtils.GetCorrectChannel(-1, 2);
+
+        // offset corrente
+        long currentOffset = 0;
+
+        // take the size of the file
+        while (true) {
+            try {
+                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // read the vocabulary element
+            VocabularyElem vocabularyElem = new VocabularyElem();
+            vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
+
+            // update the offset
+            currentOffset += 56;
+
+            // check if the term is the one we are looking for
+            if (vocabularyElem.getTerm().equals(term)) {
+                // print the vocabulary element
+                System.out.println(vocabularyElem);
+
+                // read the posting list
+                PostingList postingList = new PostingList(vocabularyElem.getTerm());
+                postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+                // print the posting list
+                System.out.println(postingList + "\n");
+            }
+        }
+    }
+
+    // used for testing, given term , retrive the PostingList
+    public static PostingList getTestPosting(String term) throws IOException {
+        // take channel
+        FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
+        FileChannel channelDocID = FileUtils.GetCorrectChannel(-1, 1);
+        FileChannel channelTermFreq = FileUtils.GetCorrectChannel(-1, 2);
+
+        // offset corrente
+        long currentOffset = 0;
+
+        // take the size of the file
+        while (true) {
+            try {
+                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // read the vocabulary element
+            VocabularyElem vocabularyElem = new VocabularyElem();
+            vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
+
+            // update the offset
+            currentOffset += 56;
+
+            // check if the term is the one we are looking for
+            if (vocabularyElem.getTerm().equals(term)) {
+                // read the posting list
+                PostingList postingList = new PostingList(vocabularyElem.getTerm());
+                postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+                return postingList;
+            }
+        }
+        return null;
+    }
+
+    // used for testing, given term , retrive the VocabularyElem
+    public static VocabularyElem getTestVocabularyElem(String term) throws IOException {
+        // take channel
+        FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
+
+        // offset corrente
+        long currentOffset = 0;
+
+        // take the size of the file
+        while (true) {
+            try {
+                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // read the vocabulary element
+            VocabularyElem vocabularyElem = new VocabularyElem();
+            vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
+
+            // update the offset
+            currentOffset += 56;
+
+            // check if the term is the one we are looking for
+            if (vocabularyElem.getTerm().equals(term)) {
+                // print the vocabulary element
+                System.out.println(vocabularyElem);
+                return vocabularyElem;
+            }
+        }
+        return null;
     }
 
 }

@@ -37,7 +37,7 @@ public class Spimi {
         System.out.println("Start Spimi Alg ...");
 
         // read collection according to the compression flag
-        BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON());
+        BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON(), Configuration.isTesting());
         // init docIndex_RAF
         FileUtils.initDocIndex_RAF();
 
@@ -79,6 +79,14 @@ public class Spimi {
             // new document index elem
             DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
+
+            if (Configuration.isTesting()){
+                System.out.println("\nDocId: " + docid + " DocNo: " + docno + " DocLen: " + documnetLength);
+                System.out.println("Tokens: ");
+                for (String token : tokens) {
+                    System.out.print(token + "-");
+                }
+            }
 
             for (String token : tokens) {
 

@@ -58,7 +58,7 @@ public class TextProcessing {
         return tokens;
     }
 
-    private static String cleanText(String doc) {
+    public static String cleanText(String doc) {
         // remove html tags
         doc = doc.replaceAll(HTML_REGEX, " ");
         // remove punctuation and strange characters
@@ -92,7 +92,7 @@ public class TextProcessing {
         return token;
     }
 
-    private static String[] stemming(String[] tokens) {
+    public static String[] stemming(String[] tokens) {
         //replace each word with its stem
         for (int i = 0; i < tokens.length; i++) {
             tokens[i] = stemmer.stemWord(tokens[i]);
@@ -100,7 +100,7 @@ public class TextProcessing {
         return tokens;
     }
 
-    private static String[] removeStopWords(String[] tokens) {
+    public static String[] removeStopWords(String[] tokens) {
         //remove stop words
         ArrayList<String> tokensList = new ArrayList<>(Arrays.asList(tokens));
         tokensList.removeIf(stopWords::contains);

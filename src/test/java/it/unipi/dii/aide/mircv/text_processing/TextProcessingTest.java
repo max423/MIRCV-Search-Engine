@@ -1,85 +1,84 @@
 package it.unipi.dii.aide.mircv.text_processing;
-import it.unipi.dii.aide.mircv.utils.FileUtils;
-import it.unipi.dii.aide.mircv.models.Configuration;
-import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import it.unipi.dii.aide.mircv.utils.FileUtils;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TextProcessingTest {
 
-    @org.junit.jupiter.api.Test
-    void documentProcessing() throws IOException {
-        BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON()) ;
-        String line;
-        int tab;
-        while((line = bufferedReader.readLine())!= null) {
-            // split on tab
-            tab = line.indexOf("\t");
-
-            // check malformed line
-            if(tab == -1) {  // tab not found
-                continue;}
-
-            // extract
-            String docid = line.substring(0, tab);
-            String text = line.substring(tab + 1);
-
-            // check empty doc
-            if (text.isEmpty())
-                continue;
-
-            // process text
-            String[] tokens = TextProcessing.DocumentProcessing(text);
 
 
-
-            System.out.println("docid: " + docid);
-            System.out.println("text: " + text);
-            System.out.println("tokens: " + String.join(" ", tokens));
-            System.out.println("tokens length: " + tokens.length);
+    @Test
+    void documentProcessing() {
 
 
-
-
-        }
 
     }
 
-
-
-    public static BufferedReader initBuffer(boolean compressed) throws IOException {
-
-        if(compressed) {
-            //read from compressed collection
-            TarArchiveInputStream tarInput = null;
-            try {
-                tarInput = new TarArchiveInputStream(new GzipCompressorInputStream(new FileInputStream(FileUtils.Path_Compressed_Collection)));
-                tarInput.getNextTarEntry();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (tarInput == null) {
-                System.out.println("Cannot access to the collection.");
-                System.exit(-1);
-            }
-            return new BufferedReader(new InputStreamReader(tarInput, StandardCharsets.UTF_8));
-        }
-        //read from uncompressed collection
-        return Files.newBufferedReader(Paths.get(FileUtils.Path_Uncompressed_Collection), StandardCharsets.UTF_8);
-    }
-
-    @org.junit.jupiter.api.Test
+    @Test
     void tokenize() {
+        // test 1
+        String doc = "The presence of communication amid scientific minds was equally important to the success of the Manhattan Project as scientific intellect was. The only cloud hanging over the impressive achievement of the atomic researchers and engineers is what their success truly meant; hundreds of thousands of innocent lives obliterated.";
+        String[] tokens = TextProcessing.tokenize(doc);
+        String[] testTokens = {"The", "presence", "of", "communication", "amid", "scientific", "minds", "was", "equally", "important", "to", "the", "success", "of", "the", "Manhattan", "Project", "as", "scientific", "intellect", "was.", "The", "only", "cloud", "hanging", "over", "the", "impressive", "achievement", "of", "the", "atomic", "researchers", "and", "engineers", "is", "what", "their", "success", "truly", "meant;", "hundreds", "of", "thousands", "of", "innocent", "lives", "obliterated."};
+        assertArrayEquals(testTokens, tokens);
+
+        // test 2
+        doc = "The Manhattan Project and its atomic bomb helped bring an end to World War II. Its legacy of peaceful uses of atomic energy continues to have an impact on history and science.";
+        tokens = TextProcessing.tokenize(doc);
+        String[] testTokens2 = {"The", "Manhattan", "Project", "and", "its", "atomic", "bomb", "helped", "bring", "an", "end", "to", "World", "War", "II.", "Its", "legacy", "of", "peaceful", "uses", "of", "atomic", "energy", "continues", "to", "have", "an", "impact", "on", "history", "and", "science."};
+        assertArrayEquals(testTokens2, tokens);
+
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void trouncateToken() {
+        // MAX_TERM_LENGTH = 20;
+        // test 1: lunghezza del token è inferiore a MAX_TERM_LENGTH
+        String shortToken = "short";
+        String resultShortToken = TextProcessing.trouncateToken(shortToken);
+        assertEquals(shortToken, resultShortToken);
+
+        // test 2: lunghezza del token è uguale a MAX_TERM_LENGTH
+        String maxToken = "thisisamaxtoken12345";
+        String resultMaxToken = TextProcessing.trouncateToken(maxToken);
+        assertEquals(maxToken, resultMaxToken);
+        System.out.println("maxToken: " + maxToken);
+        System.out.println("resultMaxToken: " + resultMaxToken);
+
+        // Caso in cui la lunghezza del token è superiore a MAX_TERM_LENGTH
+        String longToken = "thisisaverylongtokenthisisaverylongtoken";
+        String expectedResult = longToken.substring(0, FileUtils.MAX_TERM_LENGTH);
+        String resultLongToken = TextProcessing.trouncateToken(longToken);
+        assertEquals(expectedResult, resultLongToken);
+        System.out.println("longToken: " + longToken);
+        System.out.println("resultLongToken: " + resultLongToken);
+
     }
+
+    @Test
+    void stemming() {
+        // test 1
+        String[] inputTokens = {"running", "jumping", "swimming"};
+
+        String[] resultTokens = TextProcessing.stemming(inputTokens);
+
+        assertEquals("run", resultTokens[0]);
+        assertEquals("jump", resultTokens[1]);
+        assertEquals("swim", resultTokens[2]);
+    }
+
+    @Test
+    void testRemoveStopWords() {
+        // test
+        String[] inputTokens = {"the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"};
+        String[] resultTokens = TextProcessing.removeStopWords(inputTokens);
+        String[] expectedTokens = {"quick", "brown", "fox", "jumps", "lazy", "dog"};
+        assertArrayEquals(expectedTokens, resultTokens);
+    }
+
+
+
+
 }
