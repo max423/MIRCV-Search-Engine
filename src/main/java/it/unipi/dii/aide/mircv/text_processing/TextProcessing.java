@@ -60,7 +60,7 @@ public class TextProcessing {
 
     public static String cleanText(String doc) {
         // remove html tags
-        doc = doc.replaceAll(HTML_REGEX, " ");
+        doc = doc.replaceAll(HTML_REGEX, "");
         // remove punctuation and strange characters
         doc = doc.replaceAll(CharREGEX, " ");
         // remove multiple spaces

@@ -8,14 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class TextProcessingTest {
 
 
-
-    @Test
-    void documentProcessing() {
-
-
-
-    }
-
     @Test
     void tokenize() {
         // test 1
@@ -78,6 +70,29 @@ class TextProcessingTest {
         assertArrayEquals(expectedTokens, resultTokens);
     }
 
+
+    //remove html tags + punctuation and strange characters + multiple spaces + lowercase
+    @Test
+    public void testCleanText() {
+        // test 1
+        String inputText = "<p>versions of each volume as well as complementary websites. The first websiteâThe Manhattan Project: An Interactive Historyâis available on the Office of History and Heritage Resources website, http://www.cfo. doe.gov/me70/history. The Office of History and Heritage Resources and the National Nuclear Security";
+        String resultText = TextProcessing.cleanText(inputText);
+        String expectedText = "versions of each volume as well as complementary websites the first website the manhattan project an interactive history is available on the office of history and heritage resources website http www cfo doe gov me70 history the office of history and heritage resources and the national nuclear security";
+        assertEquals(expectedText, resultText);
+
+        // test 2
+        inputText = "The Manhattan Project and its atomic bomb helped bring an end to World War II. Its legacy of peaceful uses of atomic energy continues to have an impact on history and science.";
+        resultText = TextProcessing.cleanText(inputText);
+        expectedText = "the manhattan project and its atomic bomb helped bring an end to world war ii its legacy of peaceful uses of atomic energy continues to have an impact on history and science ";
+        assertEquals(expectedText, resultText);
+
+        // test 3
+        inputText = "the houŠe is  on f          _-ò       ire!  \n \t";
+        resultText = TextProcessing.cleanText(inputText);
+        expectedText = "the hou e is on f ire ";
+        assertEquals(expectedText, resultText);
+
+    }
 
 
 
