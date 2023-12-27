@@ -33,8 +33,17 @@ public class VocabularyElem {
     // length of the skip information
     private int skipLen;
 
+    // skip offset
+    private long skipOffset;
+
     // inverse document frequency
     private double idf;
+
+    // max BM25
+    private double maxBM25;
+
+    // max TFIDF
+    private double maxTFIDF;
 
 
 
@@ -155,6 +164,8 @@ public class VocabularyElem {
     }
 
 
+
+
     @Override
     public String toString() {
         return "Vocabulary{" +
@@ -232,5 +243,17 @@ public class VocabularyElem {
 
     public double getIdf() {
         return idf;
+    }
+
+    public long getSkipOffset() {
+        return skipOffset;
+    }
+
+    public double getMaxBM25() {
+        return maxBM25;
+    }
+
+    public double getMaxTFIDF() {
+        return maxTFIDF;
     }
 }

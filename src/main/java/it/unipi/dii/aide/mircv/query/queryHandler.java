@@ -35,6 +35,8 @@ public class queryHandler {
             postingList.getPostingList(token);
 
 
+
+
         }
     }
 

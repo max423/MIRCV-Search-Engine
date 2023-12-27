@@ -20,6 +20,9 @@ public class Configuration {
     // testing
     private static boolean testing_ON ;
 
+    // score
+    private static boolean scoreON;
+
     static {
 
         try {
@@ -59,6 +62,9 @@ public class Configuration {
     public static boolean isIndex_compressionON() {return index_compressionON;}
 
     public static boolean isTesting() { return testing_ON;}
+    public static boolean isScoreON() {
+        return scoreON;
+    }
 
 
     @Override
