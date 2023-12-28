@@ -111,33 +111,7 @@ public class utils {
     
 
 
-    // Demo interface for the search engine
-    public void DemoInterface() throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        String query;
 
-        System.out.println("Welcome to the MIRCV search engine!");
-
-        while (true) {
-            System.out.println("Please enter your query (or 'exit' to quit): ");
-            query = scanner.nextLine();
-
-            if (query.equalsIgnoreCase("exit")) {
-                System.out.println("Exiting the program. Goodbye!");
-                break;
-            }
-
-            // Process the query using your DAAT or any other search logic
-            // List<Integer> result = processQuery(query, iterators);
-
-            // Print the results (assuming <pid> is the document ID)
-            //System.out.println("Results for query '" + query + "': " + result);
-        }
-
-        // Close resources
-        scanner.close();
-
-    }
 
     // conjunctive query
     public static PriorityQueue<scoreDoc> conjunctiveQuery(int k) throws IOException {

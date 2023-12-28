@@ -47,7 +47,7 @@ public class Spimi {
         int tab;
         int documnetLength;
 
-        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *35 / 100; // leave 20% of memory free
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *20 / 100; // leave 20% of memory free
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
         while ((line = bufferedReader.readLine()) != null) {
@@ -179,7 +179,7 @@ public class Spimi {
             lastDocId = docid; // save last docId for CollectionStatistics
 
             // try to force garbage collection to free memory  // TODO SIMO
-            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 3) {
+            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2) {
                 // wait for memory to be freed
                 System.gc();
             }
@@ -192,6 +192,13 @@ public class Spimi {
         vocabulary.clear();
         termList.clear();
         postingListElem.clear();
+
+        // try to force garbage collection to free memory  // TODO SIMO
+        while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2) {
+            // wait for memory to be freed
+            System.gc();
+        }
+
     }
 
     private void rollback() {

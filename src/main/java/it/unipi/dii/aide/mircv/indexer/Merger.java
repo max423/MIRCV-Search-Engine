@@ -93,7 +93,7 @@ public class Merger {
             try {
                 headTerm = head.getKey();
             } catch (NullPointerException e){
-                headTerm= " ";  // ultimo termine
+                headTerm= " ";  // setto come ultimo termine
             }
 
             if(vocabularyElemApp == null){
@@ -162,6 +162,10 @@ public class Merger {
                 // update collection statistics
                 collectionStatistics.incrementTotalLength(); // +1 per il termine
 
+                if (collectionStatistics.getTotalLength() % 50000 == 0) {
+                    System.out.println("< current merged terms: " + collectionStatistics.getTotalLength() +" >");
+                }
+
             }
 
         }
@@ -169,6 +173,8 @@ public class Merger {
         collectionStatistics.setDocCount(lastDocId);
         // write the collectionStatistics on the disk
         collectionStatistics.writeToDisk(GetCorrectChannel(-1, 3));
+
+        System.out.println("> Merging completed!");
 
     }
 

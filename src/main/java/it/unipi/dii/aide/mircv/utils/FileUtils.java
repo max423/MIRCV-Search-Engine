@@ -18,7 +18,8 @@ public class FileUtils {
     // path stop words
     public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
     // path Uncompressed collection
-    public static String Path_Uncompressed_Collection = "/Users/massimo/Downloads/collection.tsv";
+    //public static String Path_Uncompressed_Collection = "/Users/massimo/Downloads/collection.tsv";
+    public static String Path_Uncompressed_Collection = "/Users/massimo/Desktop/collection.tsv";
     // path Compressed collection
     public static String Path_Compressed_Collection = "/Users/massimo/Desktop/collection.tar.gz";
     // path to the configuration json file
@@ -123,6 +124,21 @@ public class FileUtils {
 
     }
 
+    // take the RAF of the final files
+    public static void takeFinalRAF(){
+        ArrayList<RandomAccessFile> array_RAF = new ArrayList<>();
+        try {
+            array_RAF.add(new RandomAccessFile((Path_FinalVocabulary), "rw"));                      // i= 0 - vocabulary
+            array_RAF.add(new RandomAccessFile((Path_FinalDocId), "rw"));                           // i= 1 - docid (posting list)
+            array_RAF.add(new RandomAccessFile((Path_FinalTermFreq), "rw"));                        // i= 2 - termfreq (posting list)
+            array_RAF.add(new RandomAccessFile((Path_FinalCollectionStatistics), "rw"));            // i= 3 - collection statistics
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // add to the skeleton
+        skeleton_RAF.put(-1, array_RAF);    // position -1 for the final file
+    }
+
     // create final files
     public static void CreateFinalStructure() throws IOException {
         System.out.println("Creating final structure...");
@@ -163,6 +179,5 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

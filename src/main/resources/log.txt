@@ -1,5 +1,0 @@
-Block number: 01
-Spimi execution time: 132 ms
-Merger execution time: 47 ms
-Total execution time: 179 ms
-

@@ -37,7 +37,7 @@ public class Indexer {
         stopTime = System.currentTimeMillis();
         elapsedTimeMerger = stopTime - startTime;
 
-        PlotFinalStructure();
+        //PlotFinalStructure();
 
         // salva su log file tutti i tempi di esecuzione e il numero di blocchi
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
@@ -98,7 +98,19 @@ public class Indexer {
                 postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
 
             // print the posting list
-            System.out.println(postingList + "\n");}
+            System.out.println(postingList + "\n");
+
+            // aspetta input tastira ogni 10000 elementi
+            if (currentOffset % 60000 == 0) {
+                System.out.println("Press Enter to continue...");
+                try {
+                    System.in.read();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
 
         // print the collection statistics
         CollectionStatistics collectionStatistics = new CollectionStatistics();

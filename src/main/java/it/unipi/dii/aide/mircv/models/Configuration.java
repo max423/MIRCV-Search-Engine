@@ -20,13 +20,13 @@ public class Configuration {
     // testing
     private static boolean testing_ON ;
 
-    // score
+    // score function TODO SIMO ? true = BM25 vs false= TFIDF
     private static boolean scoreON;
 
-    // max score
+    // max score TODO SIMO ? MaxScore vs DAAT
     private static boolean maxScoreON;
 
-    // conjunctive
+    // true = conjunctive -  false= disjunctive
     private static boolean conjunctiveON;
 
     static {
@@ -80,6 +80,22 @@ public class Configuration {
         return conjunctiveON;
     }
 
+    public void setConjunctiveON(boolean compressionON) {
+        this.conjunctiveON = compressionON;
+    }
+
+    public void setMaxScoreON(boolean maxScoreON) {
+        this.maxScoreON = maxScoreON;
+    }
+
+    public void setScoreON(boolean scoreON) {
+        this.scoreON = scoreON;
+    }
+
+
+
+
+
 
     @Override
     public String toString() {
@@ -88,6 +104,9 @@ public class Configuration {
                 ", stemming_stopwordON=" + stemming_stopwordON +
                 ", index_compressionON=" + index_compressionON +
                 ", testing_ON=" + testing_ON +
+                ", scoreON=" + scoreON +
+                ", maxScoreON=" + maxScoreON +
+                ", conjunctiveON=" + conjunctiveON +
                 '}';
     }
 }
