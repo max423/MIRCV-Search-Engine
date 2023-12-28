@@ -31,6 +31,9 @@ public class PostingList {
     public static Iterator<SkipElem> skipElemIterator = null;
     public static Iterator<Posting> postingListIterator = null;
 
+    private RandomAccessFile docId_RAF;
+    private RandomAccessFile termFreq_RAF;
+
     public PostingList(String term) {
         this.term = term;
         this.postingList = new ArrayList<>();
@@ -239,8 +242,8 @@ public class PostingList {
     public void getPostingList(String term) throws IOException {
 
         // initialize the random access file
-        RandomAccessFile docId_RAF = new RandomAccessFile(FileUtils.Path_FinalDocId, "r");
-        RandomAccessFile termFreq_RAF = new RandomAccessFile(FileUtils.Path_FinalTermFreq, "r");
+        docId_RAF = new RandomAccessFile(FileUtils.Path_FinalDocId, "r");
+        termFreq_RAF = new RandomAccessFile(FileUtils.Path_FinalTermFreq, "r");
 
         VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
 
@@ -344,5 +347,96 @@ public class PostingList {
 
     public Double getMaxTFIDF() {
         return TFIDF;
+    }
+
+    // get the next posting of the posting list
+    public void nextPosting() {
+        // check if the posting list is empty
+        if (postingListIterator.hasNext()) {
+            currentPostingList = postingListIterator.next();
+        } else {
+            // the posting list is empty and there are no more blocks
+
+            if (skipElemIterator == null || !skipElemIterator.hasNext()) {
+                // the posting list is empty and there are no more blocks
+                currentPostingList = null;
+                return;
+            }
+
+            // get the next block
+            SkipElem nextBlock = skipElemIterator.next();
+
+            // clear the posting list
+            postingList.clear();
+
+            // read the posting list from disk
+            try {
+                if(Configuration.isIndex_compressionON()) {
+                    // compressione index On
+                    readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
+                }else{
+                    // compressione index Off
+                    readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // set the posting list iterator
+            postingListIterator = postingList.iterator();
+        }
+
+        // set the current posting list
+        currentPostingList = postingListIterator.next();
+    }
+
+    // skip to the next posting
+    public void nextGEQ(int currentDocID) {
+
+        boolean blockChanged = false;
+
+        // check if the max docID of the block is greater than the current docID
+        while (skipBlock.getDocID() < currentDocID) {
+
+            // try to get the next block
+            if (skipElemIterator.hasNext()) {
+                skipBlock = skipElemIterator.next();
+                blockChanged = true;
+            } else {
+                // there are no more blocks
+                currentPostingList = null;
+                return;
+            }
+        }
+
+        // check if the block has changed
+        if (blockChanged) {
+            // clear the posting list
+            postingList.clear();
+
+            // read the posting list from disk
+            try {
+                if(Configuration.isIndex_compressionON()) {
+                    // compressione index On
+                    readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), skipBlock);
+                }else{
+                    // compressione index Off
+                    readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), skipBlock);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // set the posting list iterator
+            postingListIterator = postingList.iterator();
+
+            // set the current posting list
+            currentPostingList = postingListIterator.next();
+        }
+
+        // get the next posting of the posting list until the docID is greater than the current docID or the posting list is empty
+        while (currentPostingList.getDocID() < currentDocID && postingListIterator.hasNext()) {
+            currentPostingList = postingListIterator.next();
+        }
     }
 }

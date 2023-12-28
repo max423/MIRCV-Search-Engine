@@ -98,4 +98,8 @@ public class SkipElem {
     public long getOffsetFreq() {
         return offsetFreq;
     }
+
+    public int getDocID() {
+        return docID;
+    }
 }
