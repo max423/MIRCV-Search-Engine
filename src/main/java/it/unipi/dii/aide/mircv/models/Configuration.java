@@ -23,6 +23,12 @@ public class Configuration {
     // score
     private static boolean scoreON;
 
+    // max score
+    private static boolean maxScoreON;
+
+    // conjunctive
+    private static boolean conjunctiveON;
+
     static {
 
         try {
@@ -64,6 +70,14 @@ public class Configuration {
     public static boolean isTesting() { return testing_ON;}
     public static boolean isScoreON() {
         return scoreON;
+    }
+
+    public static boolean isMaxScoreON() {
+        return maxScoreON;
+    }
+
+    public static boolean isConjunctiveON() {
+        return conjunctiveON;
     }
 
 
