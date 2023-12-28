@@ -337,4 +337,12 @@ public class PostingList {
     public Posting getCurrentPostingList() {
         return currentPostingList;
     }
+
+    public Double getMaxBM25() {
+        return BM25;
+    }
+
+    public Double getMaxTFIDF() {
+        return TFIDF;
+    }
 }

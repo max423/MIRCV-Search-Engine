@@ -1,12 +1,12 @@
 package it.unipi.dii.aide.mircv.query;
 
-import java.util.Scanner;
+import java.util.*;
+
 import it.unipi.dii.aide.mircv.models.CollectionStatistics;
 import it.unipi.dii.aide.mircv.models.Posting;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.IOException;
-import java.util.PriorityQueue;
 
 public class utils {
 
@@ -79,6 +79,25 @@ public class utils {
         double BM25 = idf * (tf / (k * ((1 - b) + (b * (FileUtils.documentIndex.get(currentPostingList.getDocID()).getLength() / avgDocLen))) + tf));
 
         return BM25;
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+
+        // create a list of the map entries
+        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
+
+        // sort the list
+        list.sort(Map.Entry.comparingByValue());
+
+        // create a new linked hashmap
+        Map<K, V> result = new LinkedHashMap<>();
+
+        // put the sorted list in the linked hashmap
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
     }
 
     // todo MAXSCORE algorithm
