@@ -78,8 +78,7 @@ public class queryHandler {
         // check the type of configuration
         if (Configuration.isConjunctiveON()) {
             // conjunctive configuration
-            // todo conjunctive query
-            //priorityQueue = utils.conjunctiveQuery(k);
+            priorityQueue = utils.conjunctive(k);
         } else {
             if (Configuration.isMaxScoreON()) {
                 // max score configuration
@@ -95,20 +94,16 @@ public class queryHandler {
 
                 // create an array list of score increasing order of score (for max score algorithm)
                 maxScoreOrder = new ArrayList<>(hashMapScore.values());
-                //todo max score query
-                //priorityQueue = utils.maxScoreQuery(k);
+                priorityQueue = utils.maxScore(k);
 
             } else {
-
                 // DAAT configuration
-                // todo DAAT query
-                //priorityQueue = utils.DAATQuery(k);
+                priorityQueue = utils.DAAT(k);
             }
         }
 
-        // todo print results
         // print the results
-        //printResults(priorityQueue, k);
+        printResults(priorityQueue, k);
 
         // reset the data structures
         resetDataStructures();

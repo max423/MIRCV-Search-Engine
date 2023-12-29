@@ -314,7 +314,7 @@ public class utils {
 
 
     // conjunctive query
-    public static PriorityQueue<scoreDoc> conjunctiveQuery(int k) throws IOException {
+    public static PriorityQueue<scoreDoc> conjunctive(int k) throws IOException {
 
         // initialize the priority queue with score in descending order
         PriorityQueue<scoreDoc> scoreDocsDecreasing = new PriorityQueue<>(k, new scoreDocComparator());
