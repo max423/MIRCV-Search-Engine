@@ -26,34 +26,99 @@ public class utils {
             }
         }
 
-        return (int) minDocID;
+        return minDocID;
     }
 
     // DAAT algorithm
-    // todo
     public static PriorityQueue<scoreDoc> DAAT(int k) throws IOException {
 
         // initialize the priority queue with score in descending order
-        PriorityQueue<scoreDoc> scoreDocs = new PriorityQueue<>(k, new scoreDocComparator());
+        PriorityQueue<scoreDoc> scoreDocsDecreasing = new PriorityQueue<>(k, new scoreDocComparator());
 
+        // initialize the priority queue with score in increasing order
+        PriorityQueue<scoreDoc> scoreDocsIncreasing = new PriorityQueue<>(k, new scoreDocComparatorIncreasing());
 
+        // initialize the score
+        double score = 0;
 
-        return scoreDocs;
-    }
+        // next docID
+        int nextDocID;
 
+        // current docID
+        int currentDocID;
 
-    //todo
-    /*public static double updatePartialScore(double score, int pos) {
-        // todo fare classe per gestire i flag?
-        // check if flag is set
-        if (Flags.checkScore() == 1) {
-            // BM25
-            score += BM25(queryHandler.orderedPostingList.get(pos).getTerm(), queryHandler.orderedPostingList.get(pos).getCurrentPostingList(), 1.2, 0.75);
-        } else {
-            // TF-IDF
-            score += TFIDF(queryHandler.orderedPostingList.get(pos).getTerm(), queryHandler.orderedPostingList.get(pos).getCurrentPostingList());
+        // get the min docID
+        currentDocID = getMinDocID();
+
+        // check all the docIDs in the posting lists
+        while (true) {
+
+            // reset the score
+            score = 0;
+            // update the next docID
+            nextDocID = CollectionStatistics.getDocCount();
+
+            for (PostingList postingList : queryHandler.postingListQuery) {
+
+                // check if the posting list is empty
+                if (postingList.getCurrentPostingList() == null) {
+                    continue;
+                }
+
+                // check if the docID is the same
+                if (postingList.getCurrentPostingList().getDocID() == currentDocID) {
+                    // update the score
+                    if (Configuration.isScoreON()) {
+                        // BM25
+                        score += BM25(postingList.getTerm(), postingList.getCurrentPostingList(), 1.2, 0.75);
+                    } else {
+                        // TF-IDF
+                        score += TFIDF(postingList.getTerm(), postingList.getCurrentPostingList());
+                    }
+
+                    // update the posting list
+                    postingList.nextPosting();
+                }
+
+                // check if the posting list is empty
+                if (postingList.getCurrentPostingList() == null) {
+                    continue;
+                }
+
+                // update the next docID
+                if (postingList.getCurrentPostingList().getDocID() < nextDocID) {
+                    nextDocID = postingList.getCurrentPostingList().getDocID();
+                }
+            }
+
+            // update the priority queue
+            if (scoreDocsDecreasing.size() < k) {
+                // add the scoreDoc to the priority queue
+                scoreDocsDecreasing.add(new scoreDoc(currentDocID, score));
+                scoreDocsIncreasing.add(new scoreDoc(currentDocID, score));
+            } else {
+                // check if the score is greater than the minimum score in the priority queue
+                if (scoreDocsIncreasing.peek().getScore() < score) {
+                    // add the scoreDoc to the priority queue
+                    scoreDocsDecreasing.add(new scoreDoc(currentDocID, score));
+                    scoreDocsIncreasing.add(new scoreDoc(currentDocID, score));
+
+                    // remove the minimum score
+                    scoreDocsDecreasing.remove(scoreDocsIncreasing.poll());
+                }
+            }
+
+            // check if no more docID to process
+            if (currentDocID == nextDocID) {
+                return scoreDocsDecreasing;
+            }
+
+            // update the current docID
+            currentDocID = nextDocID;
+
         }
-    }*/
+
+    }
 
     private static double TFIDF(String term, Posting currentPostingList) {
         // term frequency weight
@@ -102,12 +167,147 @@ public class utils {
         return result;
     }
 
-    // todo MAXSCORE algorithm
-    /*public static PriorityQueue<scoreDoc> maxScore(int k) throws IOException {
-        // initialize the priority queue with score in descending order
-        PriorityQueue<scoreDoc> scoreDocs = new PriorityQueue<>(k, new scoreDocComparator());
+    public static PriorityQueue<scoreDoc> maxScore(int k) throws IOException {
 
-    }*/
+        // initialize the priority queue with score in descending order
+        PriorityQueue<scoreDoc> scoreDocsDecreasing = new PriorityQueue<>(k, new scoreDocComparator());
+
+        // initialize the priority queue with score in increasing order
+        PriorityQueue<scoreDoc> scoreDocsIncreasing = new PriorityQueue<>(k, new scoreDocComparatorIncreasing());
+
+        // values of an upper bound calculated based on the highest scores associated with the query terms
+        ArrayList<Double> upperBound = new ArrayList<>();
+        upperBound.add(queryHandler.maxScoreOrder.get(0));
+        for (int i = 1; i < queryHandler.maxScoreOrder.size(); i++) {
+            upperBound.add(upperBound.get(i - 1) + queryHandler.maxScoreOrder.get(i));
+        }
+
+        // initialize the score
+        double score = 0;
+        // next docID
+        int nextDocID;
+        // divide the query to principal and not principal list
+        int listIndex = 0;
+        // lower bound
+        double lowerBound = 0;
+
+        int currentDocID = getMinDocID();
+
+        // there are still items in the list of the query to be processed and there are documents to be processed
+        while (listIndex < queryHandler.orderedPostingList.size() && currentDocID >= 0) {
+
+            // reset the score
+            score = 0;
+
+            // update the next docID
+            nextDocID = CollectionStatistics.getDocCount();
+
+            // principal list
+            for (int i = listIndex; i < queryHandler.orderedPostingList.size(); i++) {
+
+                // check if the posting list is empty
+                if (queryHandler.orderedPostingList.get(i).getCurrentPostingList() == null) {
+                    continue;
+                }
+
+                // check if the docID is the same
+                if (queryHandler.orderedPostingList.get(i).getCurrentPostingList().getDocID() == currentDocID) {
+                    // update the score
+                    if (Configuration.isScoreON()) {
+                        // BM25
+                        score += BM25(queryHandler.orderedPostingList.get(i).getTerm(), queryHandler.orderedPostingList.get(i).getCurrentPostingList(), 1.2, 0.75);
+                    } else {
+                        // TF-IDF
+                        score += TFIDF(queryHandler.orderedPostingList.get(i).getTerm(), queryHandler.orderedPostingList.get(i).getCurrentPostingList());
+                    }
+
+                    // update the posting list
+                    queryHandler.orderedPostingList.get(i).nextPosting();
+
+                    // check if the posting list is empty
+                    if (queryHandler.orderedPostingList.get(i).getCurrentPostingList() == null) {
+                        continue;
+                    }
+                }
+
+                // update the next docID
+                if (queryHandler.orderedPostingList.get(i).getCurrentPostingList().getDocID() < nextDocID) {
+                    nextDocID = queryHandler.orderedPostingList.get(i).getCurrentPostingList().getDocID();
+                }
+            }
+
+            // not principal list
+            for (int i = listIndex - 1; i > 0; i--) {
+
+                // check if the posting list is empty
+                if (queryHandler.orderedPostingList.get(i).getCurrentPostingList() == null) {
+                    continue;
+                }
+
+                // check lower bound
+                if (score + upperBound.get(i) < lowerBound) {
+                    break;
+                }
+
+                queryHandler.orderedPostingList.get(i).nextGEQ(currentDocID);
+
+                // check if the posting list is empty
+                if (queryHandler.orderedPostingList.get(i).getCurrentPostingList() == null) {
+                    continue;
+                }
+
+                // check if the docID is the same
+                if (queryHandler.orderedPostingList.get(i).getCurrentPostingList().getDocID() == currentDocID) {
+                    // update the score
+                    if (Configuration.isScoreON()) {
+                        // BM25
+                        score += BM25(queryHandler.orderedPostingList.get(i).getTerm(), queryHandler.orderedPostingList.get(i).getCurrentPostingList(), 1.2, 0.75);
+                    } else {
+                        // TF-IDF
+                        score += TFIDF(queryHandler.orderedPostingList.get(i).getTerm(), queryHandler.orderedPostingList.get(i).getCurrentPostingList());
+                    }
+                }
+            }
+
+
+            // list index update
+            if (scoreDocsDecreasing.size() < k) {
+                // add the scoreDoc to the priority queue
+                scoreDocsDecreasing.add(new scoreDoc(currentDocID, score));
+                scoreDocsIncreasing.add(new scoreDoc(currentDocID, score));
+            } else {
+                // check if the score is greater than the minimum score in the priority queue
+                if (scoreDocsIncreasing.peek().getScore() < score) {
+                    // add the scoreDoc to the priority queue
+                    scoreDocsDecreasing.add(new scoreDoc(currentDocID, score));
+                    scoreDocsIncreasing.add(new scoreDoc(currentDocID, score));
+
+                    // remove the minimum score
+                    scoreDocsDecreasing.remove(scoreDocsIncreasing.poll());
+                }
+
+                // update the lower bound
+                lowerBound = scoreDocsIncreasing.peek().getScore();
+
+                // update the list index
+                while (listIndex < queryHandler.orderedPostingList.size() && upperBound.get(listIndex) < lowerBound) {
+                    listIndex++;
+                }
+            }
+
+
+            // check if it is the last docID
+            if (nextDocID == CollectionStatistics.getDocCount()) {
+                break;
+            }
+
+            // update the current docID
+            currentDocID = nextDocID;
+        }
+
+        return scoreDocsDecreasing;
+    }
+
     
 
 
@@ -136,7 +336,7 @@ public class utils {
         // order the posting list
         queryHandler.hashMapLength = (HashMap<Integer, Integer>) sortByValue(queryHandler.hashMapLength);
 
-        // create a lisr of ordered posting list
+        // create a list of ordered posting list
         for (Map.Entry<Integer, Integer> entry : queryHandler.hashMapLength.entrySet()) {
             //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
             queryHandler.orderedPostingList.add(queryHandler.postingListQuery.get(entry.getKey()));
@@ -187,13 +387,12 @@ public class utils {
             } else {
                 // check if the score is greater than the minimum score in the priority queue
                 if (scoreDocsIncreasing.peek().getScore() < score) {
-                    // remove the minimum score
-                    scoreDocsIncreasing.poll();
-                    scoreDocsDecreasing.poll();
-
                     // add the scoreDoc to the priority queue
                     scoreDocsDecreasing.add(new scoreDoc(currentDocID, score));
                     scoreDocsIncreasing.add(new scoreDoc(currentDocID, score));
+
+                    // remove the minimum score
+                    scoreDocsDecreasing.remove(scoreDocsIncreasing.poll());
                 }
             }
 
