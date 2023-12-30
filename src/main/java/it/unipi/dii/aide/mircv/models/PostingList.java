@@ -160,11 +160,11 @@ public class PostingList {
             bufferDocId.rewind(); // reset the buffer position to 0
             bufferTermFreq.rewind(); // reset the buffer position to 0
 
+            ArrayList<Posting> postingListApp = new ArrayList<>();
             // reading docIds and termFreqs from buffer
             for (int i = 0; i < docIdsLen / 4; i++) {
                 int docId = bufferDocId.getInt();
                 int termFreq = bufferTermFreq.getInt();
-
                 this.postingList.add(new Posting(docId, termFreq));     // mantengo i posting vecchi e aggiungo quelli nuovi
             }
 

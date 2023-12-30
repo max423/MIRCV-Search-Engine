@@ -19,9 +19,9 @@ public class FileUtils {
     public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
     // path Uncompressed collection
     //public static String Path_Uncompressed_Collection = "/Users/massimo/Downloads/collection.tsv";
-    public static String Path_Uncompressed_Collection = "/Users/massimo/Desktop/collection.tsv";
+    public static String Path_Uncompressed_Collection = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
     // path Compressed collection
-    public static String Path_Compressed_Collection = "/Users/massimo/Desktop/collection.tar.gz";
+    public static String Path_Compressed_Collection = "/Volumes/S/collection.tar.gz";
     // path to the configuration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
 
@@ -74,6 +74,37 @@ public class FileUtils {
             }
         }
     }
+
+    // remove partial files
+    public static void removePartialFiles() {
+        System.out.println("Removing partial files...");
+        File dataFolder = new File("src/main/resources");
+        if (dataFolder.exists()) {
+            for (File file : dataFolder.listFiles()) {
+                if (file.getName().contains("partial_")) {
+                    file.delete();
+                }
+            }
+        }
+    }
+
+    // compute the total dimension
+    public static double getTotalFolderSize() {
+        File folder = new File("src/main/resources");
+        long totalSizeInBytes = 0;
+        double totalSizeInMB =0;
+        if (folder.exists()){
+            for (File file : folder.listFiles()) {
+                if (file.isFile()) {
+                    totalSizeInBytes += file.length();
+                    //System.out.println(file.getName());
+                }
+            }
+            totalSizeInMB = totalSizeInBytes / (1024.0 * 1024.0);
+        }
+        return totalSizeInMB;
+    }
+
 
 
     // read the collection according to the compression flag
@@ -168,10 +199,14 @@ public class FileUtils {
 
     // save the time of execution of spimi and merger
     public static void saveLog(long elapsedTimeSpimi, long elapsedTimeMerger, Integer blockNumber) {
-    // save the log of the execution
+
+        double folderDim = getTotalFolderSize();
+
+        // save the log of the execution
         try {
             FileWriter myWriter = new FileWriter(Path_Log, true);
-            myWriter.write("Block number: " + blockNumber+1 + "\n");
+            myWriter.write("Block number: " + blockNumber + "\n");
+            myWriter.write("Total folder dimension: " + folderDim + "\n");
             myWriter.write("Spimi execution time: " + elapsedTimeSpimi + " ms\n");
             myWriter.write("Merger execution time: " + elapsedTimeMerger + " ms\n");
             myWriter.write("Total execution time: " + (elapsedTimeSpimi + elapsedTimeMerger) + " ms\n\n");

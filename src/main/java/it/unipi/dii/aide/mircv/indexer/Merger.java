@@ -31,6 +31,8 @@ public class Merger {
 
     PostingList postingList ;
 
+    VocabularyElem vocabularyElem ;
+
     VocabularyElem vocabularyElemApp;
 
     int termFreqNewLen;
@@ -39,10 +41,13 @@ public class Merger {
     CollectionStatistics collectionStatistics = new CollectionStatistics();
 
     public void startMerger(int blockNumber) throws IOException {
+
         System.out.println("> Start Merging ...");
 
         // ogni posizione contiene l'offest del prossimo termine da prendere per ogni vocabolario parziale
-        long[] currentOffsetVocabulary = new long[blockNumber+1 ];
+        long[] currentOffsetVocabulary = new long[blockNumber ];
+        System.out.println(currentOffsetVocabulary.length);
+
 
         // create the final_vocabulary
         CreateFinalStructure();
@@ -60,6 +65,8 @@ public class Merger {
         PriorityQueue<AbstractMap.SimpleEntry<String, Integer>> heap = new PriorityQueue<>(customComparator);
         // populate the heap
         populateHeap(blockNumber, heap);
+        System.out.println("Heap size: " + heap.size());
+        System.out.println("Heap: " + heap);
 
         while (!heap.isEmpty()) {
             // Extract the entry <term,blocknum> from the heap
@@ -80,7 +87,7 @@ public class Merger {
             }
 
             // entry contains the next term to insert in the final_vocabulary
-            VocabularyElem vocabularyElem = readVocabularyFromPartialFile( entry.getKey(),currentOffsetVocabulary[blockNumCorrent], GetCorrectChannel(blockNumCorrent, 0));
+            vocabularyElem = readVocabularyFromPartialFile( entry.getKey(),currentOffsetVocabulary[blockNumCorrent], GetCorrectChannel(blockNumCorrent, 0));
 
             // update the offset of the current partial_vocabulary
             currentOffsetVocabulary[blockNumCorrent] += vocabularyEntrySize;
@@ -106,6 +113,14 @@ public class Merger {
 
             }
             else {
+
+
+                // vocabularyElemApp contiene quello vecchio  e devo aggiungere  a postingList la posting list di vocabularyElem
+                // leggere la posting di vocabularyElem (termine corrente) e aggiungere i soui posting alla posting list
+
+                postingList.addPostingFromDisk(GetCorrectChannel(blockNumCorrent, 1), GetCorrectChannel(blockNumCorrent, 2), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
+
                 // termine doppione aggiorno i dati del vocabolario
                 vocabularyElemApp.incDocFreq(vocabularyElem.getDocFreq());
                 vocabularyElemApp.incCollFreq(vocabularyElem.getCollFreq());
@@ -115,8 +130,7 @@ public class Merger {
                 // aggiornare Max
                 vocabularyElem = vocabularyElemApp;
 
-                // leggere la posting di vocabularyElem (termine corrente) e aggiungere i soui posting alla posting list
-                postingList.addPostingFromDisk(GetCorrectChannel(blockNumCorrent, 1), GetCorrectChannel(blockNumCorrent, 2), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+
 
             }
 
@@ -140,7 +154,6 @@ public class Merger {
                     // update the vocabularyElem with new offset
                     vocabularyElem.setDocIdsOffset(GetCorrectChannel(-1, 1).size() - docIdNewLen);
                     vocabularyElem.setTermFreqOffset(GetCorrectChannel(-1, 2).size() - termFreqNewLen);
-
 
                 }
                 else {
@@ -236,6 +249,9 @@ public class Merger {
             heap.add(new AbstractMap.SimpleEntry<>(term, i));
             i++;
 
-        } while (i < blockNumber -2);   // do + inizia da 0
+            System.out.println("Heap size: " + heap.size());
+
+        } while (i < blockNumber);
+
     }
 }

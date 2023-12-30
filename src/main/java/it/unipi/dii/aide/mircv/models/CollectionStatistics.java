@@ -56,7 +56,7 @@ public class CollectionStatistics {
 
         channel.position(channel.size());
 
-        buffer.putLong(docCount);
+        buffer.putInt(docCount);
         buffer.putLong(totalLength);
 
         buffer = ByteBuffer.wrap(buffer.array());

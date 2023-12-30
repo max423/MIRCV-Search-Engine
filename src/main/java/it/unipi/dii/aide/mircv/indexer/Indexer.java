@@ -31,6 +31,7 @@ public class Indexer {
         elapsedTimeSpimi = stopTime - startTime;
         startTime = System.currentTimeMillis();
 
+        blockNumber +=1;
         Merger merger = new Merger();
         merger.startMerger(blockNumber);
 
@@ -41,6 +42,7 @@ public class Indexer {
 
         // salva su log file tutti i tempi di esecuzione e il numero di blocchi
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
+
 
 
     }

@@ -333,7 +333,7 @@ public class utils {
         // current docID
         int currentDocID;
 
-        // order the posting list
+        // order the posting list : <position, length>
         queryHandler.hashMapLength = (HashMap<Integer, Integer>) sortByValue(queryHandler.hashMapLength);
 
         // create a list of ordered posting list

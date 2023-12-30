@@ -24,20 +24,23 @@ public class Main {
         FileUtils.takeFinalRAF();
         // Indexer.PlotFinalStructure();
 
-        DemoInterface();
+        //DemoInterface();
 
 
-        // retrive vocabulary and posting list of term
-        String term = "war";
-        VocabularyElem v = Indexer.getTestVocabularyElem(term);
-        PostingList p = Indexer.getTestPosting(term);
-        System.out.println(p);
 
-        // collection statistics
-        System.out.println("\nCollection Statistics");
-        CollectionStatistics collectionStatistics = new CollectionStatistics();
-        collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
-        System.out.println(collectionStatistics);
+
+
+//        // retrive vocabulary and posting list of term
+//        String term = "war";
+//        VocabularyElem v = Indexer.getTestVocabularyElem(term);
+//        PostingList p = Indexer.getTestPosting(term);
+//        System.out.println(p);
+//
+//        // collection statistics
+//        System.out.println("\nCollection Statistics");
+//        CollectionStatistics collectionStatistics = new CollectionStatistics();
+//        collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
+//        System.out.println(collectionStatistics);
 
     }
 

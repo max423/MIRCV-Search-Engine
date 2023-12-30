@@ -38,6 +38,7 @@ public class Spimi {
 
         // read collection according to the compression flag
         BufferedReader bufferedReader = initBuffer(Configuration.isCompressionON(), Configuration.isTesting());
+
         // init docIndex_RAF
         FileUtils.initDocIndex_RAF();
 
@@ -47,7 +48,7 @@ public class Spimi {
         int tab;
         int documnetLength;
 
-        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *20 / 100; // leave 20% of memory free
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *10 / 100; // leave 20% of memory free
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
         while ((line = bufferedReader.readLine()) != null) {
@@ -102,7 +103,7 @@ public class Spimi {
                     // termine è presente nel dizionario
                     // se è nello stesso docuemnto -> fine
                     // altrimenti dobbiamo :
-                    // 1) aggiungere alla posting list ?
+                    // 1) aggiungere alla posting list
                     // 2) aggiurnare lexicon -> docFreq + colFreq
 
                     // get the vocabulary element
@@ -116,7 +117,6 @@ public class Spimi {
                         vocElem.updateCollFreq(tf);
                         // update the last document id inserted
                         vocElem.setLastDocIdInserted(docid);
-
 
                         // add the posting list
                         postingListElem.get(token).addPosting(new Posting(docid, tf));
@@ -137,7 +137,7 @@ public class Spimi {
             }
 
             if (docid % 50000 == 0)
-                System.out.println("< current docId: " + docid +" >");
+                System.out.println("< current docId: " + docid + " >");
 
             docid++;
         }
@@ -174,26 +174,21 @@ public class Spimi {
 
             System.out.println("Block " + blockNum + " written on disk.");
 
-            clearDataStructure();
+            clearDataStructure(); // here GC
             blockNum++;
             lastDocId = docid; // save last docId for CollectionStatistics
 
-            // try to force garbage collection to free memory  // TODO SIMO
-            while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2) {
-                // wait for memory to be freed
-                System.gc();
-            }
             System.out.println(Runtime.getRuntime().freeMemory() +  " <TH +" +MEMORYFree_THRESHOLD +"> Memory free again..");
-
         }
     }
 
     private void clearDataStructure() {
+        // clear data structure in memory
         vocabulary.clear();
         termList.clear();
         postingListElem.clear();
 
-        // try to force garbage collection to free memory  // TODO SIMO
+        // and try to force garbage collection to free memory  // TODO SIMO
         while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2) {
             // wait for memory to be freed
             System.gc();
@@ -205,6 +200,7 @@ public class Spimi {
         FileUtils.clearDataFolder();
     }
 
+    // write the block (partial vocabulary and posting list ) on the disk
     private boolean WriteBlockOnDisk(int blockNum, ArrayList<String> termList, HashMap<String, VocabularyElem> Pvocabulary, HashMap<String, PostingList> PpostingListElem) {
 
         // create RAF and temp file for the block
@@ -232,9 +228,11 @@ public class Spimi {
                  // write the posting list on the disk
                  postList.writeToDisk(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel(), FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel());
 
+
                  // update the vocabulary element
                  vocElem.incFreqLen(postList.getPostingList().size()*4);
                  vocElem.incDocLen(postList.getPostingList().size()*4);
+
 
                  // TO DO  * update MAXTF
 
