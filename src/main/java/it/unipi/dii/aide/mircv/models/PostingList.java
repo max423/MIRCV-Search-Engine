@@ -247,14 +247,15 @@ public class PostingList {
 
         VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
 
+        // read skipping info
+        RandomAccessFile skip_RAF = new RandomAccessFile(FileUtils.Path_Skipping, "r");
+
         // check if the term is in the vocabulary
         if (vocabularyElem == null) {
             System.out.println("Term "+ term + " not found in the vocabulary");
             return;
         }
 
-        // read skipping info
-        RandomAccessFile skip_RAF = new RandomAccessFile(FileUtils.Path_Skipping, "r");
 
         // get the number of blocks of term
         ArrayList<SkipElem> blocks;

@@ -51,16 +51,16 @@ public class FileUtils {
 
     public static final HashMap<Integer, ArrayList<RandomAccessFile>> skeleton_RAF = new HashMap<>();
 
-    // variable to store the vocabulary
-    public static HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
-
-    // variable to store the document index
-    public static HashMap<Integer, DocumentIndexElem> documentIndex = new HashMap<>();
-
     public static String Path_Skipping = "src/main/resources/skip";
 
     // path to collection test
     public static String Path_CollectionTest = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
+
+    // HashMap to store the vocabulary
+    public static HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
+
+    // HashMap to store the document index
+    public static HashMap<Integer, DocumentIndexElem> documentIndex = new HashMap<>();
 
 
 
@@ -215,4 +215,54 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
+
+    // per query handler load in memory vocabulary and document index
+    public static void loadFinalStructure() throws IOException {
+        takeFinalRAF();
+        System.out.println("Loading Vocabulary ...");
+        loadVocabulary();
+        System.out.println("Loading Document Index ...");
+        loadDocumentIndex();
+    }
+
+    private static void loadVocabulary() throws IOException {
+        // Initial offset
+        long currentOffset = 0;
+        int VOCABULARY_ELEM_SIZE = 56;
+
+        // Get the channel
+        FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
+
+        // Read the vocabulary elements
+        while (currentOffset + VOCABULARY_ELEM_SIZE <= channelVocabulary.size()) {
+            VocabularyElem vocabularyElem = new VocabularyElem();
+            vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
+
+            // Add the vocabulary element to the vocabulary map
+            vocabulary.put(vocabularyElem.getTerm(), vocabularyElem);
+
+            // Update the offset
+            currentOffset += VOCABULARY_ELEM_SIZE;
+        }
+    }
+
+    private static void loadDocumentIndex() throws IOException {
+        int position = 0;
+        int DOC_INDEX_ELEM_SIZE =28;
+
+        try (FileChannel docIndexFC = new RandomAccessFile(FileUtils.Path_DocumentIndex, "rw").getChannel()) {
+            while (position < docIndexFC.size()) {
+
+                // Read the document index element
+                DocumentIndexElem docElem = new DocumentIndexElem();
+                docElem.readFromDisk(docIndexFC, position);
+
+                // Add the document index element to the document index hsshmap
+                documentIndex.put(docElem.getDocId(), docElem);
+
+                position += DOC_INDEX_ELEM_SIZE;
+            }
+        }
+    }
+
 }

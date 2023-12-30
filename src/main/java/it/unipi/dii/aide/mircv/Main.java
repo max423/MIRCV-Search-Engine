@@ -9,9 +9,14 @@ import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
-import static it.unipi.dii.aide.mircv.utils.FileUtils.*;
+import static it.unipi.dii.aide.mircv.query.queryHandler.QueryPreProcessing;
+import static it.unipi.dii.aide.mircv.query.queryHandler.executeQuery;
+import static it.unipi.dii.aide.mircv.utils.FileUtils.loadFinalStructure;
+
 
 public class Main {
 
@@ -20,12 +25,16 @@ public class Main {
     private static Boolean scoringFunction;
     private static Boolean searchStrategy;
 
+    static int k ; // # doc to retrive
+
     public static void main(String[] args) throws IOException {
         FileUtils.takeFinalRAF();
         // Indexer.PlotFinalStructure();
 
-        //DemoInterface();
+        loadFinalStructure();
 
+        DemoInterface();
+        System.out.println(k);
 
 
 
@@ -52,6 +61,8 @@ public class Main {
 
         configureSearchEngine(scanner);
 
+
+
         while (true) {
             System.out.println("Please enter your query (or 'exit' to quit): ");
             query = scanner.nextLine();
@@ -61,11 +72,16 @@ public class Main {
                 break;
             }
 
-            // Process the query using your DAAT or any other search logic
-            // List<Integer> result = processQuery(query, iterators);
+            // process the query and tokenize it
+            ArrayList<String> Qtokens = QueryPreProcessing(query);
+            if ( Qtokens==null ) {
+                continue;
+            }
 
-            // Print the results (assuming <pid> is the document ID)
-            //System.out.println("Results for query '" + query + "': " + result);
+            System.out.println("Query tokens: " + Qtokens);
+
+            executeQuery(Qtokens, k);
+
         }
 
         // Close resources
@@ -73,7 +89,9 @@ public class Main {
 
     }
 
-    // da tastiera prende le opzioni di configurazione ( query type, scoring function, search strategy)
+
+
+    // da tastiera prende le opzioni di configurazione ( query type, scoring function, search strategy, k )
     public static void configureSearchEngine(Scanner scanner) {
 
         // Configura la query
@@ -106,6 +124,18 @@ public class Main {
         System.out.println("Scoring function = " + (scoringFunction == true ? "BM25" : "TFIDF"));
         System.out.println("Search strategy = " + (searchStrategy == true ? "MaxScore" : "DAAT"));
         System.out.println("--------------------------------------------------");
+
+        // setta k da tastiera
+        System.out.println("Set k:");
+        while (true) {
+            try {
+                k = scanner.nextInt();
+                break;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Invalid input.");
+                scanner.nextLine();
+            }
+        }
 
         scanner.nextLine();
     }

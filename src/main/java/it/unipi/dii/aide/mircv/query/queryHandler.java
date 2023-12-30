@@ -7,6 +7,8 @@ import it.unipi.dii.aide.mircv.models.PostingList;
 import java.io.IOException;
 import java.util.*;
 
+import static it.unipi.dii.aide.mircv.text_processing.TextProcessing.DocumentProcessing;
+
 // receive a query and return the top k (10 or 20) results
 public class queryHandler {
 
@@ -37,6 +39,8 @@ public class queryHandler {
 
             // obtain the posting list for the token
             postingList.getPostingList(token);
+
+            System.out.println(postingList);
 
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {
@@ -109,6 +113,22 @@ public class queryHandler {
         resetDataStructures();
         
     }
+
+    // process the query, do text processing, check if the # of token > 0 and return the tokens
+    public static ArrayList<String>  QueryPreProcessing (String query) throws IOException {
+
+        if (query == "") {
+            System.out.println("The query is empty! \n");
+            return null;
+        }
+
+        // do text processing on query
+        String[] tokens = DocumentProcessing(query);
+
+        // Transform tokens into an ArrayList<String>
+        return new ArrayList<>(Arrays.asList(tokens));
+    }
+
 
     private static void printResults(PriorityQueue<scoreDoc> priorityQueue, int k) {
 
