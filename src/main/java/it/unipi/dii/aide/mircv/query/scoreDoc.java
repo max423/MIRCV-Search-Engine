@@ -16,4 +16,12 @@ public class scoreDoc {
     public double getScore() {
         return score;
     }
+
+    public void setDocID(int docID) {
+        this.docID = docID;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 }
