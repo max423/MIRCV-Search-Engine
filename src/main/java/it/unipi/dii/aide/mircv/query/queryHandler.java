@@ -35,7 +35,7 @@ public class queryHandler {
         for (String token : tokensNoDuplicates) {
 
             // posting list initialization
-            PostingList postingList = new PostingList(token); // crea nuova e setta term
+            PostingList postingList = new PostingList(token);
 
             // obtain the posting list for the token
             postingList.getPostingList(token);

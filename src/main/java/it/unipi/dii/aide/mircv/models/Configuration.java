@@ -35,7 +35,8 @@ public class Configuration {
             System.out.println("Reading configuration");
             System.out.println("--------------------------------------------------");
             // read json configuration file
-            JsonObject jsonObject = JsonParser.parseReader(new FileReader("/Users/massimo/Desktop/MIRCV-Project/MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json")).getAsJsonObject();
+            JsonObject jsonObject = JsonParser.parseReader(new FileReader("src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json")).getAsJsonObject();
+            //JsonObject jsonObject = JsonParser.parseReader(new FileReader("/Users/massimo/Desktop/MIRCV-Project/MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json")).getAsJsonObject();
             compressionON = jsonObject.get("read_compressionON").getAsBoolean();
             stemming_stopwordON = jsonObject.get("stemming_stopwordON").getAsBoolean();
             index_compressionON = jsonObject.get("index_compressionON").getAsBoolean();
