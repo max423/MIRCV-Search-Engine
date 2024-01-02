@@ -1,7 +1,5 @@
 package it.unipi.dii.aide.mircv.query;
 
-import java.util.*;
-
 import it.unipi.dii.aide.mircv.models.CollectionStatistics;
 import it.unipi.dii.aide.mircv.models.Configuration;
 import it.unipi.dii.aide.mircv.models.Posting;
@@ -9,18 +7,18 @@ import it.unipi.dii.aide.mircv.models.PostingList;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.IOException;
+import java.util.*;
 
 public class utils {
 
     // get the min docID from the posting list
     public static int getMinDocID() {
         // get the first docID
-        int minDocID = queryHandler.orderedPostingList.get(0).getCurrentPostingList().getDocID();
+        int minDocID = -1;
         int docIDcmp;
 
-
-        for (int i = 0; i < queryHandler.orderedPostingList.size(); i++) {
-            docIDcmp = queryHandler.orderedPostingList.get(i).getCurrentPostingList().getDocID();
+        for (PostingList postingList : queryHandler.orderedPostingList) {
+            docIDcmp = postingList.getPostingList().get(0).getDocID();
             if (docIDcmp < minDocID) {
                 minDocID = docIDcmp;
             }
@@ -29,8 +27,111 @@ public class utils {
         return minDocID;
     }
 
-    // DAAT algorithm
-    public static PriorityQueue<scoreDoc> DAAT(int k) throws IOException {
+    // conjunctive query
+    public static PriorityQueue<scoreDoc> conjunctive(int k) throws IOException {
+
+        // initialize the priority queue with score in descending order
+        PriorityQueue<scoreDoc> scoreDocsDecreasing = new PriorityQueue<>(k, new scoreDocComparator());
+
+        // initialize the priority queue with score in increasing order
+        PriorityQueue<scoreDoc> scoreDocsIncreasing = new PriorityQueue<>(k, new scoreDocComparatorIncreasing());
+
+        // initialize the score
+        double score = 0;
+
+        // next docID
+        int nextDocID;
+
+        // current docID
+        int currentDocID;
+
+        // get the min docID
+        currentDocID = getMinDocID();
+
+        // flag to check if the docID is present in all the posting lists
+        boolean present;
+
+        // check all the docIDs in the posting lists
+        while (true) {
+
+            // reset the score
+            score = 0;
+            // update the next docID
+            nextDocID = CollectionStatistics.getDocCount();
+            // update the flag
+            present = true;
+
+            // iterate over the posting lists of the query
+            for (PostingList postingList : queryHandler.postingListQuery) {
+
+                // check if the posting list is empty
+                if (postingList.getCurrentPostingList() == null) {
+                    // move to the next docID
+                    present = false;
+                    break;
+                }
+
+                // check if the docID is the same
+                if (postingList.getCurrentPostingList().getDocID() == currentDocID) {
+                    // update the score
+                    if (Configuration.isScoreON()) {
+                        // BM25
+                        score += BM25(postingList.getTerm(), postingList.getCurrentPostingList(), 1.2, 0.75);
+                    } else {
+                        // TF-IDF
+                        score += TFIDF(postingList.getTerm(), postingList.getCurrentPostingList());
+                    }
+
+                    // update the posting list
+                    postingList.nextPosting();
+                }
+
+                // check if the posting list is empty
+                if (postingList.getCurrentPostingList() == null) {
+                    // move to the next docID
+                    present = false;
+                    break;
+                }
+
+                // update the next docID
+                if (postingList.getCurrentPostingList().getDocID() < nextDocID) {
+                    nextDocID = postingList.getCurrentPostingList().getDocID();
+                }
+            }
+
+            // check if the docID is present in all the posting lists
+            if (present) {
+                // update the priority queue
+                if (scoreDocsDecreasing.size() < k) {
+                    // add the scoreDoc to the priority queue
+                    scoreDocsDecreasing.add(new scoreDoc(currentDocID, score));
+                    scoreDocsIncreasing.add(new scoreDoc(currentDocID, score));
+                } else {
+                    // check if the score is greater than the minimum score in the priority queue
+                    if (scoreDocsIncreasing.peek().getScore() < score) {
+                        // add the scoreDoc to the priority queue
+                        scoreDocsDecreasing.add(new scoreDoc(currentDocID, score));
+                        scoreDocsIncreasing.add(new scoreDoc(currentDocID, score));
+
+                        // remove the minimum score
+                        scoreDocsDecreasing.remove(scoreDocsIncreasing.poll());
+                    }
+                }
+            }
+
+            // check if no more docID to process
+            if (currentDocID == nextDocID) {
+                return scoreDocsDecreasing;
+            }
+
+            // update the current docID
+            currentDocID = nextDocID;
+        }
+
+    }
+
+    // disjunctive query
+    public static PriorityQueue<scoreDoc> disjunctive(int k) throws IOException {
 
         // initialize the priority queue with score in descending order
         PriorityQueue<scoreDoc> scoreDocsDecreasing = new PriorityQueue<>(k, new scoreDocComparator());
@@ -58,6 +159,7 @@ public class utils {
             // update the next docID
             nextDocID = CollectionStatistics.getDocCount();
 
+            // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {
 
                 // check if the posting list is empty
@@ -167,7 +269,7 @@ public class utils {
         return result;
     }
 
-    public static PriorityQueue<scoreDoc> maxScore(int k) throws IOException {
+    /*public static PriorityQueue<scoreDoc> maxScore(int k) throws IOException {
 
         // initialize the priority queue with score in descending order
         PriorityQueue<scoreDoc> scoreDocsDecreasing = new PriorityQueue<>(k, new scoreDocComparator());
@@ -306,15 +408,10 @@ public class utils {
         }
 
         return scoreDocsDecreasing;
-    }
-
-    
-
-
-
+    }*/
 
     // conjunctive query
-    public static PriorityQueue<scoreDoc> conjunctive(int k) throws IOException {
+    /*public static PriorityQueue<scoreDoc> conjunctive(int k) throws IOException {
 
         // initialize the priority queue with score in descending order
         PriorityQueue<scoreDoc> scoreDocsDecreasing = new PriorityQueue<>(k, new scoreDocComparator());
@@ -402,19 +499,23 @@ public class utils {
             }
         }
 
-    }
+    }*/
 
-    private static boolean controlPostingLists(int currentDocID) throws IOException {
+
+    /*private static boolean controlPostingLists(int currentDocID) throws IOException {
         // check if the current docID is present in all the posting lists
         for (PostingList postingList : queryHandler.orderedPostingList) {
 
             // check if the current docID is present in the posting list
-            postingList.nextGEQ(currentDocID);
-            if (postingList.getCurrentPostingList() == null)
+            //postingList.nextGEQ(currentDocID);
+            postingList.nextPosting();
+            if (postingList.getCurrentPostingList() == null || postingList.getCurrentPostingList().getDocID() > currentDocID)
                 return false;
+            else if (postingList.getCurrentPostingList().getDocID() == currentDocID)
+                continue;
         }
 
         // the current docID is present in all the posting lists
         return true;
-    }
+    }*/
 }
