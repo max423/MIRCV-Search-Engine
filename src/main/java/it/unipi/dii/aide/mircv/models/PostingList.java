@@ -18,7 +18,7 @@ public class PostingList {
     private String term;
     private final ArrayList<Posting> postingList;
 
-    private static SkipElem skipBlock;
+    //private static SkipElem skipBlock;
 
     private Posting currentPostingList;
 
@@ -28,7 +28,7 @@ public class PostingList {
     // max TF-IDF score
     private double TFIDF;
 
-    public static Iterator<SkipElem> skipElemIterator = null;
+    //public static Iterator<SkipElem> skipElemIterator = null;
     public static Iterator<Posting> postingListIterator = null;
 
     private RandomAccessFile docId_RAF;
@@ -173,14 +173,19 @@ public class PostingList {
         }
     }
 
-    public void readPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+    //public void readPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+    public void readPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId, long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
         // intialize one buffer for docIds and one for termFreqs
-        ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
-        ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
+        //ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
+        //ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
+        ByteBuffer bufferDocId = ByteBuffer.allocate(docIdsLen);
+        ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen);
 
         // get the position of the docIds and termFreqs
-        channelDocID.position(skip.getOffsetDocID());
-        channelTermFreq.position(skip.getOffsetFreq());
+        //channelDocID.position(skip.getOffsetDocID());
+        //channelTermFreq.position(skip.getOffsetFreq());
+        channelDocID.position(offsetDocId);
+        channelTermFreq.position(offsetTermFreq);
 
         // read the docIds and termFreqs
         while (bufferDocId.hasRemaining())
@@ -194,7 +199,7 @@ public class PostingList {
         bufferTermFreq.rewind();
 
         // create the posting list
-        for (int i = 0; i < skip.getBlockDocIDLen() / 4; i++) {
+        for (int i = 0; i < docIdsLen / 4; i++) {
             int docId = bufferDocId.getInt();
             int termFreq = bufferTermFreq.getInt();
 
@@ -203,14 +208,19 @@ public class PostingList {
 
     }
 
-    public void readCompressedPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+    //public void readCompressedPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+    public void readCompressedPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId, long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
         // intialize one buffer for docIds and one for termFreqs
-        ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
-        ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
+        //ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
+        //ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
+        ByteBuffer bufferDocId = ByteBuffer.allocate(docIdsLen);
+        ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen);
 
         // get the position of the docIds and termFreqs
-        channelDocID.position(skip.getOffsetDocID());
-        channelTermFreq.position(skip.getOffsetFreq());
+        //channelDocID.position(skip.getOffsetDocID());
+        //channelTermFreq.position(skip.getOffsetFreq());
+        channelDocID.position(offsetDocId);
+        channelTermFreq.position(offsetTermFreq);
 
         // read the docIds and termFreqs
         while (bufferDocId.hasRemaining())
@@ -228,9 +238,9 @@ public class PostingList {
         ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
 
         // create the posting list
-        for (int i = 0; i < skip.getBlockDocIDLen() / 4; i++) {
-            int docId = bufferDocId.getInt();
-            int termFreq = bufferTermFreq.getInt();
+        for (int i = 0; i < docIdsLen / 4; i++) {
+            int docId = docIds.get(i);
+            int termFreq = termFreqs.get(i);
 
             this.postingList.add(new Posting(docId, termFreq));
         }
@@ -248,7 +258,7 @@ public class PostingList {
         VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
 
         // read skipping info
-        RandomAccessFile skip_RAF = new RandomAccessFile(FileUtils.Path_Skipping, "r");
+        //RandomAccessFile skip_RAF = new RandomAccessFile(FileUtils.Path_Skipping, "r");
 
         // check if the term is in the vocabulary
         if (vocabularyElem == null) {
@@ -258,74 +268,76 @@ public class PostingList {
 
 
         // get the number of blocks of term
-        ArrayList<SkipElem> blocks;
-        if (vocabularyElem.getSkipLen() == 0){
+        //ArrayList<SkipElem> blocks;
+        //if (vocabularyElem.getSkipLen() == 0){
             // il termine ha una lista di posting più piccola di 1024, e quindi viene creato un unico blocco di skipping contenente l'intera lista di posting
 
             // initialize a new ArrayList of blocks
-            blocks = new ArrayList<>();
+            //blocks = new ArrayList<>();
 
-            skipBlock= new SkipElem(0, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
-            blocks.add(skipBlock);
+            //skipBlock= new SkipElem(0, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
+            //blocks.add(skipBlock);
 
-            skipElemIterator = blocks.iterator();
-            skipElemIterator.next();
+            //skipElemIterator = blocks.iterator();
+            //skipElemIterator.next();
 
-            if(Configuration.isIndex_compressionON()){
+            //if(Configuration.isIndex_compressionON()){
                 // compression On
-                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-            }
-            else {
+                //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+            //}
+            //else {
                 // compression Off
-                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-            }
+                //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+            //}
 
             // set the last docID
-            skipBlock.setDocID(this.getPostingList().get(this.getPostingList().size()-1).getDocID());
-        }
-        else{
+            //skipBlock.setDocID(this.getPostingList().get(this.getPostingList().size()-1).getDocID());
+        //}
+        //else{
             //vengono recuperate le informazioni di skipping dal file
 
             // size of step
-            int step = 32;
+            //int step = 32;
 
             // address to read the skip info
-            long skipAddress = vocabularyElem.getSkipOffset();
+            //long skipAddress = vocabularyElem.getSkipOffset();
 
             // number of blocks
-            int numBlocks = vocabularyElem.getSkipLen() / step;
+            //int numBlocks = vocabularyElem.getSkipLen() / step;
 
             // initialize a new ArrayList of blocks
-            blocks = new ArrayList<>();
+            //blocks = new ArrayList<>();
 
             // read the skip info
-            for (int i = 0; i < numBlocks; i++) {
-                SkipElem skipElem = new SkipElem();
+            //for (int i = 0; i < numBlocks; i++) {
+                //SkipElem skipElem = new SkipElem();
                 // read skipping element from disk
-                skipElem.readFromDisk(skip_RAF.getChannel(), skipAddress + i * step);
+                //skipElem.readFromDisk(skip_RAF.getChannel(), skipAddress + i * step);
                 // add the skip element to the list
-                blocks.add(skipElem);
-            }
+                //blocks.add(skipElem);
+            //}
 
             // current block
-            skipBlock = blocks.get(0);
+            //skipBlock = blocks.get(0);
 
             // initialize the iterator
-            skipElemIterator = blocks.iterator();
-            skipElemIterator.next();
+            //skipElemIterator = blocks.iterator();
+            //skipElemIterator.next();
 
             if(Configuration.isIndex_compressionON()) {
                 // compressione index On
-                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+                //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
             }else{
                 // compressione index Off
-                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+                //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
             }
-        }
+        //}
 
         // set posting list iterator
-        postingListIterator = postingList.iterator();
-        currentPostingList = postingListIterator.next();
+        //postingListIterator = postingList.iterator();
+        //currentPostingList = postingListIterator.next();
 
         if (Configuration.isScoreON()) {
             // BM25
@@ -358,41 +370,39 @@ public class PostingList {
         } else {
             // the posting list is empty and there are no more blocks
 
-            if (skipElemIterator == null || !skipElemIterator.hasNext()) {
+            //if (skipElemIterator == null || !skipElemIterator.hasNext()) {
                 // the posting list is empty and there are no more blocks
                 currentPostingList = null;
                 return;
-            }
+            //}
+
 
             // get the next block
-            SkipElem nextBlock = skipElemIterator.next();
+            //SkipElem nextBlock = skipElemIterator.next();
 
             // clear the posting list
-            postingList.clear();
+            //postingList.clear();
 
             // read the posting list from disk
-            try {
-                if(Configuration.isIndex_compressionON()) {
+            //try {
+                //if(Configuration.isIndex_compressionON()) {
                     // compressione index On
-                    readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
-                }else{
+                    //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
+                //}else{
                     // compressione index Off
-                    readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
+                //}
+            //} catch (IOException e) {
+                //e.printStackTrace();
+            //}
 
             // set the posting list iterator
-            postingListIterator = postingList.iterator();
+            //postingListIterator = postingList.iterator();
         }
-
-        // set the current posting list
-        currentPostingList = postingListIterator.next();
     }
 
     // skip to the next posting
-    public void nextGEQ(int currentDocID) {
+    /*public void nextGEQ(int currentDocID) {
 
         boolean blockChanged = false;
 
@@ -439,7 +449,7 @@ public class PostingList {
         while (currentPostingList.getDocID() < currentDocID && postingListIterator.hasNext()) {
             currentPostingList = postingListIterator.next();
         }
-    }
+    }*/
 
 
     // TODO Possiamo eliminarla
