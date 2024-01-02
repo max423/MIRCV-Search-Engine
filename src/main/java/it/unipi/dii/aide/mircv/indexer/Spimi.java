@@ -6,6 +6,7 @@ import it.unipi.dii.aide.mircv.utils.FileUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -30,7 +31,11 @@ public class Spimi {
     public static HashMap<String, PostingList> postingListElem = new HashMap<>();
     private long MEMORYFree_THRESHOLD;
 
+    public static ArrayList<Integer> docLen = new ArrayList<>();     // array di doc len for scoring
+
     public static int lastDocId = 0; // save last docId for CollectionStatistics
+
+    public static int totalLentgh = 0; // save last docId for CollectionStatistics
 
 
     public int startIndexer() throws IOException {
@@ -47,6 +52,7 @@ public class Spimi {
         String text;
         int tab;
         int documnetLength;
+
 
         MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *10 / 100; // leave 20% of memory free
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
@@ -76,10 +82,14 @@ public class Spimi {
             String[] tokens = TextProcessing.DocumentProcessing(text);
 
             documnetLength = tokens.length;
+            totalLentgh += documnetLength;
 
             // new document index elem
             DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
+
+            // add doc length to array for scoring
+            docLen.add(documnetLength);
 
             if (Configuration.isTesting()){
                 System.out.println("\nDocId: " + docid + " DocNo: " + docno + " DocLen: " + documnetLength);
@@ -95,7 +105,7 @@ public class Spimi {
                     continue;
 
                 // compute term frequency in the document
-                int tf = Collections.frequency(java.util.Arrays.asList(tokens), token);
+                int tf = Collections.frequency(Arrays.asList(tokens), token);
 
                 // check if token is already in the vocabulary
                 if (vocabulary.containsKey(token)) {
@@ -151,6 +161,7 @@ public class Spimi {
         System.out.println("Block " + blockNum + " written on disk.");
 
         lastDocId = docid; // save last docId for CollectionStatistics
+
         // close the docIndex_RAF
         docIndex_RAF.close();
 

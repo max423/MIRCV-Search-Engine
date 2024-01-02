@@ -1,6 +1,6 @@
 {
-  "read_compressionON":true,
+  "read_compressionON":false,
   "stemming_stopwordON":true,
   "index_compressionON":true,
-  "testing_ON":true
+  "testing_ON":false
 }

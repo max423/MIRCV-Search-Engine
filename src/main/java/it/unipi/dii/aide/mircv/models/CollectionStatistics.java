@@ -11,6 +11,9 @@ public class CollectionStatistics {
     private static long totalLength;
 
 
+
+
+
     public CollectionStatistics() {
         this.docCount = 0;
         this.totalLength = 0;
@@ -33,10 +36,11 @@ public class CollectionStatistics {
         return totalLength;
     }
 
-    // incremento numero di termini
-    public void incrementTotalLength() {
-        this.totalLength += 1;
+    public void setTotalLength(int totalLength) {
+        this.totalLength = totalLength;
     }
+
+
 
     // incremento numero di documenti
     public void setDocCount(int lastDocId) {
