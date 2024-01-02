@@ -43,6 +43,9 @@ public class Indexer {
 
         // salva su log file tutti i tempi di esecuzione, il numero di blocchi e la dimensione totale dei file finali
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
+
+        // print the final structure
+        PlotFinalStructure();
     }
 
 
@@ -60,7 +63,7 @@ public class Indexer {
         // take the size of the file
         while (true) {
             try {
-                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+                if (!((currentOffset + 80) < channelVocabulary.size())) break;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -73,7 +76,7 @@ public class Indexer {
             System.out.println(vocabularyElem);
 
             // update the offset
-            currentOffset += 56;
+            currentOffset += 80;
 
             // read the posting list
             PostingList postingList = new PostingList(vocabularyElem.getTerm());

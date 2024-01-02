@@ -238,7 +238,7 @@ public class PostingList {
         ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
 
         // create the posting list
-        for (int i = 0; i < docIdsLen / 4; i++) {
+        for (int i = 0; i < docIdsLen; i++) {   // modificato da docIdsLen/4 a docIdsLen
             int docId = docIds.get(i);
             int termFreq = termFreqs.get(i);
 
@@ -335,9 +335,9 @@ public class PostingList {
             }
         //}
 
-        // set posting list iterator
-        //postingListIterator = postingList.iterator();
-        //currentPostingList = postingListIterator.next();
+        // set posting list iterator ! serve !
+        postingListIterator = postingList.iterator();
+        currentPostingList = postingListIterator.next();
 
         if (Configuration.isScoreON()) {
             // BM25
@@ -347,11 +347,10 @@ public class PostingList {
             this.TFIDF = vocabularyElem.getMaxTFIDF();
         }
 
-
     }
 
     public Posting getCurrentPostingList() {
-        return currentPostingList;
+        return this.currentPostingList;
     }
 
     public Double getMaxBM25() {
@@ -366,7 +365,7 @@ public class PostingList {
     public void nextPosting() {
         // check if the posting list is empty
         if (postingListIterator.hasNext()) {
-            currentPostingList = postingListIterator.next();
+            this.currentPostingList = postingListIterator.next();
         } else {
             // the posting list is empty and there are no more blocks
 

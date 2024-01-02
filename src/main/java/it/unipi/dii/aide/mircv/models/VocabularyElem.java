@@ -34,11 +34,6 @@ public class VocabularyElem {
     // number of bytes of the termFreqs posting list
     protected int termFreqLen;
 
-    // length of the skip information
-    private int skipLen;
-
-    // skip offset
-    private long skipOffset;
 
     // inverse document frequency
     private double idf;
@@ -100,9 +95,6 @@ public class VocabularyElem {
         return docIdsLen;
     }
 
-    public void setSkipLen(int skipLen) {
-        this.skipLen = skipLen;
-    }
 
 
     public void setDocIdsLen(int docIdsLen) {
@@ -167,10 +159,6 @@ public class VocabularyElem {
         this.CollFreq += cf;
     }
 
-    public int getSkipLen() {
-        return this.skipLen;
-    }
-
 
 
 
@@ -185,8 +173,6 @@ public class VocabularyElem {
                 ", termFreqOffset=" + termFreqOffset +
                 ", docIdsLen=" + docIdsLen +
                 ", termFreqLen=" + termFreqLen +
-                ", skipLen=" + skipLen +
-                ", skipOffset=" + skipOffset +
                 ", idf=" + idf +
                 ", maxBM25=" + maxBM25 +
                 ", maxTFIDF=" + maxTFIDF +
@@ -194,7 +180,7 @@ public class VocabularyElem {
     }
 
     public void writeToDisk(FileChannel channelVoc) throws IOException {
-        ByteBuffer buffer = ByteBuffer.allocate(20 + 4 + 4 + 4 + 8 + 8 + 4 + 4 + 4 + 8 + 8 + 8 + 8 ); // stringa paddata 20 caratteri
+        ByteBuffer buffer = ByteBuffer.allocate(20 + 4 + 4 + 4 + 8 + 8 + 4 + 4  + 8 + 8 + 8 ); // stringa paddata 20 caratteri
 
         channelVoc.position(channelVoc.size());
         CharBuffer charBuffer = CharBuffer.allocate(20);
@@ -211,8 +197,6 @@ public class VocabularyElem {
         buffer.putLong(this.termFreqOffset);
         buffer.putInt(this.docIdsLen);
         buffer.putInt(this.termFreqLen);
-        buffer.putInt(this.skipLen);
-        buffer.putLong(this.skipOffset);
         buffer.putDouble(this.idf);
         buffer.putDouble(this.maxBM25);
         buffer.putDouble(this.maxTFIDF);
@@ -240,14 +224,14 @@ public class VocabularyElem {
             String term = new String(buffer.array(), StandardCharsets.UTF_8).trim();
 
             // creating ByteBuffer for reading df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen
-            buffer = ByteBuffer.allocate(4 + 4 + 4 + 8 + 8 + 4 + 4 + 4 + 8 + 8 + 8 + 8);
+            buffer = ByteBuffer.allocate(4 + 4 + 4 + 8 + 8 + 4 + 4  + 8 + 8 + 8);
 
 //            int skipLen;
 //            long skipOffset;
 //            double idf;
 //            double maxBM25;
 //            double maxTFIDF;
-//            4 + 8 + 8 + 8 + 8 = 36
+//            8 + 8 + 8 = 24
 
             while (buffer.hasRemaining())
                 channel.read(buffer);
@@ -261,8 +245,6 @@ public class VocabularyElem {
             this.termFreqOffset = buffer.getLong();
             this.docIdsLen = buffer.getInt();
             this.termFreqLen =  buffer.getInt();
-            this.skipLen = buffer.getInt();
-            this.skipOffset = buffer.getLong();
             this.idf = buffer.getDouble();
             this.maxBM25 = buffer.getDouble();
             this.maxTFIDF = buffer.getDouble();
@@ -282,13 +264,6 @@ public class VocabularyElem {
         this.idf = idf;
     }
 
-    public long getSkipOffset() {
-        return skipOffset;
-    }
-
-    public void setSkipOffset(long skipOffset) {
-        this.skipOffset = skipOffset;
-    }
 
     public void setMaxTFIDF(double maxTFIDF) {
         this.maxTFIDF = maxTFIDF;
@@ -315,7 +290,7 @@ public class VocabularyElem {
     public void computeBM25andTFIDF(double avgDocLen, PostingList postingList) {
 
         double b = 0.75;
-        double k1 = 1.0;
+        double k1 = 1.2;
 
         double current_BM25 = 0;
         int dl = 0;

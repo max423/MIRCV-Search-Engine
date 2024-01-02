@@ -26,7 +26,7 @@ public class Merger {
     MappedByteBuffer mappedByteBuffer;
     FileChannel channelVocabulary;
 
-    long vocabularyEntrySize= 92; // check
+    long vocabularyEntrySize= 80; // check
 
     String headTerm;
 
@@ -71,7 +71,7 @@ public class Merger {
         System.out.println("Heap: " + heap);
 
         collectionStatistics.setTotalLength(totalLentgh);
-        collectionStatistics.setDocCount(lastDocId);
+        collectionStatistics.setDocCount(lastDocId-1);
 
         while (!heap.isEmpty()) {
             // Extract the entry <term,blocknum> from the heap
@@ -118,13 +118,10 @@ public class Merger {
 
             }
             else {
-
-
                 // vocabularyElemApp contiene quello vecchio  e devo aggiungere  a postingList la posting list di vocabularyElem
                 // leggere la posting di vocabularyElem (termine corrente) e aggiungere i soui posting alla posting list
 
                 postingList.addPostingFromDisk(GetCorrectChannel(blockNumCorrent, 1), GetCorrectChannel(blockNumCorrent, 2), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-
 
                 // termine doppione aggiorno i dati del vocabolario
                 vocabularyElemApp.incDocFreq(vocabularyElem.getDocFreq());
@@ -205,8 +202,8 @@ public class Merger {
         vocabularyElem.computeBM25andTFIDF(collectionStatistics.getAvgDocLen(), postingList);
 
         //vocabularyElem.setOffset_skipInfo(skippingBlock_raf.getChannel().size());
-        vocabularyElem.setSkipOffset(0);
-        vocabularyElem.setSkipLen(0);
+        //vocabularyElem.setSkipOffset(0);
+        //vocabularyElem.setSkipLen(0);
 
     }
 
@@ -214,7 +211,7 @@ public class Merger {
     // take all the information from the partial_vocabulary for 1 vocabularyElem
     private VocabularyElem readVocabularyFromPartialFile(String t, long currentOffset, FileChannel channel) throws IOException {
         // 20 (term) + 4 (df) + 4 (cf) + 4(lastDocIdInserted) + 8 (docIdsOffset) + 8 (termFreqOffset) + 4 (docIdsLen) + 4(termFreqLen) = 56 bytes
-        // 20 (term) + 4 (df) + 4 (cf) + 4(lastDocIdInserted) + 8 (docIdsOffset) + 8 (termFreqOffset) + 4 (docIdsLen) + 4(termFreqLen) + 4(skipLen) + 8(skipOffset) + 8(idf) + 8(maxBM25) + 8(maxTFIDF) = 92 bytes
+        // 20 (term) + 4 (df) + 4 (cf) + 4(lastDocIdInserted) + 8 (docIdsOffset) + 8 (termFreqOffset) + 4 (docIdsLen) + 4(termFreqLen) + 8(idf) + 8(maxBM25) + 8(maxTFIDF) = 80 bytes
         try {
             // creating ByteBuffer for reading term
             ByteBuffer buffer = ByteBuffer.allocate(20);
@@ -223,7 +220,7 @@ public class Merger {
             String term = t;
 
             // creating ByteBuffer for reading df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen
-            buffer = ByteBuffer.allocate(4 + 4 + 4 + 8 + 8 + 4 + 4+ 4 + 8 + 8 + 8 + 8);
+            buffer = ByteBuffer.allocate(4 + 4 + 4 + 8 + 8 + 4 + 4 + 8 + 8 + 8);
 
             while (buffer.hasRemaining())
                 channel.read(buffer);
@@ -236,8 +233,6 @@ public class Merger {
             long termFreqOffset = buffer.getLong();          // reading termFreqOffset from buffer
             int docIdsLen = buffer.getInt();                 // reading docIdsLen from buffer
             int termFreqLen = buffer.getInt();               // reading termFreqLen from buffer
-            int skipLen = buffer.getInt();                   // reading skipLen from buffer
-            long skipOffset = buffer.getLong();              // reading skipOffset from buffer
             double idf = buffer.getDouble();                 // reading idf from buffer
             double maxBM25 = buffer.getDouble();             // reading maxBM25 from buffer
             double maxTFIDF = buffer.getDouble();            // reading maxTFIDF from buffer
@@ -246,8 +241,8 @@ public class Merger {
             VocabularyElem vocabularyElem = new VocabularyElem(term, df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen);
             //System.out.println("VocabularyElem :" + vocabularyElem);
 
-            vocabularyElem.setSkipLen(skipLen);
-            vocabularyElem.setSkipOffset(skipOffset);
+            //vocabularyElem.setSkipLen(skipLen);
+            //vocabularyElem.setSkipOffset(skipOffset);
             vocabularyElem.setIdf(idf);
             vocabularyElem.setMaxBM25(maxBM25);
             vocabularyElem.setMaxTFIDF(maxTFIDF);

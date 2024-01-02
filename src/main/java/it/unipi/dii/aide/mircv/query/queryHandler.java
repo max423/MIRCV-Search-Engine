@@ -9,7 +9,7 @@ import java.util.*;
 
 import static it.unipi.dii.aide.mircv.text_processing.TextProcessing.DocumentProcessing;
 
-// receive a query and return the top k (10 or 20) results
+// receive a query and return the top k  results
 public class queryHandler {
 
     public static ArrayList<PostingList> orderedPostingList = new ArrayList<>();
@@ -113,6 +113,7 @@ public class queryHandler {
             // DAAT configuration
             priorityQueue = utils.disjunctive(k);
         }
+
 
         // print the results
         printResults(priorityQueue, k);

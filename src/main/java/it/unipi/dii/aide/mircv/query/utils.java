@@ -9,21 +9,21 @@ import it.unipi.dii.aide.mircv.utils.FileUtils;
 import java.io.IOException;
 import java.util.*;
 
+import static it.unipi.dii.aide.mircv.utils.FileUtils.collectionStatistics;
+
 public class utils {
 
     // get the min docID from the posting list
     public static int getMinDocID() {
-        // get the first docID
-        int minDocID = -1;
+        int minDocID = Integer.MAX_VALUE;
         int docIDcmp;
 
-        for (PostingList postingList : queryHandler.orderedPostingList) {
+        for (PostingList postingList : queryHandler.postingListQuery) {
             docIDcmp = postingList.getPostingList().get(0).getDocID();
             if (docIDcmp < minDocID) {
                 minDocID = docIDcmp;
             }
         }
-
         return minDocID;
     }
 
@@ -57,7 +57,7 @@ public class utils {
             // reset the score
             score = 0;
             // update the next docID
-            nextDocID = CollectionStatistics.getDocCount();
+            nextDocID = collectionStatistics.getDocCount();
             // update the flag
             present = true;
 
@@ -157,10 +157,16 @@ public class utils {
             // reset the score
             score = 0;
             // update the next docID
-            nextDocID = CollectionStatistics.getDocCount();
+            nextDocID = collectionStatistics.getDocCount();
 
             // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {
+
+                System.out.println("----------");
+                System.out.println("current postinglist "+postingList);
+                System.out.println("Current Docid "+ currentDocID);
+                System.out.println("Next Docid "+ nextDocID);
+                System.out.println("current PIT "+postingList.getCurrentPostingList());
 
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
@@ -169,6 +175,7 @@ public class utils {
 
                 // check if the docID is the same
                 if (postingList.getCurrentPostingList().getDocID() == currentDocID) {
+
                     // update the score
                     if (Configuration.isScoreON()) {
                         // BM25
@@ -189,6 +196,7 @@ public class utils {
 
                 // update the next docID
                 if (postingList.getCurrentPostingList().getDocID() < nextDocID) {
+                    System.out.println("_______?????????:_________");
                     nextDocID = postingList.getCurrentPostingList().getDocID();
                 }
             }

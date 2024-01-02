@@ -1,4 +1,5 @@
 package it.unipi.dii.aide.mircv.utils;
+import it.unipi.dii.aide.mircv.models.CollectionStatistics;
 import it.unipi.dii.aide.mircv.models.DocumentIndexElem;
 import it.unipi.dii.aide.mircv.models.VocabularyElem;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
@@ -61,6 +62,9 @@ public class FileUtils {
 
     // HashMap to store the document index
     public static HashMap<Integer, DocumentIndexElem> documentIndex = new HashMap<>();
+
+    // collection statistics
+    public static CollectionStatistics collectionStatistics = new CollectionStatistics();
 
 
 
@@ -223,12 +227,16 @@ public class FileUtils {
         loadVocabulary();
         System.out.println("Loading Document Index ...");
         loadDocumentIndex();
+        System.out.println("Loading Collection Statistics ...");
+        collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
+
     }
+
 
     private static void loadVocabulary() throws IOException {
         // Initial offset
         long currentOffset = 0;
-        int VOCABULARY_ELEM_SIZE = 92;
+        int VOCABULARY_ELEM_SIZE = 80;
 
         // Get the channel
         FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
@@ -264,5 +272,7 @@ public class FileUtils {
             }
         }
     }
+
+
 
 }
