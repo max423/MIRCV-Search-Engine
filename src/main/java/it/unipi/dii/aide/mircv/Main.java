@@ -131,4 +131,29 @@ public class Main {
             try {
                 k = scanner.nextInt();
                 break;
-            } catch (java.util.Inp
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Invalid input.");
+                scanner.nextLine();
+            }
+        }
+
+        scanner.nextLine();
+    }
+
+    private static Boolean readIntInput(Scanner scanner, int minValue, int maxValue) {
+        int input;
+        do {
+            System.out.print("Enter " + minValue + " or " + maxValue + ": ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next();
+            }
+            input = scanner.nextInt();
+        } while (input < minValue || input > maxValue);
+
+        return input == 1; // 1: true, 2: false
+    }
+
+
+}
+
