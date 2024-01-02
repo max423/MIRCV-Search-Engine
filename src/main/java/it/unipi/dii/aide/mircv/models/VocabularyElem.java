@@ -1,10 +1,14 @@
 package it.unipi.dii.aide.mircv.models;
 
+import it.unipi.dii.aide.mircv.indexer.Spimi;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+
+import static it.unipi.dii.aide.mircv.indexer.Spimi.lastDocId;
 
 public class VocabularyElem {
     private String term;
@@ -45,6 +49,10 @@ public class VocabularyElem {
     // max TFIDF
     private double maxTFIDF;
 
+
+    public void setMaxBM25(double maxBM25) {
+        this.maxBM25 = maxBM25;
+    }
 
 
 
@@ -255,5 +263,42 @@ public class VocabularyElem {
 
     public double getMaxTFIDF() {
         return maxTFIDF;
+    }
+
+    public void setIDF() {
+        // lastDocId at the end is the number of documents in the collection
+        this.idf = Math.log10(lastDocId / (double)this.DocFreq);
+    }
+
+//    public void setMaxTFIDF(int maxTermFreq){
+//        this.maxTFIDF = (1 + Math.log10(maxTermFreq)) * this.idf;
+//    }
+
+
+    public void computeBM25andTFIDF(double avgDocLen, PostingList postingList) {
+
+        double b = 0.75;
+        double k1 = 1.0;
+
+        double current_BM25 = 0;
+        int dl = 0;
+        int maxTermFreq = 0;
+
+        for (Posting p : postingList.getPostingList()) {
+            dl = Spimi.docLen.get((int) (p.getDocID() - 1));         // doc len
+
+            current_BM25 = (p.getTermFreq() / ((k1 - b) + b * dl / avgDocLen) + p.getTermFreq()) * this.idf;
+
+            if (current_BM25 > this.getMaxBM25())
+                this.setMaxBM25(current_BM25);
+
+            // search for max term freq
+            if (p.getTermFreq() > maxTermFreq)
+                maxTermFreq = p.getTermFreq();
+        }
+
+
+        this.maxTFIDF = (1 + Math.log10(maxTermFreq)) * this.idf;
+
     }
 }

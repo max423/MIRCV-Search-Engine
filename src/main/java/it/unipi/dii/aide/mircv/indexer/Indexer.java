@@ -38,13 +38,11 @@ public class Indexer {
         stopTime = System.currentTimeMillis();
         elapsedTimeMerger = stopTime - startTime;
 
-        //PlotFinalStructure();
+        // remove all partial file
+        FileUtils.removePartialFiles();
 
-        // salva su log file tutti i tempi di esecuzione e il numero di blocchi
+        // salva su log file tutti i tempi di esecuzione, il numero di blocchi e la dimensione totale dei file finali
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
-
-
-
     }
 
 
@@ -250,10 +248,3 @@ public class Indexer {
     }
 
 }
-
-
-
-
-
-
-

@@ -18,6 +18,7 @@ import java.util.PriorityQueue;
 import static it.unipi.dii.aide.mircv.compression.unary.writeTermFreqCompressed;
 import static it.unipi.dii.aide.mircv.compression.variableByte.writeDocIdCompressed;
 import static it.unipi.dii.aide.mircv.indexer.Spimi.lastDocId;
+import static it.unipi.dii.aide.mircv.indexer.Spimi.totalLentgh;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.CreateFinalStructure;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
 
@@ -39,6 +40,7 @@ public class Merger {
     int docIdNewLen;
 
     CollectionStatistics collectionStatistics = new CollectionStatistics();
+
 
     public void startMerger(int blockNumber) throws IOException {
 
@@ -67,6 +69,9 @@ public class Merger {
         populateHeap(blockNumber, heap);
         System.out.println("Heap size: " + heap.size());
         System.out.println("Heap: " + heap);
+
+        collectionStatistics.setTotalLength(totalLentgh);
+        collectionStatistics.setDocCount(lastDocId);
 
         while (!heap.isEmpty()) {
             // Extract the entry <term,blocknum> from the heap
@@ -130,8 +135,6 @@ public class Merger {
                 // aggiornare Max
                 vocabularyElem = vocabularyElemApp;
 
-
-
             }
 
             if (!headTerm.equals(entry.getKey())) {
@@ -166,29 +169,42 @@ public class Merger {
                     vocabularyElem.setTermFreqOffset(GetCorrectChannel(-1, 2).size() - vocabularyElem.getTermFreqLen());
                 }
 
+                // compute score
+                computeScore(vocabularyElem);
+
                 // write the term in the final_vocabulary
                 vocabularyElem.writeToDisk(GetCorrectChannel(-1, 0));
 
                 vocabularyElemApp = null;
                 postingList = null;
 
-                // update collection statistics
-                collectionStatistics.incrementTotalLength(); // +1 per il termine
+                // update collection statistics TODO
+                //collectionStatistics.incrementTotalLength(); // +1 per il termine
 
-                if (collectionStatistics.getTotalLength() % 50000 == 0) {
-                    System.out.println("< current merged terms: " + collectionStatistics.getTotalLength() +" >");
-                }
+//                if (collectionStatistics.getTotalLength() % 50000 == 0) {
+//                    System.out.println("< current merged terms: " + collectionStatistics.getTotalLength() +" >");
+//                }
 
             }
 
         }
 
-        collectionStatistics.setDocCount(lastDocId);
+
         // write the collectionStatistics on the disk
         collectionStatistics.writeToDisk(GetCorrectChannel(-1, 3));
 
         System.out.println("> Merging completed!");
 
+    }
+
+    private void computeScore(VocabularyElem vocabularyElem) {
+        // compute inverse document frequency
+        vocabularyElem.setIDF();
+
+        // compute BM25 and TFIDF
+        vocabularyElem.computeBM25andTFIDF(collectionStatistics.getAvgDocLen(), postingList);
+
+        //vocabularyElem.setOffset_skipInfo(skippingBlock_raf.getChannel().size());
     }
 
     // take all the information from the partial_vocabulary for 1 vocabularyElem
