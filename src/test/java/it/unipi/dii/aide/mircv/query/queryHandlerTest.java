@@ -32,74 +32,34 @@ class queryHandlerTest {
         System.out.println("Query tokens: " + tokens2);
         System.out.println("Query tokens: " + tokens3);
 
-        // BM25 + Conjunctive + MaxScore
+        // BM25 + Conjunctive
         Configuration configuration = new Configuration();
         configuration.setScoreON(true); // BM25
         configuration.setConjunctiveON(true); // Conjunctive
-        configuration.setMaxScoreON(true); // MaxScore
 
         queryHandler.executeQuery(tokens1, 5);
         queryHandler.executeQuery(tokens2, 5);
         queryHandler.executeQuery(tokens3, 5);
 
-        // TFIDF + Conjunctive + MaxScore
+        // TFIDF + Conjunctive
         configuration.setScoreON(false); // TFIDF
         configuration.setConjunctiveON(true); // Conjunctive
-        configuration.setMaxScoreON(true); // MaxScore
 
         queryHandler.executeQuery(tokens1, 5);
         queryHandler.executeQuery(tokens2, 5);
         queryHandler.executeQuery(tokens3, 5);
 
-        // BM25 + Disjunctive + MaxScore
+        // BM25 + Disjunctive
         configuration.setScoreON(true); // BM25
         configuration.setConjunctiveON(false); // Disjunctive
-        configuration.setMaxScoreON(true); // MaxScore
 
         queryHandler.executeQuery(tokens1, 5);
         queryHandler.executeQuery(tokens2, 5);
         queryHandler.executeQuery(tokens3, 5);
 
-        // TFIDF + Disjunctive + MaxScore
+        // TFIDF + Disjunctive
         configuration.setScoreON(false); // TFIDF
         configuration.setConjunctiveON(false); // Disjunctive
-        configuration.setMaxScoreON(true); // MaxScore
-
-        queryHandler.executeQuery(tokens1, 5);
-        queryHandler.executeQuery(tokens2, 5);
-        queryHandler.executeQuery(tokens3, 5);
-
-        // BM25 + Conjunctive + DAAT
-        configuration.setScoreON(true); // BM25
-        configuration.setConjunctiveON(true); // Conjunctive
-        configuration.setMaxScoreON(false); // DAAT
-
-        queryHandler.executeQuery(tokens1, 5);
-        queryHandler.executeQuery(tokens2, 5);
-        queryHandler.executeQuery(tokens3, 5);
-
-        // TFIDF + Conjunctive + DAAT
-        configuration.setScoreON(false); // TFIDF
-        configuration.setConjunctiveON(true); // Conjunctive
-        configuration.setMaxScoreON(false); // DAAT
-
-        queryHandler.executeQuery(tokens1, 5);
-        queryHandler.executeQuery(tokens2, 5);
-        queryHandler.executeQuery(tokens3, 5);
-
-        // BM25 + Disjunctive + DAAT
-        configuration.setScoreON(true); // BM25
-        configuration.setConjunctiveON(false); // Disjunctive
-        configuration.setMaxScoreON(false); // DAAT
-
-        queryHandler.executeQuery(tokens1, 5);
-        queryHandler.executeQuery(tokens2, 5);
-        queryHandler.executeQuery(tokens3, 5);
-
-        // TFIDF + Disjunctive + DAAT
-        configuration.setScoreON(false); // TFIDF
-        configuration.setConjunctiveON(false); // Disjunctive
-        configuration.setMaxScoreON(false); // DAAT
 
         queryHandler.executeQuery(tokens1, 5);
         queryHandler.executeQuery(tokens2, 5);
