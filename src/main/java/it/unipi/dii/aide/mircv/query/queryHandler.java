@@ -16,7 +16,7 @@ public class queryHandler {
     public static ArrayList<PostingList> postingListQuery = new ArrayList<>();
     public static HashMap<Integer, Double> hashMapScore = new HashMap<>();
     public static HashMap<Integer, Integer> hashMapLength = new HashMap<>();
-    public static ArrayList<Double> maxScoreOrder = new ArrayList<>();
+    //public static ArrayList<Double> maxScoreOrder = new ArrayList<>();
 
     // receive a query and return the top k (10 or 20) results
     public static void executeQuery(ArrayList<String> tokens, int k) throws IOException {
@@ -51,7 +51,6 @@ public class queryHandler {
             // add the posting list to the posting list with the tokens in the query
             postingListQuery.add(postingList);
 
-            // todo vogliamo mantenere queste modalità?
             // check the type of configuration
             if (Configuration.isMaxScoreON()) {
                 // max score configuration
@@ -80,7 +79,7 @@ public class queryHandler {
 
         // todo manteniamo queste modalità?
         // check the type of configuration
-        if (Configuration.isConjunctiveON()) {
+        /*if (Configuration.isConjunctiveON()) {
             // conjunctive configuration
             priorityQueue = utils.conjunctive(k);
         } else {
@@ -104,6 +103,15 @@ public class queryHandler {
                 // DAAT configuration
                 priorityQueue = utils.DAAT(k);
             }
+        }*/
+
+        // check the type of configuration
+        if (Configuration.isConjunctiveON()) {
+            // conjunctive configuration
+            priorityQueue = utils.conjunctive(k);
+        } else {
+            // DAAT configuration
+            priorityQueue = utils.disjunctive(k);
         }
 
         // print the results
@@ -167,8 +175,8 @@ public class queryHandler {
         if (hashMapLength != null)
             hashMapLength.clear();
 
-        if (maxScoreOrder != null)
-            maxScoreOrder.clear();
+        //if (maxScoreOrder != null)
+        //    maxScoreOrder.clear();
     }
 
 
