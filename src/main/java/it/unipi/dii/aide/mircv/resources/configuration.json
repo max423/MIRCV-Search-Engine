@@ -2,5 +2,5 @@
   "read_compressionON":false,
   "stemming_stopwordON":true,
   "index_compressionON":false,
-  "testing_ON":false
+  "testing_ON":true
 }

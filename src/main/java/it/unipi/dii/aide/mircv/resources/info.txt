@@ -1,0 +1,846 @@
+/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home/bin/java -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=51528:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath /Users/simonelandi/Desktop/MIRCV/target/classes:/Users/simonelandi/.m2/repository/ca/rmen/porter-stemmer/1.0.0/porter-stemmer-1.0.0.jar:/Users/simonelandi/.m2/repository/org/apache/commons/commons-compress/1.4.1/commons-compress-1.4.1.jar:/Users/simonelandi/.m2/repository/org/tukaani/xz/1.0/xz-1.0.jar:/Users/simonelandi/.m2/repository/com/google/code/gson/gson/2.10/gson-2.10.jar:/Users/simonelandi/.m2/repository/org/apache/commons/commons-csv/1.8/commons-csv-1.8.jar:/Users/simonelandi/.m2/repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar:/Users/simonelandi/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/simonelandi/.m2/repository/org/mockito/mockito-core/3.11.2/mockito-core-3.11.2.jar:/Users/simonelandi/.m2/repository/net/bytebuddy/byte-buddy/1.11.3/byte-buddy-1.11.3.jar:/Users/simonelandi/.m2/repository/net/bytebuddy/byte-buddy-agent/1.11.3/byte-buddy-agent-1.11.3.jar:/Users/simonelandi/.m2/repository/org/objenesis/objenesis/3.2/objenesis-3.2.jar it.unipi.dii.aide.mircv.indexer.Indexer
+> Start Indexing ...
+Clearing data folder...
+Start Spimi Alg ...
+Reading configuration
+--------------------------------------------------
+Compressed Reading = false
+Stemming & Stopword = true
+Index Compression = false
+Testing = true
+--------------------------------------------------
+MEMORYFree_THRESHOLD : 13631488
+
+DocId: 1 DocNo: 0 DocLen: 26
+Tokens:
+presenc-commun-amid-scientif-mind-equal-success-manhattan-project-scientif-intellect-cloud-hang-impress-achiev-atom-research-engin-success-truli-meant-hundr-thousand-innoc-live-obliter-
+DocId: 2 DocNo: 1 DocLen: 17
+Tokens:
+manhattan-project-atom-bomb-help-bring-world-war-ii-legaci-peac-atom-energi-continu-impact-histori-scienc-
+DocId: 3 DocNo: 2 DocLen: 17
+Tokens:
+essai-manhattan-project-manhattan-project-manhattan-project-atom-bomb-success-project-forev-chang-world-forev-power-manmad-
+DocId: 4 DocNo: 3 DocLen: 25
+Tokens:
+manhattan-project-name-project-conduct-world-war-ii-develop-atom-bomb-refer-specif-period-project-194-2-1946-control-armi-corp-engin-administr-lesli-grove-
+DocId: 5 DocNo: 4 DocLen: 29
+Tokens:
+version-volum-complementari-websit-websit-manhattan-project-interact-histori-avail-offic-histori-heritag-resourc-websit-http-www-cfo-doe-gov-me70-histori-offic-histori-heritag-resourc-nation-nuclear-secur-
+DocId: 6 DocNo: 5 DocLen: 20
+Tokens:
+manhattan-project-classifi-photograph-featur-atom-bomb-weapon-atom-scientist-nicknam-gadget-nuclear-ag-juli-16-1945-deton-mexico-desert-
+DocId: 7 DocNo: 6 DocLen: 18
+Tokens:
+nor-attempt-substitut-extraordinarili-rich-literatur-atom-bomb-world-war-ii-collect-attempt-document-origin-develop-manhattan-project-
+DocId: 8 DocNo: 7 DocLen: 44
+Tokens:
+manhattan-project-manhattan-project-research-develop-undertak-world-war-ii-produc-nuclear-weapon-led-unit-support-unit-kingdom-canada-1942-1946-project-direct-major-lesli-grove-armi-corp-engin-nuclear-physicist-robert-oppenheim-director-lo-alamo-laboratori-design-actual-bomb-armi-compon-project-design-
+DocId: 9 DocNo: 8 DocLen: 13
+Tokens:
+june-1942-unit-armi-corp-engineersbegan-manhattan-project-secret-name-2-atom-bomb-
+DocId: 10 DocNo: 9 DocLen: 19
+Tokens:
+main-reason-hanford-select-site-manhattan-project-reactor-proxim-columbia-river-largest-river-flow-pacif-ocean-north-american-coast-
+DocId: 11 DocNo: 10 DocLen: 23
+Tokens:
+discuss-commun-board-panel-third-parti-victim-offend-dialogu-requir-skill-facilit-suffici-understand-sexual-assault-domest-violenc-date-violenc-trauma-safeti-issu-VocabularyElem written on disk: Vocabulary{term='16', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=0, termFreqOffset=0, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='194', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=4, termFreqOffset=4, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='1942', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=8, termFreqOffset=8, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='1945', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=16, termFreqOffset=16, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='1946', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=20, termFreqOffset=20, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='2', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=28, termFreqOffset=28, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='achiev', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=36, termFreqOffset=36, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='actual', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=40, termFreqOffset=40, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='administr', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=44, termFreqOffset=44, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='ag', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=48, termFreqOffset=48, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='alamo', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=52, termFreqOffset=52, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='american', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=56, termFreqOffset=56, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='amid', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=60, termFreqOffset=60, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='armi', DocFreq=3, CollFreq=4, lastDocIdInserted=9, docIdsOffset=64, termFreqOffset=64, docIdsLen=12, termFreqLen=12, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='assault', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=76, termFreqOffset=76, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='atom', DocFreq=7, CollFreq=9, lastDocIdInserted=9, docIdsOffset=80, termFreqOffset=80, docIdsLen=28, termFreqLen=28, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='attempt', DocFreq=1, CollFreq=2, lastDocIdInserted=7, docIdsOffset=108, termFreqOffset=108, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='avail', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=112, termFreqOffset=112, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='board', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=116, termFreqOffset=116, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='bomb', DocFreq=7, CollFreq=7, lastDocIdInserted=9, docIdsOffset=120, termFreqOffset=120, docIdsLen=28, termFreqLen=28, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='bring', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=148, termFreqOffset=148, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='canada', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=152, termFreqOffset=152, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='cfo', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=156, termFreqOffset=156, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='chang', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=160, termFreqOffset=160, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='classifi', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=164, termFreqOffset=164, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='cloud', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=168, termFreqOffset=168, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='coast', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=172, termFreqOffset=172, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='collect', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=176, termFreqOffset=176, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='columbia', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=180, termFreqOffset=180, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='commun', DocFreq=2, CollFreq=2, lastDocIdInserted=11, docIdsOffset=184, termFreqOffset=184, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='complementari', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=192, termFreqOffset=192, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='compon', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=196, termFreqOffset=196, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='conduct', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=200, termFreqOffset=200, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='continu', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=204, termFreqOffset=204, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='control', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=208, termFreqOffset=208, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='corp', DocFreq=3, CollFreq=3, lastDocIdInserted=9, docIdsOffset=212, termFreqOffset=212, docIdsLen=12, termFreqLen=12, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='date', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=224, termFreqOffset=224, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='desert', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=228, termFreqOffset=228, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='design', DocFreq=1, CollFreq=2, lastDocIdInserted=8, docIdsOffset=232, termFreqOffset=232, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='deton', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=236, termFreqOffset=236, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='develop', DocFreq=3, CollFreq=3, lastDocIdInserted=8, docIdsOffset=240, termFreqOffset=240, docIdsLen=12, termFreqLen=12, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='dialogu', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=252, termFreqOffset=252, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='direct', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=256, termFreqOffset=256, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='director', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=260, termFreqOffset=260, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='discuss', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=264, termFreqOffset=264, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='document', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=268, termFreqOffset=268, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='doe', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=272, termFreqOffset=272, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='domest', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=276, termFreqOffset=276, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='energi', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=280, termFreqOffset=280, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='engin', DocFreq=3, CollFreq=3, lastDocIdInserted=8, docIdsOffset=284, termFreqOffset=284, docIdsLen=12, termFreqLen=12, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='engineersbegan', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=296, termFreqOffset=296, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='equal', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=300, termFreqOffset=300, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='essai', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=304, termFreqOffset=304, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='extraordinarili', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=308, termFreqOffset=308, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='facilit', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=312, termFreqOffset=312, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='featur', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=316, termFreqOffset=316, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='flow', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=320, termFreqOffset=320, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='forev', DocFreq=1, CollFreq=2, lastDocIdInserted=3, docIdsOffset=324, termFreqOffset=324, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='gadget', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=328, termFreqOffset=328, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='gov', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=332, termFreqOffset=332, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='grove', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=336, termFreqOffset=336, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='hanford', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=344, termFreqOffset=344, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='hang', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=348, termFreqOffset=348, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='help', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=352, termFreqOffset=352, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='heritag', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=356, termFreqOffset=356, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='histori', DocFreq=2, CollFreq=5, lastDocIdInserted=5, docIdsOffset=360, termFreqOffset=360, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='http', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=368, termFreqOffset=368, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='hundr', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=372, termFreqOffset=372, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='ii', DocFreq=4, CollFreq=4, lastDocIdInserted=8, docIdsOffset=376, termFreqOffset=376, docIdsLen=16, termFreqLen=16, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='impact', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=392, termFreqOffset=392, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='impress', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=396, termFreqOffset=396, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='innoc', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=400, termFreqOffset=400, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='intellect', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=404, termFreqOffset=404, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='interact', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=408, termFreqOffset=408, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='issu', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=412, termFreqOffset=412, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='juli', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=416, termFreqOffset=416, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='june', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=420, termFreqOffset=420, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='kingdom', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=424, termFreqOffset=424, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='laboratori', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=428, termFreqOffset=428, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='largest', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=432, termFreqOffset=432, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='led', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=436, termFreqOffset=436, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='legaci', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=440, termFreqOffset=440, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='lesli', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=444, termFreqOffset=444, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='literatur', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=452, termFreqOffset=452, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='live', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=456, termFreqOffset=456, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='lo', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=460, termFreqOffset=460, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='main', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=464, termFreqOffset=464, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='major', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=468, termFreqOffset=468, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='manhattan', DocFreq=10, CollFreq=13, lastDocIdInserted=10, docIdsOffset=472, termFreqOffset=472, docIdsLen=40, termFreqLen=40, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='manmad', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=512, termFreqOffset=512, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='me70', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=516, termFreqOffset=516, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='meant', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=520, termFreqOffset=520, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='mexico', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=524, termFreqOffset=524, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='mind', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=528, termFreqOffset=528, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='name', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=532, termFreqOffset=532, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='nation', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=540, termFreqOffset=540, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='nicknam', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=544, termFreqOffset=544, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='nor', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=548, termFreqOffset=548, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='north', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=552, termFreqOffset=552, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='nuclear', DocFreq=3, CollFreq=4, lastDocIdInserted=8, docIdsOffset=556, termFreqOffset=556, docIdsLen=12, termFreqLen=12, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='obliter', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=568, termFreqOffset=568, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='ocean', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=572, termFreqOffset=572, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='offend', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=576, termFreqOffset=576, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='offic', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=580, termFreqOffset=580, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='oppenheim', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=584, termFreqOffset=584, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='origin', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=588, termFreqOffset=588, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='pacif', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=592, termFreqOffset=592, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='panel', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=596, termFreqOffset=596, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='parti', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=600, termFreqOffset=600, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='peac', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=604, termFreqOffset=604, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='period', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=608, termFreqOffset=608, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='photograph', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=612, termFreqOffset=612, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='physicist', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=616, termFreqOffset=616, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='power', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=620, termFreqOffset=620, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='presenc', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=624, termFreqOffset=624, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='produc', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=628, termFreqOffset=628, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='project', DocFreq=10, CollFreq=18, lastDocIdInserted=10, docIdsOffset=632, termFreqOffset=632, docIdsLen=40, termFreqLen=40, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='proxim', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=672, termFreqOffset=672, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='reactor', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=676, termFreqOffset=676, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='reason', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=680, termFreqOffset=680, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='refer', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=684, termFreqOffset=684, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='requir', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=688, termFreqOffset=688, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='research', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=692, termFreqOffset=692, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='resourc', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=700, termFreqOffset=700, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='rich', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=704, termFreqOffset=704, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='river', DocFreq=1, CollFreq=2, lastDocIdInserted=10, docIdsOffset=708, termFreqOffset=708, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='robert', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=712, termFreqOffset=712, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='safeti', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=716, termFreqOffset=716, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='scienc', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=720, termFreqOffset=720, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='scientif', DocFreq=1, CollFreq=2, lastDocIdInserted=1, docIdsOffset=724, termFreqOffset=724, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='scientist', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=728, termFreqOffset=728, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='secret', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=732, termFreqOffset=732, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='secur', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=736, termFreqOffset=736, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='select', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=740, termFreqOffset=740, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='sexual', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=744, termFreqOffset=744, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='site', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=748, termFreqOffset=748, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='skill', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=752, termFreqOffset=752, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='specif', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=756, termFreqOffset=756, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='substitut', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=760, termFreqOffset=760, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='success', DocFreq=2, CollFreq=3, lastDocIdInserted=3, docIdsOffset=764, termFreqOffset=764, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='suffici', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=772, termFreqOffset=772, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='support', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=776, termFreqOffset=776, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='third', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=780, termFreqOffset=780, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='thousand', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=784, termFreqOffset=784, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='trauma', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=788, termFreqOffset=788, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='truli', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=792, termFreqOffset=792, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='understand', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=796, termFreqOffset=796, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='undertak', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=800, termFreqOffset=800, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='unit', DocFreq=2, CollFreq=3, lastDocIdInserted=9, docIdsOffset=804, termFreqOffset=804, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='version', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=812, termFreqOffset=812, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='victim', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=816, termFreqOffset=816, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='violenc', DocFreq=1, CollFreq=2, lastDocIdInserted=11, docIdsOffset=820, termFreqOffset=820, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='volum', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=824, termFreqOffset=824, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='war', DocFreq=4, CollFreq=4, lastDocIdInserted=8, docIdsOffset=828, termFreqOffset=828, docIdsLen=16, termFreqLen=16, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='weapon', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=844, termFreqOffset=844, docIdsLen=8, termFreqLen=8, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='websit', DocFreq=1, CollFreq=3, lastDocIdInserted=5, docIdsOffset=852, termFreqOffset=852, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='world', DocFreq=5, CollFreq=5, lastDocIdInserted=8, docIdsOffset=856, termFreqOffset=856, docIdsLen=20, termFreqLen=20, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+VocabularyElem written on disk: Vocabulary{term='www', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=876, termFreqOffset=876, docIdsLen=4, termFreqLen=4, idf=0.0, maxBM25=0.0, maxTFIDF=0.0}
+Block 0 written on disk.
+Number of blocks generated: 0
+> Start Merging ...
+1
+Creating final structure...
+Heap size: 1
+Heap size: 1
+Heap: [16=0]
+VocabularyElem written on disk: Vocabulary{term='16', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=0, termFreqOffset=0, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='194', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=4, termFreqOffset=4, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='1942', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=8, termFreqOffset=8, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.6275357419961445, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='1945', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=16, termFreqOffset=16, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='1946', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=20, termFreqOffset=20, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3560946261679152, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='2', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=28, termFreqOffset=28, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.6275357419961445, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='achiev', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=36, termFreqOffset=36, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='actual', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=40, termFreqOffset=40, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='administr', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=44, termFreqOffset=44, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='ag', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=48, termFreqOffset=48, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='alamo', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=52, termFreqOffset=52, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='american', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=56, termFreqOffset=56, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='amid', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=60, termFreqOffset=60, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='armi', DocFreq=3, CollFreq=4, lastDocIdInserted=9, docIdsOffset=64, termFreqOffset=64, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.7979585044098048, maxTFIDF=0.7832981079068755}
+VocabularyElem written on disk: Vocabulary{term='assault', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=76, termFreqOffset=76, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='atom', DocFreq=7, CollFreq=9, lastDocIdInserted=9, docIdsOffset=80, termFreqOffset=80, docIdsLen=28, termFreqLen=28, idf=0.23408320603336794, maxBM25=0.9100155168937736, maxTFIDF=0.30454927253060354}
+VocabularyElem written on disk: Vocabulary{term='attempt', DocFreq=1, CollFreq=2, lastDocIdInserted=7, docIdsOffset=108, termFreqOffset=108, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=4.128717049345323, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='avail', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=112, termFreqOffset=112, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='board', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=116, termFreqOffset=116, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='bomb', DocFreq=7, CollFreq=7, lastDocIdInserted=9, docIdsOffset=120, termFreqOffset=120, docIdsLen=28, termFreqLen=28, idf=0.23408320603336794, maxBM25=0.4895947725233673, maxTFIDF=0.23408320603336794}
+VocabularyElem written on disk: Vocabulary{term='bring', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=148, termFreqOffset=148, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='canada', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=152, termFreqOffset=152, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='cfo', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=156, termFreqOffset=156, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='chang', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=160, termFreqOffset=160, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='classifi', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=164, termFreqOffset=164, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='cloud', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=168, termFreqOffset=168, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='coast', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=172, termFreqOffset=172, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='collect', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=176, termFreqOffset=176, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='columbia', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=180, termFreqOffset=180, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='commun', DocFreq=2, CollFreq=2, lastDocIdInserted=11, docIdsOffset=184, termFreqOffset=184, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3886090214300402, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='complementari', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=192, termFreqOffset=192, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='compon', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=196, termFreqOffset=196, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='conduct', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=200, termFreqOffset=200, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='continu', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=204, termFreqOffset=204, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='control', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=208, termFreqOffset=208, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='corp', DocFreq=3, CollFreq=3, lastDocIdInserted=9, docIdsOffset=212, termFreqOffset=212, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.2592335413315223, maxTFIDF=0.6020599913279624}
+VocabularyElem written on disk: Vocabulary{term='date', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=224, termFreqOffset=224, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='desert', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=228, termFreqOffset=228, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='design', DocFreq=1, CollFreq=2, lastDocIdInserted=8, docIdsOffset=232, termFreqOffset=232, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.222806908080922, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='deton', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=236, termFreqOffset=236, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='develop', DocFreq=3, CollFreq=3, lastDocIdInserted=8, docIdsOffset=240, termFreqOffset=240, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.1516764955044256, maxTFIDF=0.6020599913279624}
+VocabularyElem written on disk: Vocabulary{term='dialogu', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=252, termFreqOffset=252, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='direct', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=256, termFreqOffset=256, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='director', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=260, termFreqOffset=260, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='discuss', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=264, termFreqOffset=264, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='document', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=268, termFreqOffset=268, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='doe', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=272, termFreqOffset=272, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='domest', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=276, termFreqOffset=276, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='energi', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=280, termFreqOffset=280, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='engin', DocFreq=3, CollFreq=3, lastDocIdInserted=8, docIdsOffset=284, termFreqOffset=284, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.0492180260174684, maxTFIDF=0.6020599913279624}
+VocabularyElem written on disk: Vocabulary{term='engineersbegan', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=296, termFreqOffset=296, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.257152512661906, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='equal', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=300, termFreqOffset=300, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='essai', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=304, termFreqOffset=304, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='extraordinarili', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=308, termFreqOffset=308, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='facilit', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=312, termFreqOffset=312, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='featur', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=316, termFreqOffset=316, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='flow', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=320, termFreqOffset=320, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='forev', DocFreq=1, CollFreq=2, lastDocIdInserted=3, docIdsOffset=324, termFreqOffset=324, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=4.195395714565292, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='gadget', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=328, termFreqOffset=328, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='gov', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=332, termFreqOffset=332, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='grove', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=336, termFreqOffset=336, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3560946261679152, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='hanford', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=344, termFreqOffset=344, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='hang', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=348, termFreqOffset=348, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='help', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=352, termFreqOffset=352, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='heritag', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=356, termFreqOffset=356, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.607082870530623, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='histori', DocFreq=2, CollFreq=5, lastDocIdInserted=5, docIdsOffset=360, termFreqOffset=360, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=5.2018250988341554, maxTFIDF=1.2466449854414634}
+VocabularyElem written on disk: Vocabulary{term='http', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=368, termFreqOffset=368, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='hundr', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=372, termFreqOffset=372, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='ii', DocFreq=4, CollFreq=4, lastDocIdInserted=8, docIdsOffset=376, termFreqOffset=376, docIdsLen=16, termFreqLen=16, idf=0.47712125471966244, maxBM25=0.9274218184896765, maxTFIDF=0.47712125471966244}
+VocabularyElem written on disk: Vocabulary{term='impact', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=392, termFreqOffset=392, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='impress', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=396, termFreqOffset=396, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='innoc', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=400, termFreqOffset=400, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='intellect', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=404, termFreqOffset=404, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='interact', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=408, termFreqOffset=408, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='issu', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=412, termFreqOffset=412, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='juli', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=416, termFreqOffset=416, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='june', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=420, termFreqOffset=420, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.257152512661906, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='kingdom', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=424, termFreqOffset=424, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='laboratori', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=428, termFreqOffset=428, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='largest', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=432, termFreqOffset=432, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='led', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=436, termFreqOffset=436, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='legaci', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=440, termFreqOffset=440, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='lesli', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=444, termFreqOffset=444, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3560946261679152, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='literatur', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=452, termFreqOffset=452, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='live', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=456, termFreqOffset=456, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='lo', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=460, termFreqOffset=460, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='main', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=464, termFreqOffset=464, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='major', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=468, termFreqOffset=468, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='manhattan', DocFreq=10, CollFreq=13, lastDocIdInserted=10, docIdsOffset=472, termFreqOffset=472, docIdsLen=40, termFreqLen=40, idf=0.07918124604762482, maxBM25=0.46173429378815173, maxTFIDF=0.11696030151213388}
+VocabularyElem written on disk: Vocabulary{term='manmad', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=512, termFreqOffset=512, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='me70', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=516, termFreqOffset=516, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='meant', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=520, termFreqOffset=520, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='mexico', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=524, termFreqOffset=524, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='mind', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=528, termFreqOffset=528, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='name', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=532, termFreqOffset=532, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.6275357419961445, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='nation', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=540, termFreqOffset=540, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='nicknam', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=544, termFreqOffset=544, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='nor', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=548, termFreqOffset=548, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='north', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=552, termFreqOffset=552, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='nuclear', DocFreq=3, CollFreq=4, lastDocIdInserted=8, docIdsOffset=556, termFreqOffset=556, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.7979585044098048, maxTFIDF=0.7832981079068755}
+VocabularyElem written on disk: Vocabulary{term='obliter', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=568, termFreqOffset=568, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='ocean', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=572, termFreqOffset=572, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='offend', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=576, termFreqOffset=576, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='offic', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=580, termFreqOffset=580, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.607082870530623, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='oppenheim', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=584, termFreqOffset=584, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='origin', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=588, termFreqOffset=588, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='pacif', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=592, termFreqOffset=592, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='panel', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=596, termFreqOffset=596, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='parti', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=600, termFreqOffset=600, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='peac', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=604, termFreqOffset=604, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='period', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=608, termFreqOffset=608, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='photograph', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=612, termFreqOffset=612, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='physicist', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=616, termFreqOffset=616, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='power', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=620, termFreqOffset=620, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='presenc', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=624, termFreqOffset=624, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='produc', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=628, termFreqOffset=628, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='project', DocFreq=10, CollFreq=18, lastDocIdInserted=10, docIdsOffset=632, termFreqOffset=632, docIdsLen=40, termFreqLen=40, idf=0.07918124604762482, maxBM25=0.6156457250508689, maxTFIDF=0.12685310635639507}
+VocabularyElem written on disk: Vocabulary{term='proxim', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=672, termFreqOffset=672, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='reactor', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=676, termFreqOffset=676, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='reason', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=680, termFreqOffset=680, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='refer', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=684, termFreqOffset=684, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='requir', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=688, termFreqOffset=688, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='research', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=692, termFreqOffset=692, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3411025801034724, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='resourc', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=700, termFreqOffset=700, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.607082870530623, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='rich', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=704, termFreqOffset=704, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='river', DocFreq=1, CollFreq=2, lastDocIdInserted=10, docIdsOffset=708, termFreqOffset=708, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=4.06626524087464, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='robert', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=712, termFreqOffset=712, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='safeti', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=716, termFreqOffset=716, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='scienc', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=720, termFreqOffset=720, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='scientif', DocFreq=1, CollFreq=2, lastDocIdInserted=1, docIdsOffset=724, termFreqOffset=724, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.719823756011975, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='scientist', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=728, termFreqOffset=728, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='secret', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=732, termFreqOffset=732, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.257152512661906, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='secur', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=736, termFreqOffset=736, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='select', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=740, termFreqOffset=740, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='sexual', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=744, termFreqOffset=744, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='site', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=748, termFreqOffset=748, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='skill', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=752, termFreqOffset=752, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='specif', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=756, termFreqOffset=756, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='substitut', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=760, termFreqOffset=760, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='success', DocFreq=2, CollFreq=3, lastDocIdInserted=3, docIdsOffset=764, termFreqOffset=764, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=2.6822051602069448, maxTFIDF=1.0123981179125534}
+VocabularyElem written on disk: Vocabulary{term='suffici', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=772, termFreqOffset=772, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='support', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=776, termFreqOffset=776, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='third', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=780, termFreqOffset=780, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='thousand', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=784, termFreqOffset=784, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='trauma', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=788, termFreqOffset=788, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='truli', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=792, termFreqOffset=792, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='understand', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=796, termFreqOffset=796, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='undertak', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=800, termFreqOffset=800, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='unit', DocFreq=2, CollFreq=3, lastDocIdInserted=9, docIdsOffset=804, termFreqOffset=804, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=2.3238276558760194, maxTFIDF=1.0123981179125534}
+VocabularyElem written on disk: Vocabulary{term='version', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=812, termFreqOffset=812, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='victim', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=816, termFreqOffset=816, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='violenc', DocFreq=1, CollFreq=2, lastDocIdInserted=11, docIdsOffset=820, termFreqOffset=820, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.8515926390429223, maxTFIDF=1.4040471718659913}
+VocabularyElem written on disk: Vocabulary{term='volum', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=824, termFreqOffset=824, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+VocabularyElem written on disk: Vocabulary{term='war', DocFreq=4, CollFreq=4, lastDocIdInserted=8, docIdsOffset=828, termFreqOffset=828, docIdsLen=16, termFreqLen=16, idf=0.47712125471966244, maxBM25=0.9274218184896765, maxTFIDF=0.47712125471966244}
+VocabularyElem written on disk: Vocabulary{term='weapon', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=844, termFreqOffset=844, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.4448724104665742, maxTFIDF=0.7781512503836436}
+VocabularyElem written on disk: Vocabulary{term='websit', DocFreq=1, CollFreq=3, lastDocIdInserted=5, docIdsOffset=852, termFreqOffset=852, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=5.410624305795934, maxTFIDF=1.5940815562317963}
+VocabularyElem written on disk: Vocabulary{term='world', DocFreq=5, CollFreq=5, lastDocIdInserted=8, docIdsOffset=856, termFreqOffset=856, docIdsLen=20, termFreqLen=20, idf=0.38021124171160603, maxBM25=0.7390494506592018, maxTFIDF=0.38021124171160603}
+VocabularyElem written on disk: Vocabulary{term='www', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=876, termFreqOffset=876, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+> Merging completed!
+Removing partial files...
+> Plotting final Structure ...
+Vocabulary{term='16', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=0, termFreqOffset=0, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='16', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='194', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=4, termFreqOffset=4, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+PostingList{term='194', postingList=[Posting{docID=4, termFreq=1}]}
+
+Vocabulary{term='1942', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=8, termFreqOffset=8, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.6275357419961445, maxTFIDF=0.7781512503836436}
+PostingList{term='1942', postingList=[Posting{docID=8, termFreq=1}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='1945', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=16, termFreqOffset=16, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='1945', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='1946', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=20, termFreqOffset=20, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3560946261679152, maxTFIDF=0.7781512503836436}
+PostingList{term='1946', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='2', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=28, termFreqOffset=28, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.6275357419961445, maxTFIDF=0.7781512503836436}
+PostingList{term='2', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='achiev', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=36, termFreqOffset=36, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='achiev', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='actual', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=40, termFreqOffset=40, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='actual', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='administr', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=44, termFreqOffset=44, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+PostingList{term='administr', postingList=[Posting{docID=4, termFreq=1}]}
+
+Vocabulary{term='ag', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=48, termFreqOffset=48, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='ag', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='alamo', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=52, termFreqOffset=52, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='alamo', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='american', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=56, termFreqOffset=56, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='american', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='amid', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=60, termFreqOffset=60, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='amid', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='armi', DocFreq=3, CollFreq=4, lastDocIdInserted=9, docIdsOffset=64, termFreqOffset=64, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.7979585044098048, maxTFIDF=0.7832981079068755}
+PostingList{term='armi', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=8, termFreq=2}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='assault', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=76, termFreqOffset=76, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='assault', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='atom', DocFreq=7, CollFreq=9, lastDocIdInserted=9, docIdsOffset=80, termFreqOffset=80, docIdsLen=28, termFreqLen=28, idf=0.23408320603336794, maxBM25=0.9100155168937736, maxTFIDF=0.30454927253060354}
+PostingList{term='atom', postingList=[Posting{docID=1, termFreq=1}, Posting{docID=2, termFreq=2}, Posting{docID=3, termFreq=1}, Posting{docID=4, termFreq=1}, Posting{docID=6, termFreq=2}, Posting{docID=7, termFreq=1}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='attempt', DocFreq=1, CollFreq=2, lastDocIdInserted=7, docIdsOffset=108, termFreqOffset=108, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=4.128717049345323, maxTFIDF=1.4040471718659913}
+PostingList{term='attempt', postingList=[Posting{docID=7, termFreq=2}]}
+
+Vocabulary{term='avail', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=112, termFreqOffset=112, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='avail', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='board', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=116, termFreqOffset=116, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='board', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='bomb', DocFreq=7, CollFreq=7, lastDocIdInserted=9, docIdsOffset=120, termFreqOffset=120, docIdsLen=28, termFreqLen=28, idf=0.23408320603336794, maxBM25=0.4895947725233673, maxTFIDF=0.23408320603336794}
+PostingList{term='bomb', postingList=[Posting{docID=2, termFreq=1}, Posting{docID=3, termFreq=1}, Posting{docID=4, termFreq=1}, Posting{docID=6, termFreq=1}, Posting{docID=7, termFreq=1}, Posting{docID=8, termFreq=1}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='bring', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=148, termFreqOffset=148, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='bring', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='canada', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=152, termFreqOffset=152, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='canada', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='cfo', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=156, termFreqOffset=156, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='cfo', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='chang', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=160, termFreqOffset=160, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='chang', postingList=[Posting{docID=3, termFreq=1}]}
+
+Vocabulary{term='classifi', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=164, termFreqOffset=164, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='classifi', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='cloud', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=168, termFreqOffset=168, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='cloud', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='coast', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=172, termFreqOffset=172, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='coast', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='collect', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=176, termFreqOffset=176, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='collect', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='columbia', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=180, termFreqOffset=180, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='columbia', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='commun', DocFreq=2, CollFreq=2, lastDocIdInserted=11, docIdsOffset=184, termFreqOffset=184, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3886090214300402, maxTFIDF=0.7781512503836436}
+PostingList{term='commun', postingList=[Posting{docID=1, termFreq=1}, Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='complementari', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=192, termFreqOffset=192, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='complementari', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='compon', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=196, termFreqOffset=196, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='compon', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='conduct', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=200, termFreqOffset=200, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+PostingList{term='conduct', postingList=[Posting{docID=4, termFreq=1}]}
+
+Vocabulary{term='continu', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=204, termFreqOffset=204, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='continu', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='control', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=208, termFreqOffset=208, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+PostingList{term='control', postingList=[Posting{docID=4, termFreq=1}]}
+
+Vocabulary{term='corp', DocFreq=3, CollFreq=3, lastDocIdInserted=9, docIdsOffset=212, termFreqOffset=212, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.2592335413315223, maxTFIDF=0.6020599913279624}
+PostingList{term='corp', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=8, termFreq=1}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='date', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=224, termFreqOffset=224, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='date', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='desert', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=228, termFreqOffset=228, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='desert', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='design', DocFreq=1, CollFreq=2, lastDocIdInserted=8, docIdsOffset=232, termFreqOffset=232, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.222806908080922, maxTFIDF=1.4040471718659913}
+PostingList{term='design', postingList=[Posting{docID=8, termFreq=2}]}
+
+Vocabulary{term='deton', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=236, termFreqOffset=236, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='deton', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='develop', DocFreq=3, CollFreq=3, lastDocIdInserted=8, docIdsOffset=240, termFreqOffset=240, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.1516764955044256, maxTFIDF=0.6020599913279624}
+PostingList{term='develop', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=7, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='dialogu', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=252, termFreqOffset=252, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='dialogu', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='direct', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=256, termFreqOffset=256, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='direct', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='director', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=260, termFreqOffset=260, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='director', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='discuss', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=264, termFreqOffset=264, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='discuss', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='document', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=268, termFreqOffset=268, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='document', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='doe', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=272, termFreqOffset=272, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='doe', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='domest', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=276, termFreqOffset=276, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='domest', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='energi', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=280, termFreqOffset=280, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='energi', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='engin', DocFreq=3, CollFreq=3, lastDocIdInserted=8, docIdsOffset=284, termFreqOffset=284, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.0492180260174684, maxTFIDF=0.6020599913279624}
+PostingList{term='engin', postingList=[Posting{docID=1, termFreq=1}, Posting{docID=4, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='engineersbegan', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=296, termFreqOffset=296, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.257152512661906, maxTFIDF=1.0791812460476249}
+PostingList{term='engineersbegan', postingList=[Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='equal', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=300, termFreqOffset=300, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='equal', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='essai', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=304, termFreqOffset=304, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='essai', postingList=[Posting{docID=3, termFreq=1}]}
+
+Vocabulary{term='extraordinarili', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=308, termFreqOffset=308, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='extraordinarili', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='facilit', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=312, termFreqOffset=312, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='facilit', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='featur', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=316, termFreqOffset=316, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='featur', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='flow', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=320, termFreqOffset=320, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='flow', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='forev', DocFreq=1, CollFreq=2, lastDocIdInserted=3, docIdsOffset=324, termFreqOffset=324, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=4.195395714565292, maxTFIDF=1.4040471718659913}
+PostingList{term='forev', postingList=[Posting{docID=3, termFreq=2}]}
+
+Vocabulary{term='gadget', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=328, termFreqOffset=328, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='gadget', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='gov', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=332, termFreqOffset=332, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='gov', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='grove', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=336, termFreqOffset=336, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3560946261679152, maxTFIDF=0.7781512503836436}
+PostingList{term='grove', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='hanford', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=344, termFreqOffset=344, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='hanford', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='hang', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=348, termFreqOffset=348, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='hang', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='help', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=352, termFreqOffset=352, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='help', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='heritag', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=356, termFreqOffset=356, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.607082870530623, maxTFIDF=1.4040471718659913}
+PostingList{term='heritag', postingList=[Posting{docID=5, termFreq=2}]}
+
+Vocabulary{term='histori', DocFreq=2, CollFreq=5, lastDocIdInserted=5, docIdsOffset=360, termFreqOffset=360, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=5.2018250988341554, maxTFIDF=1.2466449854414634}
+PostingList{term='histori', postingList=[Posting{docID=2, termFreq=1}, Posting{docID=5, termFreq=4}]}
+
+Vocabulary{term='http', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=368, termFreqOffset=368, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='http', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='hundr', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=372, termFreqOffset=372, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='hundr', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='ii', DocFreq=4, CollFreq=4, lastDocIdInserted=8, docIdsOffset=376, termFreqOffset=376, docIdsLen=16, termFreqLen=16, idf=0.47712125471966244, maxBM25=0.9274218184896765, maxTFIDF=0.47712125471966244}
+PostingList{term='ii', postingList=[Posting{docID=2, termFreq=1}, Posting{docID=4, termFreq=1}, Posting{docID=7, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='impact', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=392, termFreqOffset=392, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='impact', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='impress', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=396, termFreqOffset=396, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='impress', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='innoc', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=400, termFreqOffset=400, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='innoc', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='intellect', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=404, termFreqOffset=404, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='intellect', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='interact', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=408, termFreqOffset=408, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='interact', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='issu', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=412, termFreqOffset=412, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='issu', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='juli', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=416, termFreqOffset=416, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='juli', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='june', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=420, termFreqOffset=420, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.257152512661906, maxTFIDF=1.0791812460476249}
+PostingList{term='june', postingList=[Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='kingdom', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=424, termFreqOffset=424, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='kingdom', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='laboratori', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=428, termFreqOffset=428, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='laboratori', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='largest', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=432, termFreqOffset=432, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='largest', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='led', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=436, termFreqOffset=436, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='led', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='legaci', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=440, termFreqOffset=440, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='legaci', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='lesli', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=444, termFreqOffset=444, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3560946261679152, maxTFIDF=0.7781512503836436}
+PostingList{term='lesli', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='literatur', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=452, termFreqOffset=452, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='literatur', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='live', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=456, termFreqOffset=456, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='live', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='lo', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=460, termFreqOffset=460, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='lo', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='main', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=464, termFreqOffset=464, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='main', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='major', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=468, termFreqOffset=468, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='major', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='manhattan', DocFreq=10, CollFreq=13, lastDocIdInserted=10, docIdsOffset=472, termFreqOffset=472, docIdsLen=40, termFreqLen=40, idf=0.07918124604762482, maxBM25=0.46173429378815173, maxTFIDF=0.11696030151213388}
+PostingList{term='manhattan', postingList=[Posting{docID=1, termFreq=1}, Posting{docID=2, termFreq=1}, Posting{docID=3, termFreq=3}, Posting{docID=4, termFreq=1}, Posting{docID=5, termFreq=1}, Posting{docID=6, termFreq=1}, Posting{docID=7, termFreq=1}, Posting{docID=8, termFreq=2}, Posting{docID=9, termFreq=1}, Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='manmad', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=512, termFreqOffset=512, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='manmad', postingList=[Posting{docID=3, termFreq=1}]}
+
+Vocabulary{term='me70', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=516, termFreqOffset=516, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='me70', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='meant', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=520, termFreqOffset=520, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='meant', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='mexico', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=524, termFreqOffset=524, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='mexico', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='mind', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=528, termFreqOffset=528, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='mind', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='name', DocFreq=2, CollFreq=2, lastDocIdInserted=9, docIdsOffset=532, termFreqOffset=532, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.6275357419961445, maxTFIDF=0.7781512503836436}
+PostingList{term='name', postingList=[Posting{docID=4, termFreq=1}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='nation', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=540, termFreqOffset=540, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='nation', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='nicknam', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=544, termFreqOffset=544, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='nicknam', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='nor', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=548, termFreqOffset=548, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='nor', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='north', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=552, termFreqOffset=552, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='north', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='nuclear', DocFreq=3, CollFreq=4, lastDocIdInserted=8, docIdsOffset=556, termFreqOffset=556, docIdsLen=12, termFreqLen=12, idf=0.6020599913279624, maxBM25=1.7979585044098048, maxTFIDF=0.7832981079068755}
+PostingList{term='nuclear', postingList=[Posting{docID=5, termFreq=1}, Posting{docID=6, termFreq=1}, Posting{docID=8, termFreq=2}]}
+
+Vocabulary{term='obliter', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=568, termFreqOffset=568, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='obliter', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='ocean', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=572, termFreqOffset=572, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='ocean', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='offend', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=576, termFreqOffset=576, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='offend', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='offic', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=580, termFreqOffset=580, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.607082870530623, maxTFIDF=1.4040471718659913}
+PostingList{term='offic', postingList=[Posting{docID=5, termFreq=2}]}
+
+Vocabulary{term='oppenheim', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=584, termFreqOffset=584, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='oppenheim', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='origin', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=588, termFreqOffset=588, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='origin', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='pacif', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=592, termFreqOffset=592, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='pacif', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='panel', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=596, termFreqOffset=596, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='panel', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='parti', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=600, termFreqOffset=600, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='parti', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='peac', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=604, termFreqOffset=604, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='peac', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='period', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=608, termFreqOffset=608, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+PostingList{term='period', postingList=[Posting{docID=4, termFreq=1}]}
+
+Vocabulary{term='photograph', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=612, termFreqOffset=612, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='photograph', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='physicist', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=616, termFreqOffset=616, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='physicist', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='power', DocFreq=1, CollFreq=1, lastDocIdInserted=3, docIdsOffset=620, termFreqOffset=620, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='power', postingList=[Posting{docID=3, termFreq=1}]}
+
+Vocabulary{term='presenc', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=624, termFreqOffset=624, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='presenc', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='produc', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=628, termFreqOffset=628, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='produc', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='project', DocFreq=10, CollFreq=18, lastDocIdInserted=10, docIdsOffset=632, termFreqOffset=632, docIdsLen=40, termFreqLen=40, idf=0.07918124604762482, maxBM25=0.6156457250508689, maxTFIDF=0.12685310635639507}
+PostingList{term='project', postingList=[Posting{docID=1, termFreq=1}, Posting{docID=2, termFreq=1}, Posting{docID=3, termFreq=4}, Posting{docID=4, termFreq=3}, Posting{docID=5, termFreq=1}, Posting{docID=6, termFreq=1}, Posting{docID=7, termFreq=1}, Posting{docID=8, termFreq=4}, Posting{docID=9, termFreq=1}, Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='proxim', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=672, termFreqOffset=672, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='proxim', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='reactor', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=676, termFreqOffset=676, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='reactor', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='reason', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=680, termFreqOffset=680, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='reason', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='refer', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=684, termFreqOffset=684, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+PostingList{term='refer', postingList=[Posting{docID=4, termFreq=1}]}
+
+Vocabulary{term='requir', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=688, termFreqOffset=688, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='requir', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='research', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=692, termFreqOffset=692, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.3411025801034724, maxTFIDF=0.7781512503836436}
+PostingList{term='research', postingList=[Posting{docID=1, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='resourc', DocFreq=1, CollFreq=2, lastDocIdInserted=5, docIdsOffset=700, termFreqOffset=700, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.607082870530623, maxTFIDF=1.4040471718659913}
+PostingList{term='resourc', postingList=[Posting{docID=5, termFreq=2}]}
+
+Vocabulary{term='rich', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=704, termFreqOffset=704, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='rich', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='river', DocFreq=1, CollFreq=2, lastDocIdInserted=10, docIdsOffset=708, termFreqOffset=708, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=4.06626524087464, maxTFIDF=1.4040471718659913}
+PostingList{term='river', postingList=[Posting{docID=10, termFreq=2}]}
+
+Vocabulary{term='robert', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=712, termFreqOffset=712, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='robert', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='safeti', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=716, termFreqOffset=716, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='safeti', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='scienc', DocFreq=1, CollFreq=1, lastDocIdInserted=2, docIdsOffset=720, termFreqOffset=720, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.097697857282646, maxTFIDF=1.0791812460476249}
+PostingList{term='scienc', postingList=[Posting{docID=2, termFreq=1}]}
+
+Vocabulary{term='scientif', DocFreq=1, CollFreq=2, lastDocIdInserted=1, docIdsOffset=724, termFreqOffset=724, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.719823756011975, maxTFIDF=1.4040471718659913}
+PostingList{term='scientif', postingList=[Posting{docID=1, termFreq=2}]}
+
+Vocabulary{term='scientist', DocFreq=1, CollFreq=1, lastDocIdInserted=6, docIdsOffset=728, termFreqOffset=728, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0038253585513073, maxTFIDF=1.0791812460476249}
+PostingList{term='scientist', postingList=[Posting{docID=6, termFreq=1}]}
+
+Vocabulary{term='secret', DocFreq=1, CollFreq=1, lastDocIdInserted=9, docIdsOffset=732, termFreqOffset=732, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.257152512661906, maxTFIDF=1.0791812460476249}
+PostingList{term='secret', postingList=[Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='secur', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=736, termFreqOffset=736, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='secur', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='select', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=740, termFreqOffset=740, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='select', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='sexual', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=744, termFreqOffset=744, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='sexual', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='site', DocFreq=1, CollFreq=1, lastDocIdInserted=10, docIdsOffset=748, termFreqOffset=748, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.03313262043732, maxTFIDF=1.0791812460476249}
+PostingList{term='site', postingList=[Posting{docID=10, termFreq=1}]}
+
+Vocabulary{term='skill', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=752, termFreqOffset=752, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='skill', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='specif', DocFreq=1, CollFreq=1, lastDocIdInserted=4, docIdsOffset=756, termFreqOffset=756, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8807036391766494, maxTFIDF=1.0791812460476249}
+PostingList{term='specif', postingList=[Posting{docID=4, termFreq=1}]}
+
+Vocabulary{term='substitut', DocFreq=1, CollFreq=1, lastDocIdInserted=7, docIdsOffset=760, termFreqOffset=760, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=2.0643585246726617, maxTFIDF=1.0791812460476249}
+PostingList{term='substitut', postingList=[Posting{docID=7, termFreq=1}]}
+
+Vocabulary{term='success', DocFreq=2, CollFreq=3, lastDocIdInserted=3, docIdsOffset=764, termFreqOffset=764, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=2.6822051602069448, maxTFIDF=1.0123981179125534}
+PostingList{term='success', postingList=[Posting{docID=1, termFreq=2}, Posting{docID=3, termFreq=1}]}
+
+Vocabulary{term='suffici', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=772, termFreqOffset=772, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='suffici', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='support', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=776, termFreqOffset=776, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='support', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='third', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=780, termFreqOffset=780, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='third', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='thousand', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=784, termFreqOffset=784, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='thousand', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='trauma', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=788, termFreqOffset=788, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='trauma', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='truli', DocFreq=1, CollFreq=1, lastDocIdInserted=1, docIdsOffset=792, termFreqOffset=792, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8599118780059876, maxTFIDF=1.0791812460476249}
+PostingList{term='truli', postingList=[Posting{docID=1, termFreq=1}]}
+
+Vocabulary{term='understand', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=796, termFreqOffset=796, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='understand', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='undertak', DocFreq=1, CollFreq=1, lastDocIdInserted=8, docIdsOffset=800, termFreqOffset=800, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.611403454040461, maxTFIDF=1.0791812460476249}
+PostingList{term='undertak', postingList=[Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='unit', DocFreq=2, CollFreq=3, lastDocIdInserted=9, docIdsOffset=804, termFreqOffset=804, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=2.3238276558760194, maxTFIDF=1.0123981179125534}
+PostingList{term='unit', postingList=[Posting{docID=8, termFreq=2}, Posting{docID=9, termFreq=1}]}
+
+Vocabulary{term='version', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=812, termFreqOffset=812, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='version', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='victim', DocFreq=1, CollFreq=1, lastDocIdInserted=11, docIdsOffset=816, termFreqOffset=816, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.9257963195214611, maxTFIDF=1.0791812460476249}
+PostingList{term='victim', postingList=[Posting{docID=11, termFreq=1}]}
+
+Vocabulary{term='violenc', DocFreq=1, CollFreq=2, lastDocIdInserted=11, docIdsOffset=820, termFreqOffset=820, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=3.8515926390429223, maxTFIDF=1.4040471718659913}
+PostingList{term='violenc', postingList=[Posting{docID=11, termFreq=2}]}
+
+Vocabulary{term='volum', DocFreq=1, CollFreq=1, lastDocIdInserted=5, docIdsOffset=824, termFreqOffset=824, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=1.8035414352653114, maxTFIDF=1.0791812460476249}
+PostingList{term='volum', postingList=[Posting{docID=5, termFreq=1}]}
+
+Vocabulary{term='war', DocFreq=4, CollFreq=4, lastDocIdInserted=8, docIdsOffset=828, termFreqOffset=828, docIdsLen=16, termFreqLen=16, idf=0.47712125471966244, maxBM25=0.9274218184896765, maxTFIDF=0.47712125471966244}
+PostingList{term='war', postingList=[Posting{docID=2, termFreq=1}, Posting{docID=4, termFreq=1}, Posting{docID=7, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='weapon', DocFreq=2, CollFreq=2, lastDocIdInserted=8, docIdsOffset=844, termFreqOffset=844, docIdsLen=8, termFreqLen=8, idf=0.7781512503836436, maxBM25=1.4448724104665742, maxTFIDF=0.7781512503836436}
+PostingList{term='weapon', postingList=[Posting{docID=6, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+Vocabulary{term='websit', DocFreq=1, CollFreq=3, lastDocIdInserted=5, docIdsOffset=852, termFreqOffset=852, docIdsLen=4, termFreqLen=4, idf=1.0791812460476249, maxBM25=5.410624305795934, maxTFIDF=1.5940815562317963}
+PostingList{term='websit', postingList=[Posting{docID=5, termFreq=3}]}
+
+Vocabulary{term='world', DocFreq=5, CollFreq=5, lastDocIdInserted=8, docIdsOffset=856, termFreqOffset=856, docIdsLen=20, termFreqLen=20, idf=0.38021124171160603, maxBM25=0.7390494506592018, maxTFIDF=0.38021124171160603}
+PostingList{term='world', postingList=[Posting{docID=2, termFreq=1}, Posting{docID=3, termFreq=1}, Posting{docID=4, termFreq=1}, Posting{docID=7, termFreq=1}, Posting{docID=8, termFreq=1}]}
+
+CollectionStatistics{docCount=12, totalLength=251}
+
+Process finished with exit code 0
