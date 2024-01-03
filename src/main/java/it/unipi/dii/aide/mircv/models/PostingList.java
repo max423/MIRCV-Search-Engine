@@ -238,7 +238,7 @@ public class PostingList {
         ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
 
         // create the posting list
-        for (int i = 0; i < docIdsLen; i++) {   // modificato da docIdsLen/4 a docIdsLen
+        for (int i = 0; i < docIds.size(); i++) {   // modificato da docIdsLen/4 a docIdsLen -> docIds.size()
             int docId = docIds.get(i);
             int termFreq = termFreqs.get(i);
 
@@ -371,7 +371,7 @@ public class PostingList {
 
             //if (skipElemIterator == null || !skipElemIterator.hasNext()) {
                 // the posting list is empty and there are no more blocks
-                currentPostingList = null;
+                this.currentPostingList = null;
                 return;
             //}
 

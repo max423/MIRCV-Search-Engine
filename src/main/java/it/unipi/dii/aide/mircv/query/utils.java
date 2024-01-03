@@ -57,7 +57,7 @@ public class utils {
             // reset the score
             score = 0;
             // update the next docID
-            nextDocID = collectionStatistics.getDocCount();
+            nextDocID = collectionStatistics.getDocCount()-1;
             // update the flag
             present = true;
 
@@ -120,7 +120,7 @@ public class utils {
             }
 
             // check if no more docID to process
-            if (currentDocID == nextDocID) {
+            if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1){
                 return scoreDocsDecreasing;
             }
 
@@ -153,11 +153,10 @@ public class utils {
 
         // check all the docIDs in the posting lists
         while (true) {
-
             // reset the score
             score = 0;
             // update the next docID
-            nextDocID = collectionStatistics.getDocCount();
+            nextDocID = collectionStatistics.getDocCount()-1;
 
             // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {
@@ -185,18 +184,19 @@ public class utils {
                         score += TFIDF(postingList.getTerm(), postingList.getCurrentPostingList());
                     }
 
-                    // update the posting list
+                    // next posting
                     postingList.nextPosting();
                 }
 
+
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
+                    System.out.println("posting list is empty");
                     continue;
                 }
 
                 // update the next docID
                 if (postingList.getCurrentPostingList().getDocID() < nextDocID) {
-                    System.out.println("_______?????????:_________");
                     nextDocID = postingList.getCurrentPostingList().getDocID();
                 }
             }
@@ -219,7 +219,7 @@ public class utils {
             }
 
             // check if no more docID to process
-            if (currentDocID == nextDocID) {
+            if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1) {
                 return scoreDocsDecreasing;
             }
 
@@ -230,6 +230,8 @@ public class utils {
 
     }
 
+
+
     private static double TFIDF(String term, Posting currentPostingList) {
         // term frequency weight
         double tf = currentPostingList.getTermFreq();
@@ -237,6 +239,7 @@ public class utils {
 
         // inverse document frequency
         double idf = FileUtils.vocabulary.get(term).getIdf();
+        System.out.println("IDF for "+ term + " is "+idf);
 
         double TFIDF = tfWeight * idf;
 

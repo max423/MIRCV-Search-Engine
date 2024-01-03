@@ -113,7 +113,7 @@ public class queryHandler {
             // DAAT configuration
             priorityQueue = utils.disjunctive(k);
         }
-
+        System.out.println("Priority queue size: " + priorityQueue.size());
 
         // print the results
         printResults(priorityQueue, k);
@@ -124,7 +124,7 @@ public class queryHandler {
     }
 
     // process the query, do text processing, check if the # of token > 0 and return the tokens
-    public static ArrayList<String>  QueryPreProcessing (String query) throws IOException {
+    public static ArrayList<String> QueryPreProcessing (String query) throws IOException {
 
         if (query == "") {
             System.out.println("The query is empty! \n");
@@ -137,6 +137,7 @@ public class queryHandler {
         // Transform tokens into an ArrayList<String>
         return new ArrayList<>(Arrays.asList(tokens));
     }
+
 
 
     private static void printResults(PriorityQueue<scoreDoc> priorityQueue, int k) {
@@ -152,9 +153,10 @@ public class queryHandler {
             }
 
             // print the results
-            for (int i = 0; i < k; i++) {
+            while (!priorityQueue.isEmpty() ){
                 scoreDoc scoreDoc = priorityQueue.poll();
                 System.out.println("DocID: " + scoreDoc.getDocID() + " Score: " + scoreDoc.getScore());
+
             }
 
             System.out.println("--------------------------------------------------");
