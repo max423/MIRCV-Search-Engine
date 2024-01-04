@@ -12,7 +12,7 @@ import static it.unipi.dii.aide.mircv.text_processing.TextProcessing.DocumentPro
 // receive a query and return the top k  results
 public class queryHandler {
 
-    public static ArrayList<PostingList> orderedPostingList = new ArrayList<>();
+    //public static ArrayList<PostingList> orderedPostingList = new ArrayList<>();
     public static ArrayList<PostingList> postingListQuery = new ArrayList<>();
     public static HashMap<Integer, Double> hashMapScore = new HashMap<>();
     public static HashMap<Integer, Integer> hashMapLength = new HashMap<>();
@@ -110,7 +110,7 @@ public class queryHandler {
             // conjunctive configuration
             priorityQueue = utils.conjunctive(k);
         } else {
-            // DAAT configuration
+            // disjunctive configuration
             priorityQueue = utils.disjunctive(k);
         }
         System.out.println("Priority queue size: " + priorityQueue.size());
@@ -153,8 +153,9 @@ public class queryHandler {
             }
 
             // print the results
-            while (!priorityQueue.isEmpty() ){
+            while (!priorityQueue.isEmpty() && k > 0) {
                 scoreDoc scoreDoc = priorityQueue.poll();
+                k--;
                 System.out.println("DocID: " + scoreDoc.getDocID() + " Score: " + scoreDoc.getScore());
 
             }
@@ -169,8 +170,8 @@ public class queryHandler {
         if (postingListQuery != null)
             postingListQuery.clear();
 
-        if (orderedPostingList != null)
-            orderedPostingList.clear();
+        //if (orderedPostingList != null)
+        //    orderedPostingList.clear();
 
         if (hashMapScore != null)
             hashMapScore.clear();

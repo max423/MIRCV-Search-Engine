@@ -8,11 +8,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-
-import static it.unipi.dii.aide.mircv.compression.unary.readTermFreqCompressed;
-import static it.unipi.dii.aide.mircv.compression.variableByte.readDocIdsCompressed;
 
 public class PostingList {
     private String term;
@@ -350,7 +346,8 @@ public class PostingList {
     }
 
     public Posting getCurrentPostingList() {
-        return this.currentPostingList;
+        //return this.currentPostingList;
+        return currentPostingList;
     }
 
     public Double getMaxBM25() {
@@ -362,11 +359,41 @@ public class PostingList {
     }
 
     // get the next posting of the posting list
-    public void nextPosting() {
+    public void nextPosting(String term) throws IOException {
         // check if the posting list is empty
+        /*if (!postingListIterator.hasNext()) {
+
+            // get the next posting
+
+            postingList.clear();
+
+            VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
+            if (Configuration.isIndex_compressionON()) {
+                // compressione index On
+                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+            } else {
+                // compressione index Off
+                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+            }
+
+            postingListIterator = postingList.iterator();
+        }
         if (postingListIterator.hasNext()) {
-            this.currentPostingList = postingListIterator.next();
-        } else {
+            // print first posting
+            System.out.println("primo next");
+            currentPostingList = postingListIterator.next();
+        }
+        if (postingListIterator.hasNext()) {
+            // print second posting
+            System.out.println("secondo next");
+            currentPostingList = postingListIterator.next();
+        }*/
+        if (postingListIterator.hasNext()) {
+            System.out.println("next");
+            currentPostingList = postingListIterator.next();
+        }
+    }
+        /*else {
             // the posting list is empty and there are no more blocks
 
             //if (skipElemIterator == null || !skipElemIterator.hasNext()) {

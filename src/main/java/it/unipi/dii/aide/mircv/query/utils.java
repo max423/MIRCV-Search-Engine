@@ -9,6 +9,7 @@ import it.unipi.dii.aide.mircv.utils.FileUtils;
 import java.io.IOException;
 import java.util.*;
 
+import static it.unipi.dii.aide.mircv.models.PostingList.postingListIterator;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.collectionStatistics;
 
 public class utils {
@@ -48,8 +49,8 @@ public class utils {
         // get the min docID
         currentDocID = getMinDocID();
 
-        // flag to check if the docID is present in all the posting lists
-        boolean present;
+        // variable used to check if the docID is present in all the posting lists
+        int present;
 
         // check all the docIDs in the posting lists
         while (true) {
@@ -58,21 +59,29 @@ public class utils {
             score = 0;
             // update the next docID
             nextDocID = collectionStatistics.getDocCount()-1;
-            // update the flag
-            present = true;
+            //nextDocID = collectionStatistics.getDocCount();
+            // update the presence
+            present = 0;
 
             // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {
 
+
+                System.out.println("----------");
+                System.out.println("current postinglist "+postingList);
+                System.out.println("Current Docid "+ currentDocID);
+                System.out.println("Next Docid "+ nextDocID);
+                System.out.println("current PIT "+postingList.getCurrentPostingList());
+
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
-                    // move to the next docID
-                    present = false;
-                    break;
+                    continue;
                 }
 
                 // check if the docID is the same
                 if (postingList.getCurrentPostingList().getDocID() == currentDocID) {
+                    // update the flag
+                    present+=1;
                     // update the score
                     if (Configuration.isScoreON()) {
                         // BM25
@@ -83,15 +92,17 @@ public class utils {
                     }
 
                     // update the posting list
-                    postingList.nextPosting();
+                    postingList.nextPosting(postingList.getTerm());
                 }
+                System.out.println("Present value "+ present);
+
 
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
-                    // move to the next docID
-                    present = false;
-                    break;
+                    System.out.println("posting list is empty");
+                    continue;
                 }
+
 
                 // update the next docID
                 if (postingList.getCurrentPostingList().getDocID() < nextDocID) {
@@ -100,7 +111,8 @@ public class utils {
             }
 
             // check if the docID is present in all the posting lists
-            if (present) {
+            //if (present == queryHandler.postingListQuery.size()) {
+                System.out.println("Update the score of Current Docid "+ currentDocID);
                 // update the priority queue
                 if (scoreDocsDecreasing.size() < k) {
                     // add the scoreDoc to the priority queue
@@ -117,10 +129,11 @@ public class utils {
                         scoreDocsDecreasing.remove(scoreDocsIncreasing.poll());
                     }
                 }
-            }
+            //}
 
             // check if no more docID to process
-            if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1){
+            //if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1){
+            if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()){
                 return scoreDocsDecreasing;
             }
 
@@ -156,7 +169,10 @@ public class utils {
             // reset the score
             score = 0;
             // update the next docID
-            nextDocID = collectionStatistics.getDocCount()-1;
+            //nextDocID = collectionStatistics.getDocCount()-1;
+            nextDocID = collectionStatistics.getDocCount();
+
+
 
             // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {
@@ -165,7 +181,7 @@ public class utils {
                 System.out.println("current postinglist "+postingList);
                 System.out.println("Current Docid "+ currentDocID);
                 System.out.println("Next Docid "+ nextDocID);
-                System.out.println("current PIT "+postingList.getCurrentPostingList());
+                System.out.println("current Posting "+postingList.getCurrentPostingList());
 
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
@@ -184,8 +200,12 @@ public class utils {
                         score += TFIDF(postingList.getTerm(), postingList.getCurrentPostingList());
                     }
 
+                    // todo capire come ottenere il prossimo posting
                     // next posting
-                    postingList.nextPosting();
+                    postingList.nextPosting(postingList.getTerm());
+                    // print current posting
+                    System.out.println("current Posting "+postingList.getCurrentPostingList());
+
                 }
 
 
@@ -219,7 +239,8 @@ public class utils {
             }
 
             // check if no more docID to process
-            if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1) {
+            //if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1) {
+            if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()) {
                 return scoreDocsDecreasing;
             }
 

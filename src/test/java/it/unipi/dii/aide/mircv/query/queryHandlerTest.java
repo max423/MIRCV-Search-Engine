@@ -25,9 +25,9 @@ class queryHandlerTest {
         loadFinalStructure();
 
         // create a String as a query
-        String query1 = "project";
-        String query2 = "Second Test query for the search engine";
-        String query3 = "Third Test query for the search engine";
+        String query1 = "manhattan discussions"; // doc 1-10 with manhattan, doc 11 with discussions
+        String query2 = "discussions"; // only doc 11
+        String query3 = "army component"; // doc 4-8-9 with army, doc 8 with component
 
         ArrayList<String> tokens1 = queryHandler.QueryPreProcessing(query1);
         ArrayList<String> tokens2 = queryHandler.QueryPreProcessing(query2);
@@ -42,8 +42,8 @@ class queryHandlerTest {
         //configuration.setScoreON(true); // BM25
         //configuration.setConjunctiveON(true); // Conjunctive
 
-        //queryHandler.executeQuery(tokens1, 5);
-        //queryHandler.executeQuery(tokens2, 5);
+        //queryHandler.executeQuery(tokens1, 12);
+        //queryHandler.executeQuery(tokens2, 1);
         //queryHandler.executeQuery(tokens3, 5);
 
         // TFIDF + Conjunctive
@@ -58,9 +58,9 @@ class queryHandlerTest {
         configuration.setScoreON(true); // BM25
         configuration.setConjunctiveON(false); // Disjunctive
 
-        queryHandler.executeQuery(tokens1, 10);
+        //queryHandler.executeQuery(tokens1, 20);
         //queryHandler.executeQuery(tokens2, 5);
-        //queryHandler.executeQuery(tokens3, 5);
+        queryHandler.executeQuery(tokens3, 10);
 
         // TFIDF + Disjunctive
         //configuration.setScoreON(false); // TFIDF
