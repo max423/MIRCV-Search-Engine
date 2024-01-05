@@ -45,8 +45,12 @@ public class queryHandler {
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {
                 System.out.println("The token " + token + " is not in the vocabulary");
-                if (!Configuration.isConjunctiveON()){
+                if (Configuration.isConjunctiveON()) {
+                    // print the results
+                    System.out.println("Results for query: ");
+                    System.out.println("--------------------------------------------------");
                     System.out.println("No results found");
+                    System.out.println("--------------------------------------------------");
                     resetDataStructures();
                     return;
                 }
@@ -126,11 +130,11 @@ public class queryHandler {
 
         // reset the data structures
         resetDataStructures();
-        
+
     }
 
     // process the query, do text processing, check if the # of token > 0 and return the tokens
-    public static ArrayList<String> QueryPreProcessing (String query) throws IOException {
+    public static ArrayList<String> QueryPreProcessing(String query) throws IOException {
 
         if (query == "") {
             System.out.println("The query is empty! \n");
@@ -145,28 +149,27 @@ public class queryHandler {
     }
 
 
-
     private static void printResults(PriorityQueue<scoreDoc> priorityQueue, int k) {
 
-            // print the results
-            System.out.println("Results for query: ");
-            System.out.println("--------------------------------------------------");
+        // print the results
+        System.out.println("Results for query: ");
+        System.out.println("--------------------------------------------------");
 
-            // check if the priority queue is empty
-            if (priorityQueue.isEmpty()) {
-                System.out.println("No results found");
-                return;
-            }
+        // check if the priority queue is empty
+        if (priorityQueue.isEmpty()) {
+            System.out.println("No results found");
+            return;
+        }
 
-            // print the results
-            while (!priorityQueue.isEmpty() && k > 0) {
-                scoreDoc scoreDoc = priorityQueue.poll();
-                k--;
-                System.out.println("DocID: " + scoreDoc.getDocID() + " Score: " + scoreDoc.getScore());
+        // print the results
+        while (!priorityQueue.isEmpty() && k > 0) {
+            scoreDoc scoreDoc = priorityQueue.poll();
+            k--;
+            System.out.println("DocID: " + scoreDoc.getDocID() + " Score: " + scoreDoc.getScore());
 
-            }
+        }
 
-            System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     private static void resetDataStructures() {
@@ -189,5 +192,84 @@ public class queryHandler {
         //    maxScoreOrder.clear();
     }
 
+    // use for testing
+    public static int returnTopDoc(ArrayList<String> tokens, int k) throws IOException {
 
+        int position = 0;
+
+        // ArrayList of tokens removing duplicates
+        ArrayList<String> tokensNoDuplicates = new ArrayList<>();
+        for (String token : tokens) {
+            if (!tokensNoDuplicates.contains(token)) {
+                tokensNoDuplicates.add(token);
+            }
+        }
+
+        // process each token of the query
+        for (String token : tokensNoDuplicates) {
+
+            // posting list initialization
+            PostingList postingList = new PostingList(token);
+
+            // obtain the posting list for the token
+            postingList.getPostingList(token);
+
+            System.out.println(postingList);
+
+            // check if the posting list is empty (the token is not in the vocabulary)
+            if (postingList.getPostingList().size() == 0) {
+                if (Configuration.isConjunctiveON()) {
+                    resetDataStructures();
+                    return 0; // no results
+                }
+                continue;
+            }
+
+            // add the posting list to the posting list with the tokens in the query
+            postingListQuery.add(postingList);
+
+            // check the type of configuration
+            if (Configuration.isMaxScoreON()) {
+                // max score configuration
+                if (Configuration.isScoreON())
+                    hashMapScore.put(position, postingList.getMaxBM25());
+                else
+                    hashMapScore.put(position, postingList.getMaxTFIDF());
+            }
+
+            // add the size of the posting list to the hashmap
+            hashMapLength.put(position, postingList.getPostingList().size());
+
+            // increment the position
+            position++;
+
+        }
+
+        // initialize a priority queue of scoreDoc objects
+        PriorityQueue<scoreDoc> priorityQueue;
+
+        // check if the posting list with the tokens in the query is empty
+        if (postingListQuery.size() == 0) {
+            resetDataStructures();
+            return 0; // no results
+        }
+
+        // check the type of configuration
+        if (Configuration.isConjunctiveON()) {
+            // conjunctive configuration
+            priorityQueue = utils.conjunctive(k);
+        } else {
+            // disjunctive configuration
+            priorityQueue = utils.disjunctive(k);
+        }
+
+        // reset the data structures
+        resetDataStructures();
+
+        scoreDoc scoreDoc = priorityQueue.poll();
+        if (scoreDoc == null)
+            return 0; // no results
+        else
+            return scoreDoc.getDocID();
+    }
 }

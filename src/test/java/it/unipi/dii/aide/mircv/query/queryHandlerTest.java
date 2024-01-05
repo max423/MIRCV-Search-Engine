@@ -42,34 +42,33 @@ class queryHandlerTest {
         configuration.setScoreON(true); // BM25
         configuration.setConjunctiveON(true); // Conjunctive
 
-        //queryHandler.executeQuery(tokens1, 12);
-        //queryHandler.executeQuery(tokens2, 1);
-        //queryHandler.executeQuery(tokens3, 5);
+        //assertEquals(0, queryHandler.returnTopDoc(tokens1, 1));
+        //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        //assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
 
         // TFIDF + Conjunctive
-        //configuration.setScoreON(false); // TFIDF
-        //configuration.setConjunctiveON(true); // Conjunctive
+        configuration.setScoreON(false); // TFIDF
+        configuration.setConjunctiveON(true); // Conjunctive
 
-        //queryHandler.executeQuery(tokens1, 5);
-        //queryHandler.executeQuery(tokens2, 5);
-        //queryHandler.executeQuery(tokens3, 5);
+        //assertEquals(0, queryHandler.returnTopDoc(tokens1, 1));
+        //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        //assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
 
         // BM25 + Disjunctive
-        //configuration.setScoreON(true); // BM25
-        //configuration.setConjunctiveON(false); // Disjunctive
+        configuration.setScoreON(true); // BM25
+        configuration.setConjunctiveON(false); // Disjunctive
 
-        //queryHandler.executeQuery(tokens1, 20);
-        //queryHandler.executeQuery(tokens2, 5);
-        //queryHandler.executeQuery(tokens3, 10);
+        //assertEquals(11, queryHandler.returnTopDoc(tokens1, 1));
+        //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        //assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
 
         // TFIDF + Disjunctive
-        //configuration.setScoreON(false); // TFIDF
-        //configuration.setConjunctiveON(false); // Disjunctive
+        configuration.setScoreON(false); // TFIDF
+        configuration.setConjunctiveON(false); // Disjunctive
 
-        //queryHandler.executeQuery(tokens1, 1);
-        //queryHandler.executeQuery(tokens2, 5);
-        //queryHandler.executeQuery(tokens3, 5);
-
+        //assertEquals(11, queryHandler.returnTopDoc(tokens1, 1));
+        //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
     }
 
 }
