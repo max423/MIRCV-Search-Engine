@@ -27,7 +27,7 @@ class queryHandlerTest {
         // create a String as a query
         String query1 = "manhattan discussions"; // doc 1-10 with manhattan, doc 11 with discussions
         String query2 = "discussions"; // only doc 11
-        String query3 = "army component"; // doc 4-8-9 with army, doc 8 with component
+        String query3 = "army component"; // doc 4-9 with army, doc 8 with component and army
 
         ArrayList<String> tokens1 = queryHandler.QueryPreProcessing(query1);
         ArrayList<String> tokens2 = queryHandler.QueryPreProcessing(query2);
@@ -39,8 +39,8 @@ class queryHandlerTest {
 
         // BM25 + Conjunctive
         Configuration configuration = new Configuration();
-        //configuration.setScoreON(true); // BM25
-        //configuration.setConjunctiveON(true); // Conjunctive
+        configuration.setScoreON(true); // BM25
+        configuration.setConjunctiveON(true); // Conjunctive
 
         //queryHandler.executeQuery(tokens1, 12);
         //queryHandler.executeQuery(tokens2, 1);
@@ -55,12 +55,12 @@ class queryHandlerTest {
         //queryHandler.executeQuery(tokens3, 5);
 
         // BM25 + Disjunctive
-        configuration.setScoreON(true); // BM25
-        configuration.setConjunctiveON(false); // Disjunctive
+        //configuration.setScoreON(true); // BM25
+        //configuration.setConjunctiveON(false); // Disjunctive
 
         //queryHandler.executeQuery(tokens1, 20);
         //queryHandler.executeQuery(tokens2, 5);
-        queryHandler.executeQuery(tokens3, 10);
+        //queryHandler.executeQuery(tokens3, 10);
 
         // TFIDF + Disjunctive
         //configuration.setScoreON(false); // TFIDF

@@ -45,6 +45,11 @@ public class queryHandler {
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {
                 System.out.println("The token " + token + " is not in the vocabulary");
+                if (!Configuration.isConjunctiveON()){
+                    System.out.println("No results found");
+                    resetDataStructures();
+                    return;
+                }
                 continue;
             }
 
@@ -74,6 +79,7 @@ public class queryHandler {
         // check if the posting list with the tokens in the query is empty
         if (postingListQuery.size() == 0) {
             System.out.println("All the tokens are not in the vocabulary");
+            resetDataStructures();
             return;
         }
 

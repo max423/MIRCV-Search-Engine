@@ -25,7 +25,7 @@ public class PostingList {
     private double TFIDF;
 
     //public static Iterator<SkipElem> skipElemIterator = null;
-    public static Iterator<Posting> postingListIterator = null;
+    public Iterator<Posting> postingListIterator = null;
 
     private RandomAccessFile docId_RAF;
     private RandomAccessFile termFreq_RAF;
@@ -361,8 +361,9 @@ public class PostingList {
     // get the next posting of the posting list
     public void nextPosting(String term) throws IOException {
         // check if the posting list is empty
-        /*if (!postingListIterator.hasNext()) {
-
+        if (postingListIterator.hasNext()) {
+            currentPostingList = postingListIterator.next();
+            /*
             // get the next posting
 
             postingList.clear();
@@ -377,21 +378,12 @@ public class PostingList {
             }
 
             postingListIterator = postingList.iterator();
+*/
+        }else{
+            currentPostingList = null;
         }
-        if (postingListIterator.hasNext()) {
-            // print first posting
-            System.out.println("primo next");
-            currentPostingList = postingListIterator.next();
-        }
-        if (postingListIterator.hasNext()) {
-            // print second posting
-            System.out.println("secondo next");
-            currentPostingList = postingListIterator.next();
-        }*/
-        if (postingListIterator.hasNext()) {
-            System.out.println("next");
-            currentPostingList = postingListIterator.next();
-        }
+
+       //currentPostingList = postingListIterator.next();
     }
         /*else {
             // the posting list is empty and there are no more blocks

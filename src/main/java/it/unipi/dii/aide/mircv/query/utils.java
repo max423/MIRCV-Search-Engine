@@ -9,7 +9,6 @@ import it.unipi.dii.aide.mircv.utils.FileUtils;
 import java.io.IOException;
 import java.util.*;
 
-import static it.unipi.dii.aide.mircv.models.PostingList.postingListIterator;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.collectionStatistics;
 
 public class utils {
@@ -58,8 +57,8 @@ public class utils {
             // reset the score
             score = 0;
             // update the next docID
-            nextDocID = collectionStatistics.getDocCount()-1;
-            //nextDocID = collectionStatistics.getDocCount();
+            //nextDocID = collectionStatistics.getDocCount()-1;
+            nextDocID = collectionStatistics.getDocCount();
             // update the presence
             present = 0;
 
@@ -111,7 +110,7 @@ public class utils {
             }
 
             // check if the docID is present in all the posting lists
-            //if (present == queryHandler.postingListQuery.size()) {
+            if (present == queryHandler.postingListQuery.size()) {
                 System.out.println("Update the score of Current Docid "+ currentDocID);
                 // update the priority queue
                 if (scoreDocsDecreasing.size() < k) {
@@ -129,7 +128,7 @@ public class utils {
                         scoreDocsDecreasing.remove(scoreDocsIncreasing.poll());
                     }
                 }
-            //}
+            }
 
             // check if no more docID to process
             //if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1){
@@ -204,7 +203,7 @@ public class utils {
                     // next posting
                     postingList.nextPosting(postingList.getTerm());
                     // print current posting
-                    System.out.println("current Posting "+postingList.getCurrentPostingList());
+                    System.out.println("current Posting after next "+postingList.getCurrentPostingList());
 
                 }
 
@@ -218,7 +217,10 @@ public class utils {
                 // update the next docID
                 if (postingList.getCurrentPostingList().getDocID() < nextDocID) {
                     nextDocID = postingList.getCurrentPostingList().getDocID();
+                    System.out.println("Next Docid "+ nextDocID);
                 }
+
+
             }
 
             // update the priority queue
@@ -241,11 +243,13 @@ public class utils {
             // check if no more docID to process
             //if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1) {
             if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()) {
+            //if (currentDocID == nextDocID) {
                 return scoreDocsDecreasing;
             }
 
             // update the current docID
             currentDocID = nextDocID;
+            System.out.println("Current Docid "+ currentDocID);
 
         }
 
