@@ -266,82 +266,82 @@ public class PostingList {
         // get the number of blocks of term
         //ArrayList<SkipElem> blocks;
         //if (vocabularyElem.getSkipLen() == 0){
-            // il termine ha una lista di posting più piccola di 1024, e quindi viene creato un unico blocco di skipping contenente l'intera lista di posting
+        // il termine ha una lista di posting più piccola di 1024, e quindi viene creato un unico blocco di skipping contenente l'intera lista di posting
 
-            // initialize a new ArrayList of blocks
-            //blocks = new ArrayList<>();
+        // initialize a new ArrayList of blocks
+        //blocks = new ArrayList<>();
 
-            //skipBlock= new SkipElem(0, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
-            //blocks.add(skipBlock);
+        //skipBlock= new SkipElem(0, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
+        //blocks.add(skipBlock);
 
-            //skipElemIterator = blocks.iterator();
-            //skipElemIterator.next();
+        //skipElemIterator = blocks.iterator();
+        //skipElemIterator.next();
 
-            //if(Configuration.isIndex_compressionON()){
-                // compression On
-                //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-            //}
-            //else {
-                // compression Off
-                //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-            //}
+        //if(Configuration.isIndex_compressionON()){
+        // compression On
+        //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+        //}
+        //else {
+        // compression Off
+        //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+        //}
 
-            // set the last docID
-            //skipBlock.setDocID(this.getPostingList().get(this.getPostingList().size()-1).getDocID());
+        // set the last docID
+        //skipBlock.setDocID(this.getPostingList().get(this.getPostingList().size()-1).getDocID());
         //}
         //else{
-            //vengono recuperate le informazioni di skipping dal file
+        //vengono recuperate le informazioni di skipping dal file
 
-            // size of step
-            //int step = 32;
+        // size of step
+        //int step = 32;
 
-            // address to read the skip info
-            //long skipAddress = vocabularyElem.getSkipOffset();
+        // address to read the skip info
+        //long skipAddress = vocabularyElem.getSkipOffset();
 
-            // number of blocks
-            //int numBlocks = vocabularyElem.getSkipLen() / step;
+        // number of blocks
+        //int numBlocks = vocabularyElem.getSkipLen() / step;
 
-            // initialize a new ArrayList of blocks
-            //blocks = new ArrayList<>();
+        // initialize a new ArrayList of blocks
+        //blocks = new ArrayList<>();
 
-            // read the skip info
-            //for (int i = 0; i < numBlocks; i++) {
-                //SkipElem skipElem = new SkipElem();
-                // read skipping element from disk
-                //skipElem.readFromDisk(skip_RAF.getChannel(), skipAddress + i * step);
-                // add the skip element to the list
-                //blocks.add(skipElem);
-            //}
+        // read the skip info
+        //for (int i = 0; i < numBlocks; i++) {
+        //SkipElem skipElem = new SkipElem();
+        // read skipping element from disk
+        //skipElem.readFromDisk(skip_RAF.getChannel(), skipAddress + i * step);
+        // add the skip element to the list
+        //blocks.add(skipElem);
+        //}
 
-            // current block
-            //skipBlock = blocks.get(0);
+        // current block
+        //skipBlock = blocks.get(0);
 
-            // initialize the iterator
-            //skipElemIterator = blocks.iterator();
-            //skipElemIterator.next();
+        // initialize the iterator
+        //skipElemIterator = blocks.iterator();
+        //skipElemIterator.next();
 
-            if(Configuration.isIndex_compressionON()) {
-                // compressione index On
-                //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-            }else{
-                // compressione index Off
-                //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-            }
+        if(Configuration.isIndex_compressionON()) {
+            // compressione index On
+            //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+            readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+        }else{
+            // compressione index Off
+            //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+            readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
+        }
         //}
 
         // set posting list iterator ! serve !
         postingListIterator = postingList.iterator();
         currentPostingList = postingListIterator.next();
 
-        if (Configuration.isScoreON()) {
-            // BM25
-            this.BM25 = vocabularyElem.getMaxBM25();
-        } else {
-            // TF-IDF
-            this.TFIDF = vocabularyElem.getMaxTFIDF();
-        }
+//        if (Configuration.isScoreON()) {
+//            // BM25
+//            this.BM25 = vocabularyElem.getMaxBM25();
+//        } else {
+//            // TF-IDF
+//            this.TFIDF = vocabularyElem.getMaxTFIDF();
+//        }
 
     }
 
@@ -383,7 +383,7 @@ public class PostingList {
             currentPostingList = null;
         }
 
-       //currentPostingList = postingListIterator.next();
+        //currentPostingList = postingListIterator.next();
     }
         /*else {
             // the posting list is empty and there are no more blocks

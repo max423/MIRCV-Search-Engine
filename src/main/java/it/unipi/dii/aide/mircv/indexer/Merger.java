@@ -26,7 +26,7 @@ public class Merger {
     MappedByteBuffer mappedByteBuffer;
     FileChannel channelVocabulary;
 
-    long vocabularyEntrySize= 80; // check
+    long vocabularyEntrySize= 60; // check
 
     String headTerm;
 
@@ -94,6 +94,7 @@ public class Merger {
             // entry contains the next term to insert in the final_vocabulary
             vocabularyElem = readVocabularyFromPartialFile( entry.getKey(),currentOffsetVocabulary[blockNumCorrent], GetCorrectChannel(blockNumCorrent, 0));
 
+            System.out.println("VocabularyElem: " + vocabularyElem);
             // update the offset of the current partial_vocabulary
             currentOffsetVocabulary[blockNumCorrent] += vocabularyEntrySize;
 
@@ -166,8 +167,10 @@ public class Merger {
                     vocabularyElem.setTermFreqOffset(GetCorrectChannel(-1, 2).size() - vocabularyElem.getTermFreqLen());
                 }
 
-                // compute score
-                computeScore(vocabularyElem);
+//                // compute score
+//                computeScore(vocabularyElem);
+
+                vocabularyElem.computeIDF();
 
                 // write the term in the final_vocabulary
                 vocabularyElem.writeToDisk(GetCorrectChannel(-1, 0));
@@ -189,23 +192,22 @@ public class Merger {
 
         // write the collectionStatistics on the disk
         collectionStatistics.writeToDisk(GetCorrectChannel(-1, 3));
-
         System.out.println("> Merging completed!");
 
     }
 
-    private void computeScore(VocabularyElem vocabularyElem) throws IOException {
-        // compute inverse document frequency
-        vocabularyElem.computeIDF();
-
-        // compute BM25 and TFIDF
-        vocabularyElem.computeBM25andTFIDF(collectionStatistics.getAvgDocLen(), postingList);
-
-        //vocabularyElem.setOffset_skipInfo(skippingBlock_raf.getChannel().size());
-        //vocabularyElem.setSkipOffset(0);
-        //vocabularyElem.setSkipLen(0);
-
-    }
+//    private void computeScore(VocabularyElem vocabularyElem) throws IOException {
+//        // compute inverse document frequency
+//        vocabularyElem.computeIDF();
+//
+//        // compute BM25 and TFIDF
+//        vocabularyElem.computeBM25andTFIDF(collectionStatistics.getAvgDocLen(), postingList);
+//
+//        //vocabularyElem.setOffset_skipInfo(skippingBlock_raf.getChannel().size());
+//        //vocabularyElem.setSkipOffset(0);
+//        //vocabularyElem.setSkipLen(0);
+//
+//    }
 
 
     // take all the information from the partial_vocabulary for 1 vocabularyElem
@@ -220,7 +222,7 @@ public class Merger {
             String term = t;
 
             // creating ByteBuffer for reading df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen
-            buffer = ByteBuffer.allocate(4 + 4 + 4 + 8 + 8 + 4 + 4 + 8 + 8 + 8);
+            buffer = ByteBuffer.allocate(4 + 4  + 8 + 8 + 4 + 4 + 8 );
 
             while (buffer.hasRemaining())
                 channel.read(buffer);
@@ -228,24 +230,24 @@ public class Merger {
             buffer.rewind(); // reset the buffer position to 0
             int df = buffer.getInt();                        // reading df from buffer
             int cf = buffer.getInt();                        // reading cf from buffer
-            int lastDocIdInserted = buffer.getInt();         // reading lastDocIdInserted from buffe  // TODO SIMO
+            //int lastDocIdInserted = buffer.getInt();         // reading lastDocIdInserted from buffe  // TODO SIMO
             long docIdsOffset = buffer.getLong();            // reading docIdsOffset from buffer
             long termFreqOffset = buffer.getLong();          // reading termFreqOffset from buffer
             int docIdsLen = buffer.getInt();                 // reading docIdsLen from buffer
             int termFreqLen = buffer.getInt();               // reading termFreqLen from buffer
             double idf = buffer.getDouble();                 // reading idf from buffer
-            double maxBM25 = buffer.getDouble();             // reading maxBM25 from buffer
-            double maxTFIDF = buffer.getDouble();            // reading maxTFIDF from buffer
+//            double maxBM25 = buffer.getDouble();             // reading maxBM25 from buffer
+//            double maxTFIDF = buffer.getDouble();            // reading maxTFIDF from buffer
 
             // creating the vocabularyElem
-            VocabularyElem vocabularyElem = new VocabularyElem(term, df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen);
+            VocabularyElem vocabularyElem = new VocabularyElem(term, df, cf, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen);
             //System.out.println("VocabularyElem :" + vocabularyElem);
 
             //vocabularyElem.setSkipLen(skipLen);
             //vocabularyElem.setSkipOffset(skipOffset);
             vocabularyElem.setIdf(idf);
-            vocabularyElem.setMaxBM25(maxBM25);
-            vocabularyElem.setMaxTFIDF(maxTFIDF);
+//            vocabularyElem.setMaxBM25(maxBM25);
+//            vocabularyElem.setMaxTFIDF(maxTFIDF);
 
             return vocabularyElem;
 

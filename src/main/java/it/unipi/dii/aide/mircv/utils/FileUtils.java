@@ -236,7 +236,7 @@ public class FileUtils {
     private static void loadVocabulary() throws IOException {
         // Initial offset
         long currentOffset = 0;
-        int VOCABULARY_ELEM_SIZE = 80;
+        int VOCABULARY_ELEM_SIZE = 60;
 
         // Get the channel
         FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);

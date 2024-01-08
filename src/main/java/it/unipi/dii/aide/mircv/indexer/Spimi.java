@@ -21,17 +21,17 @@ public class Spimi {
     // docId counter
     protected int docid = 1;
 
-    // vocabulary = hash map in memory
+    // vocabulary = hash map
     protected final HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
 
     // list of sorted term
     public static ArrayList<String> termList = new ArrayList<>();
 
-    // posting list in memory
+    // posting lis
     public static HashMap<String, PostingList> postingListElem = new HashMap<>();
     private long MEMORYFree_THRESHOLD;
 
-    public static ArrayList<Integer> docLen = new ArrayList<>();     // array di doc len for scoring
+//    public static ArrayList<Integer> docLen = new ArrayList<>();     // array di doc len for scoring
 
     public static int lastDocId = 0; // save last docId for CollectionStatistics
 
@@ -54,14 +54,14 @@ public class Spimi {
         int documnetLength;
 
 
-        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *10 / 100; // leave 20% of memory free
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *10 / 100; // leave 10% of memory free
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
         while ((line = bufferedReader.readLine()) != null) {
 
             // checking if the used memory has reached the threshold
             checkMemory();
-            
+
             // split on tab
             tab = line.indexOf("\t");
 
@@ -88,8 +88,8 @@ public class Spimi {
             DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
 
-            // add doc length to array for scoring
-            docLen.add(documnetLength);
+//            // add doc length to array for scoring
+//            docLen.add(documnetLength);
 
             if (Configuration.isTesting()){
                 System.out.println("\nDocId: " + docid + " DocNo: " + docno + " DocLen: " + documnetLength);
@@ -160,7 +160,7 @@ public class Spimi {
         }
         System.out.println("Block " + blockNum + " written on disk.");
 
-        lastDocId = docid; // save last docId for CollectionStatistics
+        lastDocId = docid-1; // save last docId for CollectionStatistics
 
         // close the docIndex_RAF
         docIndex_RAF.close();
@@ -221,43 +221,39 @@ public class Spimi {
         Collections.sort(termList);
 
         // write on the disk
-         try {
-             for (String term : termList) {
+        try {
+            for (String term : termList) {
 
-                 // get the posting list of the term
-                 PostingList postList = PpostingListElem.get(term);
+                // get the posting list of the term
+                PostingList postList = PpostingListElem.get(term);
 
-                 // get the vocabulary element of the term
-                 VocabularyElem vocElem = Pvocabulary.get(term);
+                // get the vocabulary element of the term
+                VocabularyElem vocElem = Pvocabulary.get(term);
 
-                 // set the offset of the DocId posting list in the vocabulary element
-                 vocElem.setDocIdsOffset(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel().size());
+                // set the offset of the DocId posting list in the vocabulary element
+                vocElem.setDocIdsOffset(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel().size());
 
-                 // set the offset of the TermFreq posting list in the vocabulary element
-                 vocElem.setTermFreqOffset(FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel().size());
+                // set the offset of the TermFreq posting list in the vocabulary element
+                vocElem.setTermFreqOffset(FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel().size());
 
-                 // write the posting list on the disk
-                 postList.writeToDisk(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel(), FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel());
+                // write the posting list on the disk
+                postList.writeToDisk(FileUtils.skeleton_RAF.get(blockNum).get(1).getChannel(), FileUtils.skeleton_RAF.get(blockNum).get(2).getChannel());
 
+                // update the vocabulary element
+                vocElem.incFreqLen(postList.getPostingList().size()*4);
+                vocElem.incDocLen(postList.getPostingList().size()*4);
 
-                 // update the vocabulary element
-                 vocElem.incFreqLen(postList.getPostingList().size()*4);
-                 vocElem.incDocLen(postList.getPostingList().size()*4);
+                // write the vocabulary element on the disk
+                Pvocabulary.put(term, vocElem); // update the vocabulary
+                vocElem.writeToDisk(FileUtils.skeleton_RAF.get(blockNum).get(0).getChannel());
 
-
-                 // TO DO  * update MAXTF
-
-                 // write the vocabulary element on the disk
-                 Pvocabulary.put(term, vocElem); // update the vocabulary
-                 vocElem.writeToDisk(FileUtils.skeleton_RAF.get(blockNum).get(0).getChannel());
-
-             }
-             return true;
-         }
-            catch (IOException e) {
-                System.out.println("I/O Error " + e);
-                return false;
             }
+            return true;
+        }
+        catch (IOException e) {
+            System.out.println("I/O Error " + e);
+            return false;
+        }
     }
 
 }

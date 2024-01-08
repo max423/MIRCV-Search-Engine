@@ -25,13 +25,14 @@ public class Indexer {
         // start Spimi algorithm
         Spimi spimi = new Spimi();
         blockNumber= spimi.startIndexer();
+
         System.out.println("Number of blocks generated: " + blockNumber);
 
         stopTime = System.currentTimeMillis();
         elapsedTimeSpimi = stopTime - startTime;
         startTime = System.currentTimeMillis();
-
         blockNumber +=1;
+
         Merger merger = new Merger();
         merger.startMerger(blockNumber);
 
@@ -54,6 +55,7 @@ public class Indexer {
         System.out.println("> Plotting final Structure ...");
         // offset corrente
         long currentOffset = 0;
+        long vocabularySize = 60;
 
         // take channel
         FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
@@ -61,9 +63,10 @@ public class Indexer {
         FileChannel channelTermFreq = FileUtils.GetCorrectChannel(-1, 2);
 
         // take the size of the file
+
         while (true) {
             try {
-                if (!((currentOffset + 80) < channelVocabulary.size())) break;
+                if (!((currentOffset + vocabularySize) < channelVocabulary.size())) break;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -76,7 +79,7 @@ public class Indexer {
             System.out.println(vocabularyElem);
 
             // update the offset
-            currentOffset += 80;
+            currentOffset += vocabularySize;
 
             // read the posting list
             PostingList postingList = new PostingList(vocabularyElem.getTerm());
@@ -120,6 +123,10 @@ public class Indexer {
         collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
         System.out.println(collectionStatistics);
 
+        // print the document index
+        printDocumentIndex();
+
+
     }
 
     // used for testing, print the document index
@@ -149,11 +156,12 @@ public class Indexer {
 
         // offset corrente
         long currentOffset = 0;
+        long vocabularySize= 60;
 
         // take the size of the file
         while (true) {
             try {
-                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+                if (!((currentOffset + vocabularySize) < channelVocabulary.size())) break;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -163,7 +171,7 @@ public class Indexer {
             vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
 
             // update the offset
-            currentOffset += 56;
+            currentOffset += vocabularySize;
 
             // check if the term is the one we are looking for
             if (vocabularyElem.getTerm().equals(term)) {
@@ -189,11 +197,12 @@ public class Indexer {
 
         // offset corrente
         long currentOffset = 0;
+        long vocabularySize= 60;
 
         // take the size of the file
         while (true) {
             try {
-                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+                if (!((currentOffset + vocabularySize) < channelVocabulary.size())) break;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -203,7 +212,7 @@ public class Indexer {
             vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
 
             // update the offset
-            currentOffset += 56;
+            currentOffset += vocabularySize;
 
             // check if the term is the one we are looking for
             if (vocabularyElem.getTerm().equals(term)) {
@@ -224,11 +233,12 @@ public class Indexer {
 
         // offset corrente
         long currentOffset = 0;
+        long vocabularySize= 60;
 
         // take the size of the file
         while (true) {
             try {
-                if (!((currentOffset + 56) < channelVocabulary.size())) break;
+                if (!((currentOffset + 60) < channelVocabulary.size())) break;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -238,7 +248,7 @@ public class Indexer {
             vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
 
             // update the offset
-            currentOffset += 56;
+            currentOffset += 60;
 
             // check if the term is the one we are looking for
             if (vocabularyElem.getTerm().equals(term)) {
