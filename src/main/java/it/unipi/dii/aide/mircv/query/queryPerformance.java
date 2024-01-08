@@ -56,7 +56,7 @@ public class queryPerformance {
             System.out.println("Scoring function = " + (scoringFunction == true ? "BM25" : "TFIDF"));
             System.out.println("--------------------------------------------------");
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/resources/msmarco-test2020-queries.tsv"), StandardCharsets.UTF_8));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/java/it/unipi/dii/aide/mircv/resources/msmarco-test2020-queries.tsv"), StandardCharsets.UTF_8));
             String query = reader.readLine();
 
             ArrayList<Long> queryTime = new ArrayList<>();
@@ -98,7 +98,10 @@ public class queryPerformance {
             for (long time : queryTime){
                 sum += time;
             }
-            System.out.println("Average time: " + sum/queryTime.size()/1000 + " s");
+
+            System.out.println("Average time: " + sum/queryTime.size()/1000 + " s"); // in secondi è troppo stampa sempre 0
+            System.out.println("--------------------------------------------------");
+            System.out.println("Average time: " + sum/queryTime.size() + " ms");
         }
     }
 
