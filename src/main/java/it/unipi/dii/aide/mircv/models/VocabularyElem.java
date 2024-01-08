@@ -210,7 +210,11 @@ public class VocabularyElem {
         while (buffer.hasRemaining())
             channelVoc.write(buffer);
 
-        System.out.println("VocabularyElem written on disk: " + this);
+        // testing
+        if(Configuration.isTesting()) {
+            System.out.println("VocabularyElem written on disk: " + this);
+        }
+
 
     }
 

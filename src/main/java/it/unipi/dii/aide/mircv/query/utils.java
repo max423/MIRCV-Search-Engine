@@ -176,11 +176,11 @@ public class utils {
             // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {
 
-                System.out.println("----------");
-                System.out.println("current postinglist "+postingList);
-                System.out.println("Current Docid "+ currentDocID);
-                System.out.println("Next Docid "+ nextDocID);
-                System.out.println("current Posting "+postingList.getCurrentPostingList());
+//                System.out.println("----------");
+//                System.out.println("current postinglist "+postingList);
+//                System.out.println("Current Docid "+ currentDocID);
+//                System.out.println("Next Docid "+ nextDocID);
+//                System.out.println("current Posting "+postingList.getCurrentPostingList());
 
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
@@ -203,21 +203,21 @@ public class utils {
                     // next posting
                     postingList.nextPosting(postingList.getTerm());
                     // print current posting
-                    System.out.println("current Posting after next "+postingList.getCurrentPostingList());
+//                    System.out.println("current Posting after next "+postingList.getCurrentPostingList());
 
                 }
 
 
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
-                    System.out.println("posting list is empty");
+//                    System.out.println("posting list is empty");
                     continue;
                 }
 
                 // update the next docID
                 if (postingList.getCurrentPostingList().getDocID() < nextDocID) {
                     nextDocID = postingList.getCurrentPostingList().getDocID();
-                    System.out.println("Next Docid "+ nextDocID);
+//                    System.out.println("Next Docid "+ nextDocID);
                 }
 
 
@@ -249,7 +249,7 @@ public class utils {
 
             // update the current docID
             currentDocID = nextDocID;
-            System.out.println("Current Docid "+ currentDocID);
+//            System.out.println("Current Docid "+ currentDocID);
 
         }
 
@@ -264,7 +264,7 @@ public class utils {
 
         // inverse document frequency
         double idf = FileUtils.vocabulary.get(term).getIdf();
-        System.out.println("IDF for "+ term + " is "+idf);
+//        System.out.println("IDF for "+ term + " is "+idf);
 
         double TFIDF = tfWeight * idf;
 

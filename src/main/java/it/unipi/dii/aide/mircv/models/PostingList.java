@@ -470,15 +470,15 @@ public class PostingList {
     }*/
 
 
-    // TODO Possiamo eliminarla
-    public int getMaxTermFreq() {
-        int maxTermFreq = 0;
-
-        for (Posting posting : postingList) {
-            if (posting.getTermFreq() > maxTermFreq)
-                maxTermFreq = posting.getTermFreq();
-        }
-
-        return maxTermFreq;
-    }
+//    // TODO Possiamo eliminarla
+//    public int getMaxTermFreq() {
+//        int maxTermFreq = 0;
+//
+//        for (Posting posting : postingList) {
+//            if (posting.getTermFreq() > maxTermFreq)
+//                maxTermFreq = posting.getTermFreq();
+//        }
+//
+//        return maxTermFreq;
+//    }
 }

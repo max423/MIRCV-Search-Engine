@@ -94,7 +94,7 @@ public class Merger {
             // entry contains the next term to insert in the final_vocabulary
             vocabularyElem = readVocabularyFromPartialFile( entry.getKey(),currentOffsetVocabulary[blockNumCorrent], GetCorrectChannel(blockNumCorrent, 0));
 
-            System.out.println("VocabularyElem: " + vocabularyElem);
+
             // update the offset of the current partial_vocabulary
             currentOffsetVocabulary[blockNumCorrent] += vocabularyEntrySize;
 

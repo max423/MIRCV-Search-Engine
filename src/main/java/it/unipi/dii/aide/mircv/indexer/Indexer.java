@@ -45,8 +45,10 @@ public class Indexer {
         // salva su log file tutti i tempi di esecuzione, il numero di blocchi e la dimensione totale dei file finali
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
 
-        // print the final structure
-        PlotFinalStructure();
+        if(Configuration.isTesting()) {
+            // print the final structure
+            PlotFinalStructure();
+        }
     }
 
 
