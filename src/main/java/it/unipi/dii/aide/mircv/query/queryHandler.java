@@ -218,7 +218,7 @@ public class queryHandler {
             // obtain the posting list for the token
             postingList.getPostingList(token);
 
-            System.out.println(postingList);
+            //System.out.println(postingList);
 
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {

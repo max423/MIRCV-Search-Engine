@@ -66,11 +66,13 @@ public class utils {
             for (PostingList postingList : queryHandler.postingListQuery) {
 
 
+                /*
                 System.out.println("----------");
                 System.out.println("current postinglist "+postingList);
                 System.out.println("Current Docid "+ currentDocID);
                 System.out.println("Next Docid "+ nextDocID);
                 System.out.println("current PIT "+postingList.getCurrentPostingList());
+                */
 
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
@@ -93,7 +95,7 @@ public class utils {
                     // update the posting list
                     postingList.nextPosting(postingList.getTerm());
                 }
-                System.out.println("Present value "+ present);
+                //System.out.println("Present value "+ present);
 
 
                 // check if the posting list is empty
@@ -111,7 +113,7 @@ public class utils {
 
             // check if the docID is present in all the posting lists
             if (present == queryHandler.postingListQuery.size()) {
-                System.out.println("Update the score of Current Docid "+ currentDocID);
+                //System.out.println("Update the score of Current Docid "+ currentDocID);
                 // update the priority queue
                 if (scoreDocsDecreasing.size() < k) {
                     // add the scoreDoc to the priority queue
@@ -170,6 +172,8 @@ public class utils {
             // update the next docID
             //nextDocID = collectionStatistics.getDocCount()-1;
             nextDocID = collectionStatistics.getDocCount();
+
+
 
             // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {

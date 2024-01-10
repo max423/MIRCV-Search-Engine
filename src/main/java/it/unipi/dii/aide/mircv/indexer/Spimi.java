@@ -61,7 +61,7 @@ public class Spimi {
         while ((line = bufferedReader.readLine()) != null) {
 
 
-           // System.out.println("> :" + line);
+            // System.out.println("> :" + line);
 //            l ++ ;
 //            if (l == 10000) break;
 

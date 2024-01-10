@@ -30,7 +30,6 @@ public class queryPerformance {
 
         System.out.println("Welcome to the MIRCV search engine!");
 
-
         while (true){
             ArrayList<String> tokens;
             long startTime, stopTime;

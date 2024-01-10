@@ -47,7 +47,7 @@ public class Indexer {
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
 
 
-       // PlotFinalStructure();
+        // PlotFinalStructure();
 //        if(Configuration.isTesting()) {
 //            // print the final structure
 //            PlotFinalStructure();
