@@ -12,27 +12,32 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static it.unipi.dii.aide.mircv.Main.configureSearchEngine;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.loadFinalStructure;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.takeFinalRAF;
 
 public class queryPerformance {
 
-    private static Boolean queryType;
-    private static Boolean scoringFunction;
-    private static Boolean searchStrategy;
+    //private static Boolean queryType;
+    //private static Boolean scoringFunction;
 
-    static int k = 200; // # doc to retrive
+    static int k = 10; // # doc to retrieve
 
     public static void main(String[] arg) throws IOException {
 
         takeFinalRAF();
         loadFinalStructure();
 
+        System.out.println("Welcome to the MIRCV search engine!");
+
+
         while (true){
-            Scanner scanner = new Scanner(System.in);
             ArrayList<String> tokens;
-
-
+            long startTime, stopTime;
+            Scanner scanner = new Scanner(System.in);
+            String query;
+            configureSearchEngine(scanner);
+            /*
             // Configura la query
             System.out.println("Configure query type:");
             System.out.println("1: Conjunctive");
@@ -55,9 +60,9 @@ public class queryPerformance {
             System.out.println("Query type = " + (queryType == true ? "Conjunctive" : "Disjunctive"));
             System.out.println("Scoring function = " + (scoringFunction == true ? "BM25" : "TFIDF"));
             System.out.println("--------------------------------------------------");
-
+            */
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/java/it/unipi/dii/aide/mircv/resources/msmarco-test2020-queries.tsv"), StandardCharsets.UTF_8));
-            String query = reader.readLine();
+            query = reader.readLine();
 
             ArrayList<Long> queryTime = new ArrayList<>();
 
@@ -65,7 +70,9 @@ public class queryPerformance {
                 String[] queryTokens = query.split("\t");
 
                 // print query
-                System.out.println("Query: " + queryTokens[0]);
+                System.out.println("Query ID: " + queryTokens[0]);
+                System.out.println("Query: " + queryTokens[1]);
+
 
                 List<String> queryList = new ArrayList<>(Arrays.asList(queryTokens));
                 queryList.remove(0);
@@ -74,14 +81,14 @@ public class queryPerformance {
                 String finalQuery = String.join(",", queryList);
 
                 // start timer
-                long startTime = System.currentTimeMillis();
+                startTime = System.currentTimeMillis();
 
                 tokens = queryHandler.QueryPreProcessing(finalQuery);
 
                 queryHandler.executeQuery(tokens, k);
 
                 // stop timer
-                long stopTime = System.currentTimeMillis() - startTime;
+                stopTime = System.currentTimeMillis() - startTime;
 
                 // print time
                 System.out.println("Query time: " + stopTime + " ms");

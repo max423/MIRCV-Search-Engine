@@ -243,7 +243,7 @@ public class utils {
             // check if no more docID to process
             //if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()-1) {
             if (currentDocID == nextDocID || nextDocID == collectionStatistics.getDocCount()) {
-            //if (currentDocID == nextDocID) {
+                //if (currentDocID == nextDocID) {
                 return scoreDocsDecreasing;
             }
 

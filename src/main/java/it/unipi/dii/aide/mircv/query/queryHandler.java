@@ -272,4 +272,80 @@ public class queryHandler {
         else
             return scoreDoc.getDocID();
     }
+
+    // return PriorityQueue<scoreDoc> for testing
+    public static PriorityQueue<scoreDoc> returnPriorityQueue(ArrayList<String> tokens, int k) throws IOException {
+        int position = 0;
+
+        // ArrayList of tokens removing duplicates
+        ArrayList<String> tokensNoDuplicates = new ArrayList<>();
+        for (String token : tokens) {
+            if (!tokensNoDuplicates.contains(token)) {
+                tokensNoDuplicates.add(token);
+            }
+        }
+
+        // process each token of the query
+        for (String token : tokensNoDuplicates) {
+
+            // posting list initialization
+            PostingList postingList = new PostingList(token);
+
+            // obtain the posting list for the token
+            postingList.getPostingList(token);
+
+            System.out.println(postingList);
+
+            // check if the posting list is empty (the token is not in the vocabulary)
+            if (postingList.getPostingList().size() == 0) {
+                if (Configuration.isConjunctiveON()) {
+                    resetDataStructures();
+                    return null; // no results
+                }
+                continue;
+            }
+
+            // add the posting list to the posting list with the tokens in the query
+            postingListQuery.add(postingList);
+
+            // check the type of configuration
+            if (Configuration.isMaxScoreON()) {
+                // max score configuration
+                if (Configuration.isScoreON())
+                    hashMapScore.put(position, postingList.getMaxBM25());
+                else
+                    hashMapScore.put(position, postingList.getMaxTFIDF());
+            }
+
+            // add the size of the posting list to the hashmap
+            hashMapLength.put(position, postingList.getPostingList().size());
+
+            // increment the position
+            position++;
+
+        }
+
+        // initialize a priority queue of scoreDoc objects
+        PriorityQueue<scoreDoc> priorityQueue;
+
+        // check if the posting list with the tokens in the query is empty
+        if (postingListQuery.size() == 0) {
+            resetDataStructures();
+            return null; // no results
+        }
+
+        // check the type of configuration
+        if (Configuration.isConjunctiveON()) {
+            // conjunctive configuration
+            priorityQueue = utils.conjunctive(k);
+        } else {
+            // disjunctive configuration
+            priorityQueue = utils.disjunctive(k);
+        }
+
+        // reset the data structures
+        resetDataStructures();
+
+        return priorityQueue;
+    }
 }
