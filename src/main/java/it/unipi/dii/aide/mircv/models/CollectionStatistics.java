@@ -44,7 +44,7 @@ public class CollectionStatistics {
 
     // incremento numero di documenti
     public void setDocCount(int lastDocId) {
-        this.docCount = lastDocId +1;   // DocId parte da 0
+        this.docCount = lastDocId +1;
     }
 
     @Override

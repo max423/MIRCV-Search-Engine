@@ -100,7 +100,7 @@ public class utils {
 
                 // check if the posting list is empty
                 if (postingList.getCurrentPostingList() == null) {
-                    System.out.println("posting list is empty");
+                    //System.out.println("posting list is empty");
                     continue;
                 }
 
@@ -261,14 +261,27 @@ public class utils {
 
     private static double TFIDF(String term, Posting currentPostingList) {
         // term frequency weight
+        System.out.println("Current Posting List "+currentPostingList);
         double tf = currentPostingList.getTermFreq();
+        System.out.println("TF for "+ term + " is "+tf);
         double tfWeight = 1 + Math.log10(tf);
+        System.out.println("TF weight for "+ term + " is "+tfWeight);
 
         // inverse document frequency
         double idf = FileUtils.vocabulary.get(term).getIdf();
-//        System.out.println("IDF for "+ term + " is "+idf);
+        System.out.println("IDF for "+ term + " is "+idf);
 
         double TFIDF = tfWeight * idf;
+        System.out.println("TFIDF for "+ term + " is "+TFIDF);
+
+        float collectionSize = collectionStatistics.getDocCount();
+        System.out.println("Collection size "+ collectionSize);
+        float documentFrequency = FileUtils.vocabulary.get(term).getDocFreq();
+
+        double test = ((1 + Math.log10(tf)) * Math.log10((float) collectionSize/documentFrequency));
+        System.out.println("TEST TF = : " + (1 + Math.log10(tf)));
+        System.out.println("TEST IDF = : " + Math.log10((float) collectionSize/documentFrequency));
+        System.out.println("TEST TFIDF for "+ term + " is "+test);
 
         return TFIDF;
     }

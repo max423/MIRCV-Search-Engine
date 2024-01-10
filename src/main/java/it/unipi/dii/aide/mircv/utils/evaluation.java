@@ -11,15 +11,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static it.unipi.dii.aide.mircv.Main.configureSearchEngine;
-import static it.unipi.dii.aide.mircv.utils.FileUtils.loadFinalStructure;
-import static it.unipi.dii.aide.mircv.utils.FileUtils.takeFinalRAF;
+import static it.unipi.dii.aide.mircv.utils.FileUtils.*;
 
 public class evaluation {
 
     //private static Boolean queryType;
     //private static Boolean scoringFunction;
 
-    static int k = 10; // # doc to retrieve
+    static int k = 30; // # doc to retrieve
     static String TestQueryPath = "src/main/java/it/unipi/dii/aide/mircv/resources/msmarco-test2020-queries.tsv";
     static String ResultQueryPath ="src/main/java/it/unipi/dii/aide/mircv/resources/resultTrecQeury.txt";
     static String QrelPath = "src/main/java/it/unipi/dii/aide/mircv/resources/2020qrels-pass.txt";
@@ -72,9 +71,9 @@ public class evaluation {
             runTrecEval(ResultQueryPath, QrelPath);
 
             // clean result file
-            PrintWriter writer = new PrintWriter(ResultQueryPath);
-            writer.print("");
-            writer.close();
+//            PrintWriter writer = new PrintWriter(ResultQueryPath);
+//            writer.print("");
+//            writer.close();
 
         }
 
@@ -88,17 +87,20 @@ public class evaluation {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ResultQueryPath, true)))
         {
-            // write qrel file
             int rank = 1;
-            int k = 10;
+            int k = 30;
             // <query_id Q0 doc_id rank score STANDARD>
+
             while (!returnPriorityQueue.isEmpty() && k > 0){
+                // returnPriorityQueue size
+                System.out.println(returnPriorityQueue.size());
                 scoreDoc doc = returnPriorityQueue.poll();
-                // query_id Q0 doc_id rank STANDARD
-                String resultLine = queryId + " Q0 " + doc.getDocID() + " " + rank + " " + doc.getScore() + " STANDARD\n";
+                String pid = documentIndex.get(doc.getDocID()).getDocno();
+                String resultLine = queryId + " Q0 " + pid + " " + rank + " " + doc.getScore() + " STANDARD\n";
                 writer.write(resultLine);
                 rank++;
                 k--;
+
                 //System.out.println(resultLine);
             }
 
@@ -118,33 +120,35 @@ public class evaluation {
 
             // Costruisci il comando per eseguire trec_eval
             String command = "/usr/local/bin/trec_eval -m all_trec " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
+            //String command = "/usr/local/bin/trec_eval -m ndcg_cut -m map -m recip_rank -m recall.10,100,1000 -M1000  " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
 
             // Esegui il comando
             Process process = Runtime.getRuntime().exec(command);
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/it/unipi/dii/aide/mircv/resources/evaluation.txt", true));
-            {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/it/unipi/dii/aide/mircv/resources/evaluation.txt", true))) {
                 // scrivi il comafigurazione
                 writer.write("--------------------------------------------------\n");
-                writer.write("Compressed Reading = " + Configuration.isCompressionON() + "\n" + "Stemming & Stopword = " + Configuration.isStemming_stopwordON() + "\n" + "Index Compression = " + Configuration.isIndex_compressionON() + "\n");
-            }
+                writer.write("isConjunctive = " + Configuration.isConjunctiveON() + "\n" + "Stemming & Stopword = " + Configuration.isStemming_stopwordON()
+                        + "\n" + "BM25ON ="+ Configuration.isScoreON() + "\n");
 
-            // Leggi l'output del processo
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-                // e salva il risultato in un file
-                {
-                    writer.write(line + "\n");
+                // Leggi l'output del processo
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                        // e salva il risultato in un file
+                        writer.write(line + "\n");
+                    }
+                }
+
+                // Leggi l'errore del processo
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
                 }
             }
-            // Leggi l'errore del processo
-            reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-
 
 
         } catch (IOException e) {
