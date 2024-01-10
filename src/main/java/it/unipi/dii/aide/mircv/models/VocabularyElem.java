@@ -286,8 +286,9 @@ public class VocabularyElem {
 
     public void computeIDF() {
         // lastDocId at the end is the number of documents in the collection
-        System.out.println("lastDocId: " + lastDocId + " DocFreq: " + this.DocFreq);
+        //System.out.println("lastDocId: " + lastDocId + " DocFreq: " + this.DocFreq);
         this.idf = Math.log10(lastDocId / (double)this.DocFreq);
+
     }
 
 //    public void setMaxTFIDF(int maxTermFreq){

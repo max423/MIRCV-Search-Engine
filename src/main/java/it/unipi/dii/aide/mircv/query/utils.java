@@ -177,7 +177,7 @@ public class utils {
             for (PostingList postingList : queryHandler.postingListQuery) {
 
 //                System.out.println("----------");
-//                System.out.println("current postinglist "+postingList);
+//                  System.out.println("current postinglist "+postingList);
 //                System.out.println("Current Docid "+ currentDocID);
 //                System.out.println("Next Docid "+ nextDocID);
 //                System.out.println("current Posting "+postingList.getCurrentPostingList());

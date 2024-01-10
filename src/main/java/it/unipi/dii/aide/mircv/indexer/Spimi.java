@@ -57,7 +57,13 @@ public class Spimi {
         MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *10 / 100; // leave 10% of memory free
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
+        int l = 0;
         while ((line = bufferedReader.readLine()) != null) {
+
+
+           // System.out.println("> :" + line);
+//            l ++ ;
+//            if (l == 10000) break;
 
             // checking if the used memory has reached the threshold
             checkMemory();

@@ -8,6 +8,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import static it.unipi.dii.aide.mircv.compression.unary.readTermFreqCompressed;
 import static it.unipi.dii.aide.mircv.compression.variableByte.readDocIdsCompressed;
+import static it.unipi.dii.aide.mircv.utils.FileUtils.loadFinalStructure;
 
 public class Indexer {
     static Integer blockNumber = 0;
@@ -45,10 +46,14 @@ public class Indexer {
         // salva su log file tutti i tempi di esecuzione, il numero di blocchi e la dimensione totale dei file finali
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
 
-        if(Configuration.isTesting()) {
-            // print the final structure
-            PlotFinalStructure();
-        }
+
+       // PlotFinalStructure();
+//        if(Configuration.isTesting()) {
+//            // print the final structure
+//            PlotFinalStructure();
+//        }
+
+
     }
 
 
@@ -106,10 +111,10 @@ public class Indexer {
                 postingList.readFromDisk(channelDocID, channelTermFreq, vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
 
             // print the posting list
-            System.out.println(postingList + "\n");
+            System.out.println(postingList );
 
             // aspetta input tastira ogni 10000 elementi
-            if (currentOffset % 60000 == 0) {
+            if (currentOffset % 600000 == 0) {
                 System.out.println("Press Enter to continue...");
                 try {
                     System.in.read();
@@ -126,7 +131,7 @@ public class Indexer {
         System.out.println(collectionStatistics);
 
         // print the document index
-        printDocumentIndex();
+        //printDocumentIndex();
 
 
     }

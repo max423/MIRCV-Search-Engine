@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static it.unipi.dii.aide.mircv.text_processing.TextProcessing.DocumentProcessing;
+import static it.unipi.dii.aide.mircv.utils.FileUtils.documentIndex;
 
 // receive a query and return the top k  results
 public class queryHandler {
@@ -40,7 +41,8 @@ public class queryHandler {
             // obtain the posting list for the token
             postingList.getPostingList(token);
 
-            //System.out.println(postingList);
+
+            System.out.println(postingList);
 
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {
@@ -165,7 +167,9 @@ public class queryHandler {
         while (!priorityQueue.isEmpty() && k > 0) {
             scoreDoc scoreDoc = priorityQueue.poll();
             k--;
-            System.out.println("DocID: " + scoreDoc.getDocID() + " Score: " + scoreDoc.getScore());
+            //System.out.println("DocID: " + scoreDoc.getDocID() + " Score: " + scoreDoc.getScore());
+            String pid = documentIndex.get(scoreDoc.getDocID()).getDocno(); // <- take docNo from documentIndex
+            System.out.println("DocNo: " + pid + " Score: " + scoreDoc.getScore());
 
         }
 

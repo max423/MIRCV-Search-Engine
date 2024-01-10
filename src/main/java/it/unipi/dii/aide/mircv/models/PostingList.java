@@ -98,10 +98,6 @@ public class PostingList {
         while (freqsByteBuffer.hasRemaining())
             channelTermFreq.write(freqsByteBuffer);
 
-
-        // TO DO : check if this is necessary
-        // 1) skipElement
-
     }
 
     public void readFromDisk( FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId , long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
@@ -232,6 +228,7 @@ public class PostingList {
         // decompress
         ArrayList<Integer> docIds = variableByte.decompress(bufferDocId.array());
         ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
+
 
         // create the posting list
         for (int i = 0; i < docIds.size(); i++) {   // modificato da docIdsLen/4 a docIdsLen -> docIds.size()
