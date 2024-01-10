@@ -171,8 +171,6 @@ public class utils {
             //nextDocID = collectionStatistics.getDocCount()-1;
             nextDocID = collectionStatistics.getDocCount();
 
-
-
             // iterate over the posting lists of the query
             for (PostingList postingList : queryHandler.postingListQuery) {
 
