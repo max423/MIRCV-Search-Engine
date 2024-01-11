@@ -226,13 +226,9 @@ public class PostingList {
         bufferTermFreq.rewind();
 
         // decompress
-        System.out.println("decompressione DOcID");
         ArrayList<Integer> docIds = variableByte.decompressV2(bufferDocId.array());
-        System.out.println("decompressione DOcID finita");
 
-        System.out.println("decompressione termFreq");
         ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
-        System.out.println("decompressione termFreq finita");
 
 
         // create the posting list
@@ -253,17 +249,9 @@ public class PostingList {
         docId_RAF = new RandomAccessFile(FileUtils.Path_FinalDocId, "r");
         termFreq_RAF = new RandomAccessFile(FileUtils.Path_FinalTermFreq, "r");
 
-
-        System.out.println("prima prendo il vocabolario");
+        // get the vocabulary element of the term
         VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
 
-        // interval 1
-        System.out.println("dopo prendo il vocabolario");
-
-        // read skipping info
-        //RandomAccessFile skip_RAF = new RandomAccessFile(FileUtils.Path_Skipping, "r");
-
-        // check if the term is in the vocabulary
         if (vocabularyElem == null) {
             System.out.println("Term "+ term + " not found in the vocabulary");
             return;
@@ -330,9 +318,7 @@ public class PostingList {
         if(Configuration.isIndex_compressionON()) {
             // compressione index On
             //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-            System.out.println("compressione onPrima");
             readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-            System.out.println("compressione onDopo");
         }else{
             // compressione index Off
             //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));

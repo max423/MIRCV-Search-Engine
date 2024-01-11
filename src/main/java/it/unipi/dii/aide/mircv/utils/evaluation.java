@@ -14,7 +14,6 @@ import static it.unipi.dii.aide.mircv.Main.configureSearchEngine;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.*;
 
 public class evaluation {
-
     static int k;
 
     // iterative process to evaluate the system performance by changing the configuration
@@ -43,10 +42,13 @@ public class evaluation {
                     scanner.nextLine();
                 }
             }
+            scanner.nextLine();
+
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(TestQueryPath), StandardCharsets.UTF_8));
             query = reader.readLine();
 
+            // array to store the query time
             ArrayList<Long> queryTime = new ArrayList<>();
 
             while (query != null){
@@ -63,26 +65,45 @@ public class evaluation {
                 // convert to document without id
                 String finalQuery = String.join(",", queryList);
 
+                // start timer
+                startTime = System.currentTimeMillis();
+
                 tokens = queryHandler.QueryPreProcessing(finalQuery);
 
                 // execute query
                 PriorityQueue<scoreDoc> result = queryHandler.returnPriorityQueue(tokens, k);
+
+                // stop timer
+                stopTime = System.currentTimeMillis();
 
                 // create a qrel file
                 writeResultOnFile(queryTokens[0], result);
 
                 query = reader.readLine();
                 tokens.clear();
+
+                // add query time
+                queryTime.add(stopTime - startTime);
             }
+
             System.out.println("Query result written on file ");
 
+            System.out.println("Run trec_eval command");
             // run trec_eval
             runTrecEval(ResultQueryPath, QrelPath);
 
-            // clean result file
+            // clean result file for the loop evaluation
             PrintWriter writer = new PrintWriter(ResultQueryPath);
             writer.print("");
             writer.close();
+
+            // calculate average query time
+            long total = 0;
+            for (long time : queryTime) {
+                total += time;
+            }
+
+            System.out.println("Average query time: " + total / queryTime.size() + " ms");
 
         }
     }
@@ -98,8 +119,6 @@ public class evaluation {
 
             // <query_id Q0 doc_id rank score STANDARD>
             while (!returnPriorityQueue.isEmpty() && g > 0){
-                // returnPriorityQueue size
-                System.out.println(returnPriorityQueue.size());
                 scoreDoc doc = returnPriorityQueue.poll();
                 String pid = documentIndex.get(doc.getDocID()).getDocno();
                 String resultLine = queryId + " Q0 " + pid + " " + rank + " " + doc.getScore() + " STANDARD\n";
@@ -125,8 +144,8 @@ public class evaluation {
             String AbsolutePathfileResult = fileResult.getAbsolutePath();
 
             // Command to run trec_eval
-            String command = "/usr/local/bin/trec_eval -m all_trec " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
-            //String command = "/usr/local/bin/trec_eval -m ndcg_cut -m map -m recip_rank -m recall.10,100,1000 -M1000  " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
+            //String command = "/usr/local/bin/trec_eval -m all_trec " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
+            String command = "/usr/local/bin/trec_eval -m ndcg_cut -m map -m recip_rank -m recall.10,100,1000 -M1000  " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
 
             // run the command
             Process process = Runtime.getRuntime().exec(command);
@@ -135,17 +154,15 @@ public class evaluation {
 
                 // scrivi il comafigurazione
                 writer.write("--------------------------------------------------\n");
-                writer.write("Stemming & Stopword = " + Configuration.isStemming_stopwordON()+ "\n" );
-
                 if (Configuration.isConjunctiveON())
-                    writer.write("Conjunctive = ON \n");
+                    writer.write("Conjunctive  \n");
                 else
-                    writer.write("Disjunctive = ON \n");
+                    writer.write("Disjunctive  \n");
 
                 if (Configuration.isScoreON())
-                    writer.write("BM25 = ON \n");
+                    writer.write("BM25  \n");
                 else
-                    writer.write("TFIDF = ON \n");
+                    writer.write("TFIDF \n");
 
                 // write the evaluation result pn file
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {

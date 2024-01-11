@@ -81,20 +81,7 @@ public class variableByte { // -> docid
         return decompressed;
     }
 
-    public static ArrayList<Integer> decompressV3(byte[] compressed) {
-        List<Integer> numbers = new ArrayList<Integer>();
-        int n = 0;
-        for (byte b : compressed) {
-            if ((b & 0xff) < 128) {
-                n = 128 * n + b;
-            } else {
-                int num = (128 * n + ((b - 128) & 0xff));
-                numbers.add(num);
-                n = 0;
-            }
-        }
-        return (ArrayList<Integer>) numbers;
-    }
+
 
 
 

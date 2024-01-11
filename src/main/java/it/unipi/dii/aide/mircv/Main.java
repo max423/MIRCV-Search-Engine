@@ -79,6 +79,7 @@ public class Main {
                         scanner.nextLine();
                     }
                 }
+                scanner.nextLine();
                 continue;
             }
 

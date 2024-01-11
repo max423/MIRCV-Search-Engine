@@ -38,20 +38,8 @@ public class queryHandler {
             // posting list initialization
             PostingList postingList = new PostingList(token);
 
-
-            long startTime = System.currentTimeMillis();
-            System.out.println("prima della decompressione " + System.currentTimeMillis());
-
             // obtain the posting list for the token
             postingList.getPostingList(token);
-
-            long endTime = System.currentTimeMillis();
-            System.out.println("dopo la decompressione " + System.currentTimeMillis());
-
-            System.out.println("interval " + (endTime - startTime));
-
-
-
 
             //System.out.println(postingList);
 
