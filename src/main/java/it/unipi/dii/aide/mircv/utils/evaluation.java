@@ -15,14 +15,11 @@ import static it.unipi.dii.aide.mircv.utils.FileUtils.*;
 
 public class evaluation {
 
-    //private static Boolean queryType;
-    //private static Boolean scoringFunction;
+    static int k;
 
-    static int k = 30; // # doc to retrieve
-    static String TestQueryPath = "src/main/java/it/unipi/dii/aide/mircv/resources/msmarco-test2020-queries.tsv";
-    static String ResultQueryPath ="src/main/java/it/unipi/dii/aide/mircv/resources/resultTrecQeury.txt";
-    static String QrelPath = "src/main/java/it/unipi/dii/aide/mircv/resources/2020qrels-pass.txt";
-
+    // iterative process to evaluate the system performance by changing the configuration
+    // create a Result TracEval file for all query in msmarco-test-queries.tsv file
+    // and run trec_eval tool to evaluate the system performance
     public static void main(String[] args) throws IOException {
         takeFinalRAF();
         loadFinalStructure();
@@ -34,6 +31,18 @@ public class evaluation {
             Scanner scanner = new Scanner(System.in);
             String query;
             configureSearchEngine(scanner);
+
+            // setta k da tastiera
+            System.out.println("Set k:");
+            while (true) {
+                try {
+                    k = scanner.nextInt();
+                    break;
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("Invalid input.");
+                    scanner.nextLine();
+                }
+            }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(TestQueryPath), StandardCharsets.UTF_8));
             query = reader.readLine();
@@ -71,14 +80,11 @@ public class evaluation {
             runTrecEval(ResultQueryPath, QrelPath);
 
             // clean result file
-//            PrintWriter writer = new PrintWriter(ResultQueryPath);
-//            writer.print("");
-//            writer.close();
+            PrintWriter writer = new PrintWriter(ResultQueryPath);
+            writer.print("");
+            writer.close();
 
         }
-
-
-
     }
 
     // create a Result TracEval file for all query in msmarco-test-queries.tsv file
@@ -88,10 +94,10 @@ public class evaluation {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ResultQueryPath, true)))
         {
             int rank = 1;
-            int k = 30;
-            // <query_id Q0 doc_id rank score STANDARD>
+            int g = k;
 
-            while (!returnPriorityQueue.isEmpty() && k > 0){
+            // <query_id Q0 doc_id rank score STANDARD>
+            while (!returnPriorityQueue.isEmpty() && g > 0){
                 // returnPriorityQueue size
                 System.out.println(returnPriorityQueue.size());
                 scoreDoc doc = returnPriorityQueue.poll();
@@ -99,7 +105,7 @@ public class evaluation {
                 String resultLine = queryId + " Q0 " + pid + " " + rank + " " + doc.getScore() + " STANDARD\n";
                 writer.write(resultLine);
                 rank++;
-                k--;
+                g--;
 
                 //System.out.println(resultLine);
             }
@@ -118,30 +124,40 @@ public class evaluation {
             File fileResult = new File(resultsFile);
             String AbsolutePathfileResult = fileResult.getAbsolutePath();
 
-            // Costruisci il comando per eseguire trec_eval
+            // Command to run trec_eval
             String command = "/usr/local/bin/trec_eval -m all_trec " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
             //String command = "/usr/local/bin/trec_eval -m ndcg_cut -m map -m recip_rank -m recall.10,100,1000 -M1000  " + AbsolutePathfileQrels + " " + AbsolutePathfileResult;
 
-            // Esegui il comando
+            // run the command
             Process process = Runtime.getRuntime().exec(command);
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/it/unipi/dii/aide/mircv/resources/evaluation.txt", true))) {
+
                 // scrivi il comafigurazione
                 writer.write("--------------------------------------------------\n");
-                writer.write("isConjunctive = " + Configuration.isConjunctiveON() + "\n" + "Stemming & Stopword = " + Configuration.isStemming_stopwordON()
-                        + "\n" + "BM25ON ="+ Configuration.isScoreON() + "\n");
+                writer.write("Stemming & Stopword = " + Configuration.isStemming_stopwordON()+ "\n" );
 
-                // Leggi l'output del processo
+                if (Configuration.isConjunctiveON())
+                    writer.write("Conjunctive = ON \n");
+                else
+                    writer.write("Disjunctive = ON \n");
+
+                if (Configuration.isScoreON())
+                    writer.write("BM25 = ON \n");
+                else
+                    writer.write("TFIDF = ON \n");
+
+                // write the evaluation result pn file
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         System.out.println(line);
-                        // e salva il risultato in un file
+
                         writer.write(line + "\n");
                     }
                 }
 
-                // Leggi l'errore del processo
+                // check tutto ok
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
@@ -149,7 +165,6 @@ public class evaluation {
                     }
                 }
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();

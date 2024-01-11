@@ -76,9 +76,9 @@ class variableByteTest {
 
 
         // Decompress the compressed array
-        ArrayList<Integer> decompressed1 = variableByte.decompress(compressed1);
-        ArrayList<Integer> decompressed2 = variableByte.decompress(compressed2);
-        ArrayList<Integer> decompressed3 = variableByte.decompress(compressed3);
+        ArrayList<Integer> decompressed1 = variableByte.decompressV2(compressed1);
+        ArrayList<Integer> decompressed2 = variableByte.decompressV2(compressed2);
+        ArrayList<Integer> decompressed3 = variableByte.decompressV2(compressed3);
 
         // Assert that the decompressed array is equal to the expected decompressed array
         //assertEquals(expectedDecompressed1, decompressed1);

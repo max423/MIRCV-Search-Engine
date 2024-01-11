@@ -22,8 +22,8 @@ public class FileUtils {
     //public static String Path_Uncompressed_Collection = "/Users/massimo/Downloads/collection.tsv";
     public static String Path_Uncompressed_Collection = "/Volumes/S/collection.tsv"; //"src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
     // path Compressed collection
-    //public static String Path_Compressed_Collection = "/Volumes/S/collection.tar.gz"; //"/Users/simonelandi/Desktop/collection/collection.tar.gz";
-    public static String Path_Compressed_Collection = "/Users/simonelandi/Desktop/collection/collection.tar.gz";
+    public static String Path_Compressed_Collection = "/Volumes/S/collection.tar.gz"; //"/Users/simonelandi/Desktop/collection/collection.tar.gz";
+    //public static String Path_Compressed_Collection = "/Users/simonelandi/Desktop/collection/collection.tar.gz";
 
     // path to the configuration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
@@ -67,6 +67,11 @@ public class FileUtils {
 
     // collection statistics
     public static CollectionStatistics collectionStatistics = new CollectionStatistics();
+
+    // TREC_EVAL path
+    static String TestQueryPath = "src/main/java/it/unipi/dii/aide/mircv/resources/msmarco-test2020-queries.tsv";
+    static String ResultQueryPath ="src/main/java/it/unipi/dii/aide/mircv/resources/resultTrecQeury.txt";
+    static String QrelPath = "src/main/java/it/unipi/dii/aide/mircv/resources/2020qrels-pass.txt";
 
 
 

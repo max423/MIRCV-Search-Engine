@@ -4,8 +4,12 @@ import it.unipi.dii.aide.mircv.models.Posting;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.List;
+
+
 
 
 public class variableByte { // -> docid
@@ -47,6 +51,52 @@ public class variableByte { // -> docid
         return compressedBytes;
 
     }
+
+
+
+
+    public static ArrayList<Integer> decompressV2(byte[] compressed) {
+        // allocate the array
+        ArrayList<Integer> decompressed = new ArrayList<>();
+        // decompress
+        int n = 0;
+        for (byte byteElem : compressed) {
+            // convert the byte to an unsigned int
+            int unsignedByte = byteElem & 0xff;
+            // check if the byte is the first one
+            if (unsignedByte < 128) {
+                // add the previous number to the array
+                if (n != 0) { // check if it is the first number
+                    decompressed.add(n);
+                    n = 0;
+                }
+                n = 128 * n + unsignedByte;
+            } else {
+                n = 128 * n + (unsignedByte - 128);
+            }
+        }
+        // add the last number to the array
+        decompressed.add(n);
+
+        return decompressed;
+    }
+
+    public static ArrayList<Integer> decompressV3(byte[] compressed) {
+        List<Integer> numbers = new ArrayList<Integer>();
+        int n = 0;
+        for (byte b : compressed) {
+            if ((b & 0xff) < 128) {
+                n = 128 * n + b;
+            } else {
+                int num = (128 * n + ((b - 128) & 0xff));
+                numbers.add(num);
+                n = 0;
+            }
+        }
+        return (ArrayList<Integer>) numbers;
+    }
+
+
 
     // decompress an array of bytes
     public static ArrayList<Integer> decompress(byte[] compressed) {

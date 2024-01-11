@@ -38,8 +38,19 @@ public class queryHandler {
             // posting list initialization
             PostingList postingList = new PostingList(token);
 
+
+            long startTime = System.currentTimeMillis();
+            System.out.println("prima della decompressione " + System.currentTimeMillis());
+
             // obtain the posting list for the token
             postingList.getPostingList(token);
+
+            long endTime = System.currentTimeMillis();
+            System.out.println("dopo la decompressione " + System.currentTimeMillis());
+
+            System.out.println("interval " + (endTime - startTime));
+
+
 
 
             //System.out.println(postingList);
@@ -62,14 +73,6 @@ public class queryHandler {
             // add the posting list to the posting list with the tokens in the query
             postingListQuery.add(postingList);
 
-            // check the type of configuration
-            if (Configuration.isMaxScoreON()) {
-                // max score configuration
-                if (Configuration.isScoreON())
-                    hashMapScore.put(position, postingList.getMaxBM25());
-                else
-                    hashMapScore.put(position, postingList.getMaxTFIDF());
-            }
 
             // add the size of the posting list to the hashmap
             hashMapLength.put(position, postingList.getPostingList().size());
@@ -89,50 +92,22 @@ public class queryHandler {
             return;
         }
 
-        // todo manteniamo queste modalità?
-        // check the type of configuration
-        /*if (Configuration.isConjunctiveON()) {
-            // conjunctive configuration
-            priorityQueue = utils.conjunctive(k);
-        } else {
-            if (Configuration.isMaxScoreON()) {
-                // max score configuration
-
-                // sort the posting list in increasing order of score
-                hashMapScore = (HashMap<Integer, Double>) utils.sortByValue(hashMapScore);
-
-                // add the posting list in the priority queue in increasing order of score
-                for (Map.Entry<Integer, Double> entry : hashMapScore.entrySet()) {
-                    //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-                    orderedPostingList.add(postingListQuery.get(entry.getKey()));
-                }
-
-                // create an array list of score increasing order of score (for max score algorithm)
-                maxScoreOrder = new ArrayList<>(hashMapScore.values());
-                priorityQueue = utils.maxScore(k);
-
-            } else {
-                // DAAT configuration
-                priorityQueue = utils.DAAT(k);
-            }
-        }*/
-
         // check the type of configuration
         if (Configuration.isConjunctiveON()) {
-            // conjunctive configuration
+            // conjunctive
             priorityQueue = utils.conjunctive(k);
         } else {
-            // disjunctive configuration
+            // disjunctive
             priorityQueue = utils.disjunctive(k);
         }
-        System.out.println("Priority queue size: " + priorityQueue.size());
+
+        //System.out.println("Priority queue size: " + priorityQueue.size());
 
         // print the results
         printResults(priorityQueue, k);
 
         // reset the data structures
         resetDataStructures();
-
     }
 
     // process the query, do text processing, check if the # of token > 0 and return the tokens
@@ -176,15 +151,13 @@ public class queryHandler {
         System.out.println("--------------------------------------------------");
     }
 
-    private static void resetDataStructures() {
 
+
+    private static void resetDataStructures() {
         //priorityQueue.clear();
 
         if (postingListQuery != null)
             postingListQuery.clear();
-
-        //if (orderedPostingList != null)
-        //    orderedPostingList.clear();
 
         if (hashMapScore != null)
             hashMapScore.clear();
@@ -192,8 +165,6 @@ public class queryHandler {
         if (hashMapLength != null)
             hashMapLength.clear();
 
-        //if (maxScoreOrder != null)
-        //    maxScoreOrder.clear();
     }
 
     // use for testing
@@ -232,14 +203,6 @@ public class queryHandler {
             // add the posting list to the posting list with the tokens in the query
             postingListQuery.add(postingList);
 
-            // check the type of configuration
-            if (Configuration.isMaxScoreON()) {
-                // max score configuration
-                if (Configuration.isScoreON())
-                    hashMapScore.put(position, postingList.getMaxBM25());
-                else
-                    hashMapScore.put(position, postingList.getMaxTFIDF());
-            }
 
             // add the size of the posting list to the hashmap
             hashMapLength.put(position, postingList.getPostingList().size());
@@ -311,15 +274,6 @@ public class queryHandler {
 
             // add the posting list to the posting list with the tokens in the query
             postingListQuery.add(postingList);
-
-            // check the type of configuration
-            if (Configuration.isMaxScoreON()) {
-                // max score configuration
-                if (Configuration.isScoreON())
-                    hashMapScore.put(position, postingList.getMaxBM25());
-                else
-                    hashMapScore.put(position, postingList.getMaxTFIDF());
-            }
 
             // add the size of the posting list to the hashmap
             hashMapLength.put(position, postingList.getPostingList().size());

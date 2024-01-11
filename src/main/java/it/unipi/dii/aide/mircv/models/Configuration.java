@@ -1,17 +1,13 @@
 package it.unipi.dii.aide.mircv.models;
-
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import it.unipi.dii.aide.mircv.utils.FileUtils;
-
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Configuration {
-    // compression
+    // compression reading
     private static boolean compressionON;
-    // stemming
+    // stemming and stopword removal
     private static boolean stemming_stopwordON;
 
     // compressione index
@@ -20,29 +16,24 @@ public class Configuration {
     // testing
     private static boolean testing_ON ;
 
-    // score function TODO SIMO ? true = BM25 vs false= TFIDF
+    // score function : true = BM25 - false= TFIDF
     private static boolean scoreON;
 
-    // max score TODO SIMO ? MaxScore vs DAAT
-    private static boolean maxScoreON;
-
-    // true = conjunctive -  false= disjunctive
+    // query retrival : true = conjunctive - false= disjunctive
     private static boolean conjunctiveON;
 
     static {
 
         try {
-            System.out.println("Reading configuration");
-            System.out.println("--------------------------------------------------");
+            System.out.println("----------------- CONFIGURATION  -----------------");
             // read json configuration file
             JsonObject jsonObject = JsonParser.parseReader(new FileReader("src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json")).getAsJsonObject();
-            //JsonObject jsonObject = JsonParser.parseReader(new FileReader("/Users/massimo/Desktop/MIRCV-Project/MIRCV-Project/src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json")).getAsJsonObject();
             compressionON = jsonObject.get("read_compressionON").getAsBoolean();
             stemming_stopwordON = jsonObject.get("stemming_stopwordON").getAsBoolean();
             index_compressionON = jsonObject.get("index_compressionON").getAsBoolean();
             testing_ON = jsonObject.get("testing_ON").getAsBoolean();
             // print configuration
-            System.out.println("Compressed Reading = " + compressionON + "\n" + "Stemming & Stopword = " + stemming_stopwordON + "\n" + "Index Compression = " + index_compressionON + "\n" + "Testing = " + testing_ON);
+            System.out.println("Compressed Reading = " + compressionON + "\n" + "Stemming = " + stemming_stopwordON + "\n" + "Stopword = "+ stemming_stopwordON +  "\n" + "Index Compression = " + index_compressionON + "\n" + "Testing = " + testing_ON);
             System.out.println("--------------------------------------------------");
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,15 +57,15 @@ public class Configuration {
         return stemming_stopwordON;
     }
 
-    public static boolean isIndex_compressionON() {return index_compressionON;}
-
-    public static boolean isTesting() { return testing_ON;}
-    public static boolean isScoreON() {
-        return scoreON;
+    public static boolean isIndex_compressionON() {
+        return index_compressionON;
     }
 
-    public static boolean isMaxScoreON() {
-        return maxScoreON;
+    public static boolean isTesting() {
+        return testing_ON;
+    }
+    public static boolean isScoreON() {
+        return scoreON;
     }
 
     public static boolean isConjunctiveON() {
@@ -85,17 +76,9 @@ public class Configuration {
         this.conjunctiveON = compressionON;
     }
 
-    public void setMaxScoreON(boolean maxScoreON) {
-        this.maxScoreON = maxScoreON;
-    }
-
     public void setScoreON(boolean scoreON) {
         this.scoreON = scoreON;
     }
-
-
-
-
 
 
     @Override
@@ -106,7 +89,6 @@ public class Configuration {
                 ", index_compressionON=" + index_compressionON +
                 ", testing_ON=" + testing_ON +
                 ", scoreON=" + scoreON +
-                ", maxScoreON=" + maxScoreON +
                 ", conjunctiveON=" + conjunctiveON +
                 '}';
     }
