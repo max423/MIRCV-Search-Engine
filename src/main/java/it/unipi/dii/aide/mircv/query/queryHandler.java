@@ -13,16 +13,11 @@ import static it.unipi.dii.aide.mircv.utils.FileUtils.documentIndex;
 // receive a query and return the top k  results
 public class queryHandler {
 
-    //public static ArrayList<PostingList> orderedPostingList = new ArrayList<>();
+    // posting list with the tokens in the query
     public static ArrayList<PostingList> postingListQuery = new ArrayList<>();
-    public static HashMap<Integer, Double> hashMapScore = new HashMap<>();
-    public static HashMap<Integer, Integer> hashMapLength = new HashMap<>();
-    //public static ArrayList<Double> maxScoreOrder = new ArrayList<>();
 
     // receive a query and return the top k (10 or 20) results
     public static void executeQuery(ArrayList<String> tokens, int k) throws IOException {
-
-        int position = 0;
 
         // ArrayList of tokens removing duplicates
         ArrayList<String> tokensNoDuplicates = new ArrayList<>();
@@ -41,8 +36,6 @@ public class queryHandler {
             // obtain the posting list for the token
             postingList.getPostingList(token);
 
-            //System.out.println(postingList);
-
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {
                 System.out.println("The token " + token + " is not in the vocabulary");
@@ -60,13 +53,6 @@ public class queryHandler {
 
             // add the posting list to the posting list with the tokens in the query
             postingListQuery.add(postingList);
-
-
-            // add the size of the posting list to the hashmap
-            hashMapLength.put(position, postingList.getPostingList().size());
-
-            // increment the position
-            position++;
 
         }
 
@@ -89,13 +75,13 @@ public class queryHandler {
             priorityQueue = utils.disjunctive(k);
         }
 
-        //System.out.println("Priority queue size: " + priorityQueue.size());
-
         // print the results
         printResults(priorityQueue, k);
 
         // reset the data structures
         resetDataStructures();
+
+        priorityQueue.clear();
     }
 
     // process the query, do text processing, check if the # of token > 0 and return the tokens
@@ -113,7 +99,7 @@ public class queryHandler {
         return new ArrayList<>(Arrays.asList(tokens));
     }
 
-
+    // print the results of the query
     private static void printResults(PriorityQueue<scoreDoc> priorityQueue, int k) {
 
         // print the results
@@ -130,7 +116,6 @@ public class queryHandler {
         while (!priorityQueue.isEmpty() && k > 0) {
             scoreDoc scoreDoc = priorityQueue.poll();
             k--;
-            //System.out.println("DocID: " + scoreDoc.getDocID() + " Score: " + scoreDoc.getScore());
             String pid = documentIndex.get(scoreDoc.getDocID()).getDocno(); // <- take docNo from documentIndex
             System.out.println("DocNo: " + pid + " Score: " + scoreDoc.getScore());
 
@@ -141,24 +126,16 @@ public class queryHandler {
 
 
 
+    // reset the data structures
     private static void resetDataStructures() {
-        //priorityQueue.clear();
 
         if (postingListQuery != null)
             postingListQuery.clear();
 
-        if (hashMapScore != null)
-            hashMapScore.clear();
-
-        if (hashMapLength != null)
-            hashMapLength.clear();
-
     }
 
-    // use for testing
+    // use for testing purposes only: return the top dociD of the query
     public static int returnTopDoc(ArrayList<String> tokens, int k) throws IOException {
-
-        int position = 0;
 
         // ArrayList of tokens removing duplicates
         ArrayList<String> tokensNoDuplicates = new ArrayList<>();
@@ -177,8 +154,6 @@ public class queryHandler {
             // obtain the posting list for the token
             postingList.getPostingList(token);
 
-            //System.out.println(postingList);
-
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {
                 if (Configuration.isConjunctiveON()) {
@@ -190,13 +165,6 @@ public class queryHandler {
 
             // add the posting list to the posting list with the tokens in the query
             postingListQuery.add(postingList);
-
-
-            // add the size of the posting list to the hashmap
-            hashMapLength.put(position, postingList.getPostingList().size());
-
-            // increment the position
-            position++;
 
         }
 
@@ -224,13 +192,14 @@ public class queryHandler {
         scoreDoc scoreDoc = priorityQueue.poll();
         if (scoreDoc == null)
             return 0; // no results
-        else
+        else {
+            priorityQueue.clear();
             return scoreDoc.getDocID();
+        }
     }
 
-    // return PriorityQueue<scoreDoc> for testing
+    // return PriorityQueue<scoreDoc> used for evaluating purposes only
     public static PriorityQueue<scoreDoc> returnPriorityQueue(ArrayList<String> tokens, int k) throws IOException {
-        int position = 0;
 
         // ArrayList of tokens removing duplicates
         ArrayList<String> tokensNoDuplicates = new ArrayList<>();
@@ -249,8 +218,6 @@ public class queryHandler {
             // obtain the posting list for the token
             postingList.getPostingList(token);
 
-            //System.out.println(postingList);
-
             // check if the posting list is empty (the token is not in the vocabulary)
             if (postingList.getPostingList().size() == 0) {
                 if (Configuration.isConjunctiveON()) {
@@ -262,12 +229,6 @@ public class queryHandler {
 
             // add the posting list to the posting list with the tokens in the query
             postingListQuery.add(postingList);
-
-            // add the size of the posting list to the hashmap
-            hashMapLength.put(position, postingList.getPostingList().size());
-
-            // increment the position
-            position++;
 
         }
 

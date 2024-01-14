@@ -4,11 +4,13 @@ public class scoreDoc {
     int docID;
     double score;
 
+    // constructor
     public scoreDoc(int currentDocID, double score) {
         this.docID = currentDocID;
         this.score = score;
     }
 
+    // getters and setters
     public int getDocID() {
         return docID;
     }

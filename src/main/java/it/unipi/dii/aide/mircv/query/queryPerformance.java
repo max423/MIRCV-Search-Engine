@@ -18,61 +18,42 @@ import static it.unipi.dii.aide.mircv.utils.FileUtils.takeFinalRAF;
 
 public class queryPerformance {
 
-    //private static Boolean queryType;
-    //private static Boolean scoringFunction;
-
     static int k = 10; // # doc to retrieve
 
     public static void main(String[] arg) throws IOException {
 
-        takeFinalRAF();
+        //takeFinalRAF();
         loadFinalStructure();
 
         System.out.println("Welcome to the MIRCV search engine!");
 
         while (true){
+
+            // list used to store the tokens of the query
             ArrayList<String> tokens;
             long startTime, stopTime;
             Scanner scanner = new Scanner(System.in);
             String query;
+
             configureSearchEngine(scanner);
-            /*
-            // Configura la query
-            System.out.println("Configure query type:");
-            System.out.println("1: Conjunctive");
-            System.out.println("2: Disjunctive");
-            queryType = readIntInput(scanner, 1, 2);
 
-            // Configura la funzione di scoring
-            System.out.println("Configure scoring function:");
-            System.out.println("1: BM25");
-            System.out.println("2: TFIDF");
-            scoringFunction = readIntInput(scanner, 1, 2);
-
-            // set configuration options and print them
-            Configuration configuration = new Configuration();
-            configuration.setConjunctiveON(queryType);
-            configuration.setScoreON(scoringFunction);
-
-            // Stampa le opzioni di configurazione
-            System.out.println("Configured options:");
-            System.out.println("Query type = " + (queryType == true ? "Conjunctive" : "Disjunctive"));
-            System.out.println("Scoring function = " + (scoringFunction == true ? "BM25" : "TFIDF"));
-            System.out.println("--------------------------------------------------");
-            */
+            // take the query from the file msmarco-test2020-queries.tsv
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/java/it/unipi/dii/aide/mircv/resources/msmarco-test2020-queries.tsv"), StandardCharsets.UTF_8));
             query = reader.readLine();
 
             ArrayList<Long> queryTime = new ArrayList<>();
 
+            // for each query
             while (query != null){
+
+                // take the query id and the query
                 String[] queryTokens = query.split("\t");
 
                 // print query
                 System.out.println("Query ID: " + queryTokens[0]);
                 System.out.println("Query: " + queryTokens[1]);
 
-
+                // remove the query id from the query
                 List<String> queryList = new ArrayList<>(Arrays.asList(queryTokens));
                 queryList.remove(0);
 
@@ -82,8 +63,10 @@ public class queryPerformance {
                 // start timer
                 startTime = System.currentTimeMillis();
 
+                // query preprocessing
                 tokens = queryHandler.QueryPreProcessing(finalQuery);
 
+                // query execution
                 queryHandler.executeQuery(tokens, k);
 
                 // stop timer
@@ -95,6 +78,7 @@ public class queryPerformance {
                 // add time to list
                 queryTime.add(stopTime);
 
+                // take the next query
                 query = reader.readLine();
                 tokens.clear();
             }
@@ -105,23 +89,9 @@ public class queryPerformance {
                 sum += time;
             }
 
-            System.out.println("Average time: " + sum/queryTime.size()/1000 + " s"); // in secondi è troppo stampa sempre 0
             System.out.println("--------------------------------------------------");
             System.out.println("Average time: " + sum/queryTime.size() + " ms");
         }
     }
 
-    private static Boolean readIntInput(Scanner scanner, int minValue, int maxValue) {
-        int input;
-        do {
-            System.out.print("Enter " + minValue + " or " + maxValue + ": ");
-            while (!scanner.hasNextInt()) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.next();
-            }
-            input = scanner.nextInt();
-        } while (input < minValue || input > maxValue);
-
-        return input == 1; // 1: true, 2: false
-    }
 }

@@ -3,6 +3,8 @@ package it.unipi.dii.aide.mircv.query;
 import java.util.Comparator;
 
 public class scoreDocComparator implements Comparator<scoreDoc> {
+
+    // Comparator for scoreDoc objects (used in the priority queue) in order to retrieve the top-k results
     @Override
     public int compare(scoreDoc o1, scoreDoc o2) {
         // descending order of score and ascending order of docID
