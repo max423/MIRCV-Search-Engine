@@ -21,7 +21,7 @@ class queryHandlerTest {
     @Test
     void executeQuery() throws IOException {
 
-        FileUtils.takeFinalRAF();
+        //FileUtils.takeFinalRAF();
         loadFinalStructure();
 
         // create a String as a query
@@ -42,32 +42,44 @@ class queryHandlerTest {
         configuration.setScoreON(true); // BM25
         configuration.setConjunctiveON(true); // Conjunctive
 
+        // expected 0: not found
         //assertEquals(0, queryHandler.returnTopDoc(tokens1, 1));
+        // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        // expected 8
         //assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
 
         // TFIDF + Conjunctive
         configuration.setScoreON(false); // TFIDF
         configuration.setConjunctiveON(true); // Conjunctive
 
+        // expected 0: not found
         //assertEquals(0, queryHandler.returnTopDoc(tokens1, 1));
+        // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        // expected 8
         //assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
 
         // BM25 + Disjunctive
         configuration.setScoreON(true); // BM25
         configuration.setConjunctiveON(false); // Disjunctive
 
+        // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens1, 1));
+        // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        // expected 8
         //assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
 
         // TFIDF + Disjunctive
         configuration.setScoreON(false); // TFIDF
         configuration.setConjunctiveON(false); // Disjunctive
 
+        // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens1, 1));
+        // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
+        // expected 8
         assertEquals(8, queryHandler.returnTopDoc(tokens3, 1));
     }
 
