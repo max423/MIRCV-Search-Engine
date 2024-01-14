@@ -9,14 +9,10 @@ import java.util.ArrayList;
 
 public class unary { // -> termfreq
 
-
-
-
-
     // compress an array of integer
     public static byte[] compress(ArrayList<Integer> uncompressed) {
 
-        // count the number of bits
+        // count the number of bits needed to store the compressed array
         int bits = 0;
         for (int i = 0; i < uncompressed.size(); i++) {
             // check if 0 or negative
@@ -27,10 +23,10 @@ public class unary { // -> termfreq
             bits += uncompressed.get(i);
         }
 
-        // allocate the byte array
+        // allocate the byte array for the compressed array (round up to the next byte)
         byte[] compressed = new byte[(int) Math.ceil(bits / 8.0)];
 
-        // compress each number n with n-1 1s and a 0 at the end, except for 1 that is compressed with a single 0
+        // compress each number n with n-1 1s and a 0 at the end
         int index = 0;
         int count = 0;
         for (int i = 0; i < uncompressed.size(); i++) {
@@ -47,7 +43,7 @@ public class unary { // -> termfreq
                 }
                 continue;
             }
-            // compress the number
+            // add n-1 1s
             for (int j = 0; j < uncompressed.get(i) - 1; j++) {
                 // set to 1 the bit at position count
                 compressed[index] |= 1 << (7 - count);
@@ -83,10 +79,10 @@ public class unary { // -> termfreq
     // decompress an array of bytes
     public static ArrayList<Integer> decompress(byte[] compressed) {
 
-        // allocate the array
+        // allocate the array for the decompressed array
         ArrayList<Integer> decompressed = new ArrayList<>();
 
-        // decompress
+        // decompress each byte
         int count = 0;
         for (int i = 0; i < compressed.length; i++) {
             for (int j = 0; j < 8; j++) {
@@ -106,12 +102,12 @@ public class unary { // -> termfreq
         return decompressed;
     }
 
-
+    // compress an array of integer and write it to a file channel
     public static int writeTermFreqCompressed(ArrayList<Posting> postingList, FileChannel channelTermFreq) throws IOException {
 
         ArrayList<Integer> TFlistUncompressed = new ArrayList<>();
 
-        // riempio la lista di interi
+        // get the termFreqs from the posting list
         for (Posting posting : postingList) {
             TFlistUncompressed.add(posting.getTermFreq());
         }
@@ -119,6 +115,7 @@ public class unary { // -> termfreq
         // compress the list
         byte[] compressed = compress(TFlistUncompressed);
 
+        // allocate ByteBuffer for writing termFreqs
         channelTermFreq.position(channelTermFreq.size());
         ByteBuffer freqsByteBuffer = ByteBuffer.wrap(compressed);
 
@@ -126,26 +123,31 @@ public class unary { // -> termfreq
         while (freqsByteBuffer.hasRemaining())
             channelTermFreq.write(freqsByteBuffer);
 
+        // return the number of bytes written
         return compressed.length;
     }
 
+    // read an array of integer from a file channel and decompress it
     public static ArrayList<Integer> readTermFreqCompressed( FileChannel channelTermFreq , long offsetTermFreq, int termFreqLen) throws IOException {
         try {
+            // array for decompressed termFreqs
             ArrayList<Integer> TFlistDecompressed = new ArrayList<>();
+            // set position
             channelTermFreq.position(offsetTermFreq);
 
             // creating ByteBuffer for reading termFreqs
             ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen );
 
+            // reading termFreqs from channel
             while (bufferTermFreq.hasRemaining())
                 channelTermFreq.read(bufferTermFreq);
 
             bufferTermFreq.rewind(); // reset the buffer position to 0
 
             // reading termFreqs from buffer
-
             TFlistDecompressed = decompress(bufferTermFreq.array());
 
+            // return the decompressed termFreqs
             return TFlistDecompressed;
         } catch (IOException e) {
             e.printStackTrace();

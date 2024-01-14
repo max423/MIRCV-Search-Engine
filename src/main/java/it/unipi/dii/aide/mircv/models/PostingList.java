@@ -226,7 +226,7 @@ public class PostingList {
         bufferTermFreq.rewind();
 
         // decompress
-        ArrayList<Integer> docIds = variableByte.decompressV2(bufferDocId.array());
+        ArrayList<Integer> docIds = variableByte.decompress(bufferDocId.array());
 
         ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
 

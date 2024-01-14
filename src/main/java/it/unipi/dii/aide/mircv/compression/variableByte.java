@@ -9,16 +9,15 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 public class variableByte { // -> docid
 
     // compress an array of integer
     public static byte[] compress(ArrayList<Integer> uncompressed) {
 
+        // allocate the array
         ArrayList<Integer> compressed = new ArrayList<>();
 
+        // compress the numbers
         for(int uncompressedNumber : uncompressed) {
 
             // convert the number to binary
@@ -48,30 +47,35 @@ public class variableByte { // -> docid
             compressedBytes[i] = compressed.get(i).byteValue();
         }
 
+        // return the compressed array
         return compressedBytes;
 
     }
 
-
-
-
-    public static ArrayList<Integer> decompressV2(byte[] compressed) {
+    // compress an array of integer
+    public static ArrayList<Integer> decompress(byte[] compressed) {
         // allocate the array
         ArrayList<Integer> decompressed = new ArrayList<>();
+
         // decompress
         int n = 0;
+        // convert the bytes to an integer
         for (byte byteElem : compressed) {
             // convert the byte to an unsigned int
             int unsignedByte = byteElem & 0xff;
-            // check if the byte is the first one
+            // check if is the first chunk of the number
             if (unsignedByte < 128) {
-                // add the previous number to the array
-                if (n != 0) { // check if it is the first number
+                // check if it is not the first number
+                if (n != 0) {
+                    // add the previous number to the array
                     decompressed.add(n);
+                    // reset the number
                     n = 0;
                 }
+                // update the number
                 n = 128 * n + unsignedByte;
             } else {
+                // not the first chunk of the number --> update the number
                 n = 128 * n + (unsignedByte - 128);
             }
         }
@@ -81,93 +85,32 @@ public class variableByte { // -> docid
         return decompressed;
     }
 
-
-
-
-
-    // decompress an array of bytes
-    public static ArrayList<Integer> decompress(byte[] compressed) {
-
-        ArrayList<Integer> decompressed = new ArrayList<>();
-        StringBuilder binaryBuilder = new StringBuilder();
-        StringBuilder supportBuilder = new StringBuilder();
-
-        int decodedNumber;
-
-        // convert the bytes to a binary string
-        for (byte b : compressed) {
-            binaryBuilder.append(String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0'));
-        }
-
-        // decoding the binary string
-        while (binaryBuilder.length() > 0) {
-            int firstBit = Character.getNumericValue(binaryBuilder.charAt(0));
-
-            // if the first bit is 0, it is the first chunk of the number
-            if (firstBit == 0) {
-                int groupLength = Math.min(8, binaryBuilder.length());
-                String group = binaryBuilder.substring(0, groupLength);
-                binaryBuilder.delete(0, groupLength);
-
-                // check if the support builder is empty
-                if (supportBuilder.length() == 0) {
-                    // add the binary group to the support builder
-                    supportBuilder.append(group);
-                }
-                else {
-                    // convert support builder to an integer
-                    decodedNumber = Integer.parseInt(supportBuilder.toString(), 2);
-                    decompressed.add(decodedNumber);
-                    // reset the support builder
-                    supportBuilder.setLength(0);
-                    // add the binary group to the support builder
-                    supportBuilder.append(group);
-                }
-
-            } else {
-                // if the first bit is 1, it is not the first chunk of the number
-                int groupLength = Math.min(7, binaryBuilder.length() - 1);
-                String group = binaryBuilder.substring(1, 1 + groupLength);
-                binaryBuilder.delete(0, 1 + groupLength);
-
-                // add a 1 at the beginning of the group
-                //group = "1" + group;
-
-                // add the binary group to the support builder at the end
-                supportBuilder.append(group);
-            }
-        }
-
-        // convert support builder to an integer
-        decodedNumber = Integer.parseInt(supportBuilder.toString(), 2);
-        decompressed.add(decodedNumber);
-        // reset the support builder
-        supportBuilder.setLength(0);
-
-        return decompressed;
-    }
-
+    // compress an array of integer and write it to a file channel
     public static int writeDocIdCompressed(ArrayList<Posting> postingList, FileChannel channelDocId) throws IOException {
+
         ArrayList<Integer> docIdsUncompressed = new ArrayList<>();
 
-        // get the docIds
+        // get the docIds from the posting list
         for (Posting posting : postingList) {
             docIdsUncompressed.add(posting.getDocID());
         }
 
-        // compress the docIds
+        // compress the list
         byte[] compressed = compress(docIdsUncompressed);
 
+        // allocate ByteBuffer for writing docIds
         channelDocId.position(channelDocId.size());
         ByteBuffer DocIdByteBuffer = ByteBuffer.wrap(compressed);
 
-        // write buffers to the channels
+        // write the DocIds to the buffers
         while (DocIdByteBuffer.hasRemaining())
             channelDocId.write(DocIdByteBuffer);
 
+        // return the number of bytes written
         return compressed.length;
     }
 
+    // read an array of integer from a file channel and decompress it
     public static ArrayList<Integer> readDocIdsCompressed(FileChannel channelDocId, long offsetDocId, int DocIdLen) throws IOException {
         try {
             // create a buffer
@@ -176,13 +119,17 @@ public class variableByte { // -> docid
             // set position
             channelDocId.position(offsetDocId);
 
+            // read the docIds from the channel
             while (docsByteBuffer.hasRemaining())
                 channelDocId.read(docsByteBuffer);
 
-            docsByteBuffer.rewind(); // reset the buffer position to 0
+            // reset the buffer position to 0
+            docsByteBuffer.rewind();
 
+            // decompress the docIds
             ArrayList<Integer> docIdsDecompressed = decompress(docsByteBuffer.array());
 
+            // return the decompressed docIds
             return docIdsDecompressed;
 
         } catch (IOException e) {
@@ -190,6 +137,5 @@ public class variableByte { // -> docid
         }
         return null;
     }
-
 
 }
