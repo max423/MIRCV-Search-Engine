@@ -227,16 +227,12 @@ public class FileUtils {
         }
     }
 
-    // per query handler load in memory vocabulary and document index
+    // per query handler load document index
     public static void loadFinalStructure() throws IOException {
         takeFinalRAF();
-        System.out.println("Loading Vocabulary ...");
-        loadVocabulary();
-        System.out.println("Loading Document Index ...");
+        //loadVocabulary();
         loadDocumentIndex();
-        System.out.println("Loading Collection Statistics ...");
         collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
-
     }
 
 
@@ -263,7 +259,8 @@ public class FileUtils {
 
     private static void loadDocumentIndex() throws IOException {
         int position = 0;
-        int DOC_INDEX_ELEM_SIZE =28;
+        int DOC_INDEX_ELEM_SIZE =24;
+        int docId = 1;
 
         try (FileChannel docIndexFC = new RandomAccessFile(FileUtils.Path_DocumentIndex, "rw").getChannel()) {
             while (position < docIndexFC.size()) {
@@ -273,9 +270,10 @@ public class FileUtils {
                 docElem.readFromDisk(docIndexFC, position);
 
                 // Add the document index element to the document index hsshmap
-                documentIndex.put(docElem.getDocId(), docElem);
+                documentIndex.put(docId, docElem);
 
                 position += DOC_INDEX_ELEM_SIZE;
+                docId++;
             }
         }
     }

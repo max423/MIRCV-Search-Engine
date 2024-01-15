@@ -148,7 +148,7 @@ public class Indexer {
             doc_elem = new DocumentIndexElem();
             doc_elem.readFromDisk(DocIndexFC, position);
             System.out.println(doc_elem.toString());
-            System.out.printf("Docid: %d, DocNo: %s, Lenght: %d\n",doc_elem.getDocId(), doc_elem.getDocno(), doc_elem.getLength());
+            System.out.printf(" DocNo: %s, Lenght: %d\n", doc_elem.getDocno(), doc_elem.getLength());
 
             position += 28;
         }

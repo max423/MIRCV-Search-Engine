@@ -83,6 +83,7 @@ public class Main {
                 continue;
             }
 
+//          long startTime = System.currentTimeMillis();
             // process the query and tokenize it
             ArrayList<String> Qtokens = QueryPreProcessing(query);
             if ( Qtokens==null ) {
@@ -92,6 +93,8 @@ public class Main {
             System.out.println("Query tokens: " + Qtokens);
 
             executeQuery(Qtokens, k);
+//            long stopTime = System.currentTimeMillis();
+//            System.out.println("Query time: " + (stopTime - startTime) + " ms");
         }
 
         scanner.close();

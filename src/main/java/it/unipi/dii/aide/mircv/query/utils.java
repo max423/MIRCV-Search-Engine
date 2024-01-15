@@ -1,14 +1,12 @@
 package it.unipi.dii.aide.mircv.query;
 
-import it.unipi.dii.aide.mircv.models.CollectionStatistics;
-import it.unipi.dii.aide.mircv.models.Configuration;
-import it.unipi.dii.aide.mircv.models.Posting;
-import it.unipi.dii.aide.mircv.models.PostingList;
+import it.unipi.dii.aide.mircv.models.*;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.*;
 
+import static it.unipi.dii.aide.mircv.query.queryHandler.VocTerms;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.collectionStatistics;
 
 public class utils {
@@ -232,7 +230,7 @@ public class utils {
         double tfWeight = 1 + Math.log10(tf);
 
         // inverse document frequency
-        double idf = FileUtils.vocabulary.get(term).getIdf();
+        double idf = VocTerms.get(term).getIdf();
 
         double TFIDF = tfWeight * idf;
 
@@ -245,7 +243,7 @@ public class utils {
         int tf = currentPostingList.getTermFreq();
 
         // inverse document frequency
-        double idf = FileUtils.vocabulary.get(term).getIdf();
+        double idf = VocTerms.get(term).getIdf();
 
         // average document length
         double avgDocLen = CollectionStatistics.getAvgDocLen();

@@ -1,80 +1,88 @@
-
-Compressione ON + Stemming/Stopword ON 
 --------------------------------------------------
 Conjunctive  
 BM25  
-map                   	all	0.1193
-recip_rank            	all	0.7775
-recall_10             	all	0.1429
-recall_100            	all	0.1429
-recall_1000           	all	0.1429
+map                   	all	0.0567
+recip_rank            	all	0.2896
+recall_10             	all	0.0619
+recall_100            	all	0.1096
+recall_1000           	all	0.1382
+ndcg_cut_5            	all	0.1379
+ndcg_cut_10           	all	0.1436
+ndcg_cut_15           	all	0.1299
+ndcg_cut_20           	all	0.1227
+ndcg_cut_30           	all	0.1176
+ndcg_cut_100          	all	0.1193
+ndcg_cut_200          	all	0.1269
+ndcg_cut_500          	all	0.1323
+ndcg_cut_1000         	all	0.1341
+--------------------------------------------------
+Disjunctive  
+TFIDF 
+map                   	all	0.1085
+recip_rank            	all	0.4249
+recall_10             	all	0.0905
+recall_100            	all	0.2244
+recall_1000           	all	0.3658
+ndcg_cut_5            	all	0.1978
+ndcg_cut_10           	all	0.1970
+ndcg_cut_15           	all	0.1929
+ndcg_cut_20           	all	0.1928
+ndcg_cut_30           	all	0.1927
+ndcg_cut_100          	all	0.2157
+ndcg_cut_200          	all	0.2347
+ndcg_cut_500          	all	0.2619
+ndcg_cut_1000         	all	0.2734
+--------------------------------------------------
+Conjunctive  
+BM25  
+map                   	all	0.0567
+recip_rank            	all	0.2896
+recall_10             	all	0.0619
+recall_100            	all	0.1096
+recall_1000           	all	0.1382
+ndcg_cut_5            	all	0.1379
+ndcg_cut_10           	all	0.1436
+ndcg_cut_15           	all	0.1299
+ndcg_cut_20           	all	0.1227
+ndcg_cut_30           	all	0.1176
+ndcg_cut_100          	all	0.1193
+ndcg_cut_200          	all	0.1269
+ndcg_cut_500          	all	0.1323
+ndcg_cut_1000         	all	0.1341
+--------------------------------------------------
+Conjunctive  
+BM25  
+map                   	all	0.0637
+recip_rank            	all	0.3901
+recall_10             	all	0.0706
+recall_100            	all	0.1114
+recall_1000           	all	0.1382
+ndcg_cut_5            	all	0.1561
+ndcg_cut_10           	all	0.1555
+ndcg_cut_15           	all	0.1436
+ndcg_cut_20           	all	0.1399
+ndcg_cut_30           	all	0.1352
+ndcg_cut_100          	all	0.1323
+ndcg_cut_200          	all	0.1402
+ndcg_cut_500          	all	0.1449
+ndcg_cut_1000         	all	0.1464
+--------------------------------------------------
+Conjunctive  
+BM25  
+map                   	all	0.1909
+recip_rank            	all	0.7806
+recall_10             	all	0.1432
+recall_100            	all	0.2600
+recall_1000           	all	0.3040
 ndcg_cut_5            	all	0.4421
-ndcg_cut_10           	all	0.4113
-ndcg_cut_15           	all	0.3484
-ndcg_cut_20           	all	0.3135
-ndcg_cut_30           	all	0.2757
-ndcg_cut_100          	all	0.2329
-ndcg_cut_200          	all	0.2302
-ndcg_cut_500          	all	0.2302
-ndcg_cut_1000         	all	0.2302
-Average query time: 55 ms
---------------------------------------------------
-Conjunctive  
-TFIDF 
-map                   	all	0.1216
-recip_rank            	all	0.7862
-recall_10             	all	0.1422
-recall_100            	all	0.1422
-recall_1000           	all	0.1422
-ndcg_cut_5            	all	0.4531
-ndcg_cut_10           	all	0.4122
-ndcg_cut_15           	all	0.3500
-ndcg_cut_20           	all	0.3153
-ndcg_cut_30           	all	0.2780
-ndcg_cut_100          	all	0.2356
-ndcg_cut_200          	all	0.2328
-ndcg_cut_500          	all	0.2328
-ndcg_cut_1000         	all	0.2328
-Average query time: 29 ms
-
---------------------------------------------------
-Disjunctive  
-BM25  
-map                   	all	0.1393
-recip_rank            	all	0.7647
-recall_10             	all	0.1707
-recall_100            	all	0.1707
-recall_1000           	all	0.1707
-ndcg_cut_5            	all	0.4675
-ndcg_cut_10           	all	0.4647
-ndcg_cut_15           	all	0.3944
-ndcg_cut_20           	all	0.3564
-ndcg_cut_30           	all	0.3162
-ndcg_cut_100          	all	0.2675
-ndcg_cut_200          	all	0.2647
-ndcg_cut_500          	all	0.2646
-ndcg_cut_1000         	all	0.2646
-Average query time: 53 ms
-
---------------------------------------------------
-Disjunctive  
-TFIDF 
-map                   	all	0.1239
-recip_rank            	all	0.7238
-recall_10             	all	0.1596
-recall_100            	all	0.1596
-recall_1000           	all	0.1596
-ndcg_cut_5            	all	0.4375
-ndcg_cut_10           	all	0.4353
-ndcg_cut_15           	all	0.3669
-ndcg_cut_20           	all	0.3298
-ndcg_cut_30           	all	0.2913
-ndcg_cut_100          	all	0.2446
-ndcg_cut_200          	all	0.2413
-ndcg_cut_500          	all	0.2412
-ndcg_cut_1000         	all	0.2412
-Average query time: 28 ms
-
+ndcg_cut_10           	all	0.4119
+ndcg_cut_15           	all	0.3809
+ndcg_cut_20           	all	0.3680
+ndcg_cut_30           	all	0.3446
+ndcg_cut_100          	all	0.3192
+ndcg_cut_200          	all	0.3230
+ndcg_cut_500          	all	0.3321
+ndcg_cut_1000         	all	0.3350
 --------------------------------------------------
 Disjunctive  
 TFIDF 

@@ -3,8 +3,13 @@ package it.unipi.dii.aide.mircv.query;
 import it.unipi.dii.aide.mircv.models.CollectionStatistics;
 import it.unipi.dii.aide.mircv.models.Configuration;
 import it.unipi.dii.aide.mircv.models.PostingList;
+import it.unipi.dii.aide.mircv.models.VocabularyElem;
+import it.unipi.dii.aide.mircv.utils.FileUtils;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static it.unipi.dii.aide.mircv.text_processing.TextProcessing.DocumentProcessing;
@@ -16,6 +21,9 @@ public class queryHandler {
     // posting list with the tokens in the query
     public static ArrayList<PostingList> postingListQuery = new ArrayList<>();
 
+    public static HashMap<String, VocabularyElem> VocTerms = new HashMap<>();
+
+
     // receive a query and return the top k (10 or 20) results
     public static void executeQuery(ArrayList<String> tokens, int k) throws IOException {
 
@@ -25,6 +33,14 @@ public class queryHandler {
             if (!tokensNoDuplicates.contains(token)) {
                 tokensNoDuplicates.add(token);
             }
+        }
+
+        // retrive vocabulary entries
+        for (String token : tokensNoDuplicates) {
+            VocabularyElem Velem;
+            Velem = binarySearch(token);
+
+            VocTerms.put(token, Velem);
         }
 
         // process each token of the query
@@ -82,6 +98,7 @@ public class queryHandler {
         resetDataStructures();
 
         priorityQueue.clear();
+        VocTerms.clear();
     }
 
     // process the query, do text processing, check if the # of token > 0 and return the tokens
@@ -208,6 +225,14 @@ public class queryHandler {
                 tokensNoDuplicates.add(token);
             }
         }
+        // retrive vocabulary
+        for (String token : tokensNoDuplicates) {
+            VocabularyElem Velem;
+            Velem = binarySearch(token);
+
+            VocTerms.put(token, Velem);
+        }
+
 
         // process each token of the query
         for (String token : tokensNoDuplicates) {
@@ -254,5 +279,102 @@ public class queryHandler {
         resetDataStructures();
 
         return priorityQueue;
+    }
+
+
+    public static VocabularyElem binarySearch(String targetTerm) throws IOException {
+        FileChannel vocabularyChannel = FileUtils.GetCorrectChannel(-1, 0);
+        long totalTerms = (vocabularyChannel.size() / 60);
+
+        // Binary search
+        long lowerBound = 0;
+        long upperBound = totalTerms;
+        long previousMiddlePoint = -1;
+
+        // Binary search on the vocabulary file
+        while (true) {
+            // Calculate the middle point of the window
+            long middlePoint = (upperBound - lowerBound) / 2 + lowerBound;
+
+            // Check if the window is empty
+            if (previousMiddlePoint == middlePoint)
+                break;
+
+            previousMiddlePoint = middlePoint;
+
+            // Check if the term is in the cache
+            String middleTermString = getOnlyTerm(middlePoint);
+            VocabularyElem middleTerm = null;
+
+            // Compare the target term with the middle term
+            int comparisonResult = middleTermString.compareTo(targetTerm);
+
+            if (comparisonResult == 0) {
+                // Found
+                if (middleTerm == null) {
+                    middleTerm = getTermFromDisk(middlePoint);
+                }
+                return middleTerm;
+            } else if (comparisonResult > 0) {
+                // Target term is in the left half
+                upperBound = middlePoint;
+            } else {
+                // Target term is in the right half
+                lowerBound = middlePoint;
+            }
+        }
+
+        return null;
+    }
+
+
+    private static VocabularyElem getTermFromDisk(long from) throws IOException {
+        from= from * 60;
+        FileChannel channel = FileUtils.GetCorrectChannel(-1, 0);
+        // creating ByteBuffer for reading term
+        ByteBuffer buffer = ByteBuffer.allocate(20);
+        channel.position(from);
+
+        while (buffer.hasRemaining())
+            channel.read(buffer);
+
+        String term = new String(buffer.array(), StandardCharsets.UTF_8).trim();
+
+        buffer = ByteBuffer.allocate(4 + 4 + 8 + 8 + 4 + 4  + 8 );
+
+
+        while (buffer.hasRemaining())
+            channel.read(buffer);
+
+        buffer.rewind(); // reset the buffer position to 0
+        int DocFreq = buffer.getInt();
+        int CollFreq = buffer.getInt();
+        long docIdsOffset = buffer.getLong();
+        long termFreqOffset = buffer.getLong();
+        int docIdsLen = buffer.getInt();
+        int termFreqLen =  buffer.getInt();
+        double idf = buffer.getDouble();
+        VocabularyElem v = new VocabularyElem(term, DocFreq, CollFreq, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen);
+        v.setIdf(idf);
+        //System.out.println("VocabularyElem read from disk: " + v);
+        return v;
+
+    }
+
+    private static String getOnlyTerm(long from) throws IOException {
+        from= from * 60;
+        FileChannel channel = FileUtils.GetCorrectChannel(-1, 0);
+
+        // creating ByteBuffer for reading term
+        ByteBuffer buffer = ByteBuffer.allocate(20);
+        channel.position(from);
+
+        while (buffer.hasRemaining())
+            channel.read(buffer);
+
+        String term = new String(buffer.array(), StandardCharsets.UTF_8).trim();
+
+        return term;
+
     }
 }

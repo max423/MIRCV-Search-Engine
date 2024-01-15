@@ -7,28 +7,23 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 
 public class DocumentIndexElem {
-    private int docId;
     private String docNo;   // dalla collection
     private int docLen;  // lunghezza del documento
 
     public DocumentIndexElem(){
     }
 
-    public DocumentIndexElem(int docId, String docno, int length) {
+    public DocumentIndexElem(String docno, int length) {
         int diffLength = 20 - docno.length();
 
         if (diffLength != 0)
             /* padding = concatenate " " to the fixed size of 20 characters */
             docno = docno + " ".repeat(Math.max(0, diffLength));
 
-        this.docId = docId;
         this.docNo = docno;
         this.docLen = length;
     }
 
-    public int getDocId() {
-        return docId;
-    }
 
     public String getDocno() {
         return docNo;
@@ -38,9 +33,6 @@ public class DocumentIndexElem {
         return docLen;
     }
 
-    public void setDocId(int docId) {
-        this.docId = docId;
-    }
     public void setDocno(String docno) {
         this.docNo = docno;
     }
@@ -51,7 +43,6 @@ public class DocumentIndexElem {
     @Override
     public String toString() {
         return "DocumentIndexElem{" +
-                "docId=" + docId +
                 ", docno='" + docNo + '\'' +
                 ", length=" + docLen +
                 '}';
@@ -59,10 +50,10 @@ public class DocumentIndexElem {
 
 
     public void writeToDisk(FileChannel channel) {
-        // 20 (doc_no) + 4 (docId) + 4 (length) = 28 bytes
+        // 20 (doc_no)  + 4 (length) = 24 bytes
         try {
             // creating ByteBuffer
-            ByteBuffer buffer = ByteBuffer.allocate(28);
+            ByteBuffer buffer = ByteBuffer.allocate(24);
             channel.position(channel.size());
             CharBuffer charBuffer = CharBuffer.allocate(20);    // 20 bytes for docno
 
@@ -72,8 +63,7 @@ public class DocumentIndexElem {
 
             buffer.put(StandardCharsets.UTF_8.encode(charBuffer));
 
-            buffer.putInt(this.docId); // [start at position 20] writing docId into buffer
-            buffer.putInt(this.docLen); // [start at position 24] writing length into buffer
+            buffer.putInt(this.docLen); // [start at position 20] writing length into buffer
 
             // buffer.flip(); // flip the buffer to prepare for get operation
             buffer = ByteBuffer.wrap(buffer.array());
@@ -88,7 +78,7 @@ public class DocumentIndexElem {
     }
 
     public void readFromDisk(FileChannel channel, int position) {
-        // 20 (doc_no) + 4 (docId) + 4 (length) = 28 bytes
+        // 20 (doc_no)  + 4 (length) = 24 bytes
         try {
             // creating ByteBuffer for reading DocNo
             ByteBuffer buffer = ByteBuffer.allocate(20);
@@ -99,13 +89,12 @@ public class DocumentIndexElem {
             this.setDocno(new String(buffer.array(), StandardCharsets.UTF_8).trim());
 
             // creating ByteBuffer for reading DocId and Length
-            buffer = ByteBuffer.allocate(8);
+            buffer = ByteBuffer.allocate(4);
 
             while (buffer.hasRemaining())
                 channel.read(buffer);
 
             buffer.rewind(); // reset the buffer position to 0
-            this.setDocId(buffer.getInt());
             this.setLength(buffer.getInt());
 
         } catch (IOException e) {

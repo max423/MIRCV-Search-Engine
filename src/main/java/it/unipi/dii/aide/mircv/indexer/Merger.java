@@ -130,7 +130,7 @@ public class Merger {
                 vocabularyElemApp.incFreqLen(vocabularyElem.getTermFreqLen());
                 vocabularyElemApp.incDocLen(vocabularyElem.getDocIdsLen());
 
-                // aggiornare Max
+                // aggiornare
                 vocabularyElem = vocabularyElemApp;
 
             }
@@ -167,9 +167,6 @@ public class Merger {
                     vocabularyElem.setTermFreqOffset(GetCorrectChannel(-1, 2).size() - vocabularyElem.getTermFreqLen());
                 }
 
-//                // compute score
-//                computeScore(vocabularyElem);
-
                 vocabularyElem.computeIDF();
 
                 // write the term in the final_vocabulary
@@ -177,9 +174,6 @@ public class Merger {
 
                 vocabularyElemApp = null;
                 postingList = null;
-
-                // update collection statistics TODO
-                //collectionStatistics.incrementTotalLength(); // +1 per il termine
 
 //                if (collectionStatistics.getTotalLength() % 50000 == 0) {
 //                    System.out.println("< current merged terms: " + collectionStatistics.getTotalLength() +" >");
@@ -196,18 +190,6 @@ public class Merger {
 
     }
 
-//    private void computeScore(VocabularyElem vocabularyElem) throws IOException {
-//        // compute inverse document frequency
-//        vocabularyElem.computeIDF();
-//
-//        // compute BM25 and TFIDF
-//        vocabularyElem.computeBM25andTFIDF(collectionStatistics.getAvgDocLen(), postingList);
-//
-//        //vocabularyElem.setOffset_skipInfo(skippingBlock_raf.getChannel().size());
-//        //vocabularyElem.setSkipOffset(0);
-//        //vocabularyElem.setSkipLen(0);
-//
-//    }
 
 
     // take all the information from the partial_vocabulary for 1 vocabularyElem

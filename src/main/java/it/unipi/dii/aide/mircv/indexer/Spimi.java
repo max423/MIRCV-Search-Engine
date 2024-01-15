@@ -91,14 +91,12 @@ public class Spimi {
             totalLentgh += documnetLength;
 
             // new document index elem
-            DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
+            DocumentIndexElem doc = new DocumentIndexElem(docno, documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
 
-//            // add doc length to array for scoring
-//            docLen.add(documnetLength);
 
             if (Configuration.isTesting()){
-                System.out.println("\nDocId: " + docid + " DocNo: " + docno + " DocLen: " + documnetLength);
+                System.out.println("\n DocNo: " + docno + " DocLen: " + documnetLength);
                 System.out.println("Tokens: ");
                 for (String token : tokens) {
                     System.out.print(token + "-");

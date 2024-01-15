@@ -10,6 +10,8 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static it.unipi.dii.aide.mircv.query.queryHandler.VocTerms;
+
 public class PostingList {
     private String term;
     private final ArrayList<Posting> postingList;
@@ -250,7 +252,9 @@ public class PostingList {
         termFreq_RAF = new RandomAccessFile(FileUtils.Path_FinalTermFreq, "r");
 
         // get the vocabulary element of the term
-        VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
+        VocabularyElem vocabularyElem = VocTerms.get(term);
+
+        //VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
 
         if (vocabularyElem == null) {
             System.out.println("Term "+ term + " not found in the vocabulary");
@@ -330,13 +334,7 @@ public class PostingList {
         postingListIterator = postingList.iterator();
         currentPostingList = postingListIterator.next();
 
-//        if (Configuration.isScoreON()) {
-//            // BM25
-//            this.BM25 = vocabularyElem.getMaxBM25();
-//        } else {
-//            // TF-IDF
-//            this.TFIDF = vocabularyElem.getMaxTFIDF();
-//        }
+
 
     }
 

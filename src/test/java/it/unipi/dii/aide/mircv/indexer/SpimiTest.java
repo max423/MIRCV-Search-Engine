@@ -36,8 +36,8 @@ class SpimiTest {
         // tree ,ocean, sunshine, whisper, tree, harmony
         // Sunshine, ball, house
 
-        DocumentIndexElem doc1 = new DocumentIndexElem(1, "1", 6);
-        DocumentIndexElem doc2 = new DocumentIndexElem(2, "2", 3);
+        DocumentIndexElem doc1 = new DocumentIndexElem( "1", 6);
+        DocumentIndexElem doc2 = new DocumentIndexElem( "2", 3);
         docIndex.add(doc1);
         docIndex.add(doc2);
 
@@ -128,10 +128,6 @@ class SpimiTest {
         // check if the two document index have the same size
         assertEquals(docIndex.size(), docIndexT.size());
 
-        // check if the two document index have the same docid
-        for (int i = 0; i < docIndex.size(); i++) {
-            assertEquals(docIndex.get(i).getDocId(), docIndexT.get(i).getDocId());
-        }
 
         // check if the two document index have the same docno
         for (int i = 0; i < docIndex.size(); i++) {
@@ -179,7 +175,7 @@ class SpimiTest {
             documnetLength = tokens.length;
 
             // new document index elem
-            DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
+            DocumentIndexElem doc = new DocumentIndexElem( docno, documnetLength);
             docIndexT.add(doc);
 
             docid++;
@@ -299,7 +295,7 @@ class SpimiTest {
             documnetLength = tokens.length;
 
             // new document index elem
-            DocumentIndexElem doc = new DocumentIndexElem(docid, docno, documnetLength);
+            DocumentIndexElem doc = new DocumentIndexElem( docno, documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
 
             for (String token : tokens) {
