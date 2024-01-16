@@ -117,3 +117,20 @@ ndcg_cut_100          	all	0.3192
 ndcg_cut_200          	all	0.3230
 ndcg_cut_500          	all	0.3321
 ndcg_cut_1000         	all	0.3350
+--------------------------------------------------
+Conjunctive  
+BM25  
+map                   	all	0.1909
+recip_rank            	all	0.7806
+recall_10             	all	0.1432
+recall_100            	all	0.2600
+recall_1000           	all	0.3040
+ndcg_cut_5            	all	0.4421
+ndcg_cut_10           	all	0.4119
+ndcg_cut_15           	all	0.3809
+ndcg_cut_20           	all	0.3680
+ndcg_cut_30           	all	0.3446
+ndcg_cut_100          	all	0.3192
+ndcg_cut_200          	all	0.3230
+ndcg_cut_500          	all	0.3321
+ndcg_cut_1000         	all	0.3350

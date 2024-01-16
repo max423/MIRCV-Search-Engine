@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import static it.unipi.dii.aide.mircv.query.queryHandler.QueryPreProcessing;
-import static it.unipi.dii.aide.mircv.query.queryHandler.executeQuery;
+import static it.unipi.dii.aide.mircv.query.queryHandler.*;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.loadFinalStructure;
 
 
@@ -128,6 +127,13 @@ public class Main {
         System.out.println("Query type = " + (queryType == true ? "Conjunctive" : "Disjunctive"));
         System.out.println("Scoring function = " + (scoringFunction == true ? "BM25" : "TFIDF"));
         System.out.println("--------------------------------------------------");
+
+        if ( cacheFlag == true ) {
+            // queryCache inizializza
+            queryCache.invalidateAll();
+
+
+        }
 
     }
 

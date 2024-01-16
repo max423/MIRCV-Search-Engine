@@ -8,10 +8,12 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import static it.unipi.dii.aide.mircv.compression.unary.readTermFreqCompressed;
 import static it.unipi.dii.aide.mircv.compression.variableByte.readDocIdsCompressed;
-import static it.unipi.dii.aide.mircv.utils.FileUtils.loadFinalStructure;
 
+// Inverted Index Creation: creating an inverted index structure from collection
 public class Indexer {
+    // numero di blocchi generati
     static Integer blockNumber = 0;
+    // tempo di esecuzione
     static long startTime,stopTime, elapsedTimeSpimi, elapsedTimeMerger;
 
     public static void main(String[] args) throws IOException {
@@ -23,17 +25,18 @@ public class Indexer {
         // misura il tempo di esecuzione
         startTime = System.currentTimeMillis();
 
-        // start Spimi algorithm
+        // SPIMI
         Spimi spimi = new Spimi();
         blockNumber= spimi.startIndexer();
 
         System.out.println("Number of blocks generated: " + blockNumber);
-
         stopTime = System.currentTimeMillis();
         elapsedTimeSpimi = stopTime - startTime;
-        startTime = System.currentTimeMillis();
-        blockNumber +=1;
 
+        blockNumber +=1;
+        startTime = System.currentTimeMillis();
+
+        // MERGER
         Merger merger = new Merger();
         merger.startMerger(blockNumber);
 
@@ -46,13 +49,10 @@ public class Indexer {
         // salva su log file tutti i tempi di esecuzione, il numero di blocchi e la dimensione totale dei file finali
         FileUtils.saveLog(elapsedTimeSpimi, elapsedTimeMerger, blockNumber);
 
-
-        // PlotFinalStructure();
 //        if(Configuration.isTesting()) {
 //            // print the final structure
 //            PlotFinalStructure();
 //        }
-
 
     }
 
@@ -70,7 +70,6 @@ public class Indexer {
         FileChannel channelTermFreq = FileUtils.GetCorrectChannel(-1, 2);
 
         // take the size of the file
-
         while (true) {
             try {
                 if (!((currentOffset + vocabularySize) < channelVocabulary.size())) break;
@@ -92,7 +91,6 @@ public class Indexer {
             PostingList postingList = new PostingList(vocabularyElem.getTerm());
 
             if(Configuration.isIndex_compressionON()){
-
                 // read + decompress the posting list : docIds [Vbyte] and termFreqs [Unary]
 
                 // unary
@@ -129,11 +127,6 @@ public class Indexer {
         CollectionStatistics collectionStatistics = new CollectionStatistics();
         collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
         System.out.println(collectionStatistics);
-
-        // print the document index
-        //printDocumentIndex();
-
-
     }
 
     // used for testing, print the document index

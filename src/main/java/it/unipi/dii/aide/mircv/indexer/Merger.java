@@ -4,17 +4,14 @@ import it.unipi.dii.aide.mircv.models.CollectionStatistics;
 import it.unipi.dii.aide.mircv.models.Configuration;
 import it.unipi.dii.aide.mircv.models.PostingList;
 import it.unipi.dii.aide.mircv.models.VocabularyElem;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-
 import static it.unipi.dii.aide.mircv.compression.unary.writeTermFreqCompressed;
 import static it.unipi.dii.aide.mircv.compression.variableByte.writeDocIdCompressed;
 import static it.unipi.dii.aide.mircv.indexer.Spimi.lastDocId;
@@ -23,23 +20,19 @@ import static it.unipi.dii.aide.mircv.utils.FileUtils.CreateFinalStructure;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.GetCorrectChannel;
 
 public class Merger {
-    MappedByteBuffer mappedByteBuffer;
-    FileChannel channelVocabulary;
+    long vocabularyEntrySize= 60;
 
-    long vocabularyEntrySize= 60; // check
-
-    String headTerm;
-
+    // utility structures for merging
     PostingList postingList ;
-
     VocabularyElem vocabularyElem ;
-
     VocabularyElem vocabularyElemApp;
-
     int termFreqNewLen;
     int docIdNewLen;
-
+    // termine in testa all heap
+    String headTerm;
+    // collection statistics for the final_vocabulary
     CollectionStatistics collectionStatistics = new CollectionStatistics();
+    MappedByteBuffer mappedByteBuffer;
 
 
     public void startMerger(int blockNumber) throws IOException {
@@ -65,11 +58,13 @@ public class Merger {
 
         // heap structure with the first term of each partial_vocabulary with blockNumber
         PriorityQueue<AbstractMap.SimpleEntry<String, Integer>> heap = new PriorityQueue<>(customComparator);
+
         // populate the heap
         populateHeap(blockNumber, heap);
         System.out.println("Heap size: " + heap.size());
         System.out.println("Heap: " + heap);
 
+        // set value for collectionStatistics
         collectionStatistics.setTotalLength(totalLentgh);
         collectionStatistics.setDocCount(lastDocId-1);
 
@@ -94,13 +89,14 @@ public class Merger {
             // entry contains the next term to insert in the final_vocabulary
             vocabularyElem = readVocabularyFromPartialFile( entry.getKey(),currentOffsetVocabulary[blockNumCorrent], GetCorrectChannel(blockNumCorrent, 0));
 
-
             // update the offset of the current partial_vocabulary
             currentOffsetVocabulary[blockNumCorrent] += vocabularyEntrySize;
 
             // controllo se c'è almeno un altro termine uguale nell heap
             // se si -> devo fare il merge
             // se no -> scrivo il termine nel final_vocabulary
+
+            // termine in testa all heap, No estrazione qui
             AbstractMap.SimpleEntry<String, Integer> head = heap.peek();
 
             try {
@@ -119,9 +115,9 @@ public class Merger {
 
             }
             else {
-                // vocabularyElemApp contiene quello vecchio  e devo aggiungere  a postingList la posting list di vocabularyElem
-                // leggere la posting di vocabularyElem (termine corrente) e aggiungere i soui posting alla posting list
+                // faccio il merge delle informazioni
 
+                // leggere la posting di vocabularyElem (termine corrente) e aggiungere i soui posting alla posting list
                 postingList.addPostingFromDisk(GetCorrectChannel(blockNumCorrent, 1), GetCorrectChannel(blockNumCorrent, 2), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
 
                 // termine doppione aggiorno i dati del vocabolario
@@ -132,7 +128,6 @@ public class Merger {
 
                 // aggiornare
                 vocabularyElem = vocabularyElemApp;
-
             }
 
             if (!headTerm.equals(entry.getKey())) {
@@ -180,22 +175,17 @@ public class Merger {
 //                }
 
             }
-
         }
-
 
         // write the collectionStatistics on the disk
         collectionStatistics.writeToDisk(GetCorrectChannel(-1, 3));
         System.out.println("> Merging completed!");
-
     }
 
 
-
+    // read the vocabularyElem from the partial_vocabulary without reading the term (already in the heap)
     // take all the information from the partial_vocabulary for 1 vocabularyElem
     private VocabularyElem readVocabularyFromPartialFile(String t, long currentOffset, FileChannel channel) throws IOException {
-        // 20 (term) + 4 (df) + 4 (cf) + 4(lastDocIdInserted) + 8 (docIdsOffset) + 8 (termFreqOffset) + 4 (docIdsLen) + 4(termFreqLen) = 56 bytes
-        // 20 (term) + 4 (df) + 4 (cf) + 4(lastDocIdInserted) + 8 (docIdsOffset) + 8 (termFreqOffset) + 4 (docIdsLen) + 4(termFreqLen) + 8(idf) + 8(maxBM25) + 8(maxTFIDF) = 80 bytes
         try {
             // creating ByteBuffer for reading term
             ByteBuffer buffer = ByteBuffer.allocate(20);
@@ -203,7 +193,7 @@ public class Merger {
 
             String term = t;
 
-            // creating ByteBuffer for reading df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen
+            // creating ByteBuffer for reading df, cf, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen, idf
             buffer = ByteBuffer.allocate(4 + 4  + 8 + 8 + 4 + 4 + 8 );
 
             while (buffer.hasRemaining())
@@ -212,24 +202,17 @@ public class Merger {
             buffer.rewind(); // reset the buffer position to 0
             int df = buffer.getInt();                        // reading df from buffer
             int cf = buffer.getInt();                        // reading cf from buffer
-            //int lastDocIdInserted = buffer.getInt();         // reading lastDocIdInserted from buffe  // TODO SIMO
             long docIdsOffset = buffer.getLong();            // reading docIdsOffset from buffer
             long termFreqOffset = buffer.getLong();          // reading termFreqOffset from buffer
             int docIdsLen = buffer.getInt();                 // reading docIdsLen from buffer
             int termFreqLen = buffer.getInt();               // reading termFreqLen from buffer
             double idf = buffer.getDouble();                 // reading idf from buffer
-//            double maxBM25 = buffer.getDouble();             // reading maxBM25 from buffer
-//            double maxTFIDF = buffer.getDouble();            // reading maxTFIDF from buffer
+
 
             // creating the vocabularyElem
             VocabularyElem vocabularyElem = new VocabularyElem(term, df, cf, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen);
             //System.out.println("VocabularyElem :" + vocabularyElem);
-
-            //vocabularyElem.setSkipLen(skipLen);
-            //vocabularyElem.setSkipOffset(skipOffset);
             vocabularyElem.setIdf(idf);
-//            vocabularyElem.setMaxBM25(maxBM25);
-//            vocabularyElem.setMaxTFIDF(maxTFIDF);
 
             return vocabularyElem;
 
@@ -247,7 +230,7 @@ public class Merger {
         do {
             // read the first element of each partial_vocabulary
             // add it to the heap
-            FileChannel channelVocabulary = GetCorrectChannel(i, 0);
+            FileChannel channelVocabulary = GetCorrectChannel(i, 0); // i = blockNumber , 0 -> vocabolario
 
             ByteBuffer buffer = ByteBuffer.allocate(20);
             channelVocabulary.position(0);

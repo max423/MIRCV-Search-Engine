@@ -1,46 +1,20 @@
-CollectionStatistics —> 16
-- docCount —> 8
-- totalLength —> 8
 
-Configuration —> 2
-- compressionON —> 1
-- stemming_stopwordON —> 1
 
-DocumentIndexElem —> 28
-- docId —> 4
-- docNo —> 20
-- docLen —> 4
 
-Posting —> 8 
-- docID —> 4
-- termFreq —> 4
+# MIRCV Search Engine 
 
-PostingList
-- term —> 20
-- ArrayList<Posting> postingList
+In this project, a search engine was developed based on the MSMARCO Passages collection, which is available on https://microsoft.github.io/msmarco/TREC-Deep-Learning-2020. The project consists of three main parts:
 
-VocabularyElem —> 60
-- term —> 20
-- DocFreq —> 4 update 
-- CollFreq —> 4 update
-- lastDocIdInserted —> 4
-- docIdsOffset —> 8
-- termFreqOffset —> 8
-- docIdsLen —> 4
-- termFreqLen —> 4
+* **Inverted Index Creation**: the first part involves creating an inverted index structure from a set of text documents.
 
-SkipElem -> 28
-- docID -> 4
-- blockDocIDLen -> 4
-- offsetDocID -> 8
-- blockFreqLen -> 4
-- offsetFreq -> 8
-- skipLen -> 4
 
-SkipElem -> 28
-- docID -> 4
-- blockDocIDLen -> 4
-- offsetDocID -> 8
-- blockFreqLen -> 4
-- offsetFreq -> 8
+* **Query Processing**: the second part focuses on processing queries over the inverted index through a terminal interface.
 
+
+* **Search Engine Evaluation**: the final part involves evaluating the search engine's performance using standard evaluation tool TrecEval.
+
+# Getting Started
+
+- **Main Commands:**
+
+  Use the following comm

@@ -2,19 +2,16 @@ package it.unipi.dii.aide.mircv.indexer;
 import it.unipi.dii.aide.mircv.models.*;
 import it.unipi.dii.aide.mircv.text_processing.TextProcessing;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-
 import static it.unipi.dii.aide.mircv.utils.FileUtils.docIndex_RAF;
 import static it.unipi.dii.aide.mircv.utils.FileUtils.initBuffer;
 
 public class Spimi {
-
     // block number
     protected int blockNum = 0;
 
@@ -24,18 +21,19 @@ public class Spimi {
     // vocabulary = hash map
     protected final HashMap<String, VocabularyElem> vocabulary = new HashMap<>();
 
-    // list of sorted term
+    // list used to sort vocabulary elem
     public static ArrayList<String> termList = new ArrayList<>();
 
-    // posting lis
+    // Posting list = hash map
     public static HashMap<String, PostingList> postingListElem = new HashMap<>();
+
+    // threshold for memory
     private long MEMORYFree_THRESHOLD;
 
-//    public static ArrayList<Integer> docLen = new ArrayList<>();     // array di doc len for scoring
-
-    public static int lastDocId = 0; // save last docId for CollectionStatistics
-
-    public static int totalLentgh = 0; // save last docId for CollectionStatistics
+    // save last docId for CollectionStatistics
+    public static int lastDocId = 0;
+    // total length for CollectionStatistics
+    public static int totalLentgh = 0;
 
 
     public int startIndexer() throws IOException {
@@ -47,23 +45,17 @@ public class Spimi {
         // init docIndex_RAF
         FileUtils.initDocIndex_RAF();
 
-        String line;
+        String line; // riga della collection
         String docno;
-        String text;
+        String text; // body of the document
         int tab;
         int documnetLength;
 
-
-        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *10 / 100; // leave 10% of memory free
+        // leave 10% of memory free
+        MEMORYFree_THRESHOLD = Runtime.getRuntime().totalMemory() *10 / 100;
         System.out.println("MEMORYFree_THRESHOLD : " + MEMORYFree_THRESHOLD);
 
-        int l = 0;
         while ((line = bufferedReader.readLine()) != null) {
-
-
-            // System.out.println("> :" + line);
-//            l ++ ;
-//            if (l == 10000) break;
 
             // checking if the used memory has reached the threshold
             checkMemory();
@@ -87,13 +79,13 @@ public class Spimi {
             // process text
             String[] tokens = TextProcessing.DocumentProcessing(text);
 
+            // compute document length and total length
             documnetLength = tokens.length;
             totalLentgh += documnetLength;
 
             // new document index elem
             DocumentIndexElem doc = new DocumentIndexElem(docno, documnetLength);
             doc.writeToDisk(docIndex_RAF.getChannel());
-
 
             if (Configuration.isTesting()){
                 System.out.println("\n DocNo: " + docno + " DocLen: " + documnetLength);
@@ -108,7 +100,7 @@ public class Spimi {
                 if (token.isEmpty())
                     continue;
 
-                // compute term frequency in the document
+                // compute term frequency
                 int tf = Collections.frequency(Arrays.asList(tokens), token);
 
                 // check if token is already in the vocabulary
@@ -117,8 +109,8 @@ public class Spimi {
                     // termine è presente nel dizionario
                     // se è nello stesso docuemnto -> fine
                     // altrimenti dobbiamo :
-                    // 1) aggiungere alla posting list
-                    // 2) aggiurnare lexicon -> docFreq + colFreq
+                    // 1) aggiungere posting alla posting list
+                    // 2) aggiornare vocabolary entry -> docFreq + colFreq
 
                     // get the vocabulary element
                     VocabularyElem vocElem = vocabulary.get(token);
@@ -156,7 +148,7 @@ public class Spimi {
             docid++;
         }
 
-        // write the last block on the disk
+        // write the last block on the disk, which did not trigger checkMemory()
         if (!WriteBlockOnDisk(blockNum, termList, vocabulary, postingListElem)) {
             System.out.println("Couldn't write block "+ blockNum + " to disk.");
             rollback();
@@ -175,8 +167,8 @@ public class Spimi {
         return blockNum;
     }
 
+    // check if the used memory has reached the threshold and write on disk vocabulary and posting list
     private void checkMemory() {
-        // check if the used memory has reached the threshold and write on disk
         if (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD) {
             System.out.println("Memory full..");
             System.out.println("Writing block " + blockNum + " on disk..");
@@ -197,20 +189,22 @@ public class Spimi {
         }
     }
 
+    // clear data structure in memory and try to force garbage collection to free memory
     private void clearDataStructure() {
         // clear data structure in memory
         vocabulary.clear();
         termList.clear();
         postingListElem.clear();
 
-        // and try to force garbage collection to free memory  // TODO SIMO
+        // and try to force garbage collection to free memory
         while (Runtime.getRuntime().freeMemory() < MEMORYFree_THRESHOLD * 2) {
-            // wait for memory to be freed
+            // wait for free memory
             System.gc();
         }
 
     }
 
+    // remove data if error occcurs
     private void rollback() {
         FileUtils.clearDataFolder();
     }

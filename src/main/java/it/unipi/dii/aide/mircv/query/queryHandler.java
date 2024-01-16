@@ -5,6 +5,9 @@ import it.unipi.dii.aide.mircv.models.Configuration;
 import it.unipi.dii.aide.mircv.models.PostingList;
 import it.unipi.dii.aide.mircv.models.VocabularyElem;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -23,6 +26,10 @@ public class queryHandler {
 
     public static HashMap<String, VocabularyElem> VocTerms = new HashMap<>();
 
+    // LRU cache used to store query results
+    public static final Cache<ArrayList<String>, PriorityQueue<scoreDoc>> queryCache = CacheBuilder.newBuilder().maximumSize(1000).initialCapacity(1000).build();
+
+    public static boolean cacheFlag = true;
 
     // receive a query and return the top k (10 or 20) results
     public static void executeQuery(ArrayList<String> tokens, int k) throws IOException {
@@ -34,6 +41,20 @@ public class queryHandler {
                 tokensNoDuplicates.add(token);
             }
         }
+
+
+        if (cacheFlag == true) {
+            PriorityQueue<scoreDoc> documentScores;
+            // check if result are in cache and return them
+            if ((documentScores = queryCache.getIfPresent(tokensNoDuplicates)) != null) {
+                PriorityQueue<scoreDoc> documentScores2 = new PriorityQueue<>(documentScores);
+                // print the results
+                printResults(documentScores2, k);
+                //queryCache.invalidate(tokensNoDuplicates);
+                return;
+            }
+        }
+
 
         // retrive vocabulary entries
         for (String token : tokensNoDuplicates) {
@@ -91,8 +112,20 @@ public class queryHandler {
             priorityQueue = utils.disjunctive(k);
         }
 
+
+        if (cacheFlag == true) {
+            // copy priorityQueue into a new priorityQueue
+            PriorityQueue<scoreDoc> priorityQueueCopy = new PriorityQueue<>(priorityQueue);
+            // save the results in cache
+            queryCache.put(tokensNoDuplicates, priorityQueueCopy);
+        }
+
         // print the results
         printResults(priorityQueue, k);
+
+
+
+
 
         // reset the data structures
         resetDataStructures();
@@ -133,7 +166,7 @@ public class queryHandler {
         while (!priorityQueue.isEmpty() && k > 0) {
             scoreDoc scoreDoc = priorityQueue.poll();
             k--;
-            String pid = documentIndex.get(scoreDoc.getDocID()).getDocno(); // <- take docNo from documentIndex
+            String pid = documentIndex.get(scoreDoc.getDocID()).getDocno();
             System.out.println("DocNo: " + pid + " Score: " + scoreDoc.getScore());
 
         }
