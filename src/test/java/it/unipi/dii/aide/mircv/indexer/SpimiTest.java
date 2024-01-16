@@ -106,9 +106,9 @@ class SpimiTest {
             assertEquals(invIdexT.containsKey(term), invIdex.containsKey(term));
         }
 
-        // per ogni chiave del hashmap
-        // controllo che il posting list sia uguale
-        // controllo che il term sia uguale
+        // for each key of the hashmap
+        // check if the posting list is the same
+        // check if the term is the same
         for (String term : invIdex.keySet()) {
             System.out.println("term: " + term);
             PostingList postList = invIdex.get(term);
@@ -127,7 +127,6 @@ class SpimiTest {
 
         // check if the two document index have the same size
         assertEquals(docIndex.size(), docIndexT.size());
-
 
         // check if the two document index have the same docno
         for (int i = 0; i < docIndex.size(); i++) {
@@ -202,7 +201,6 @@ class SpimiTest {
             // split on tab
             tab = line.indexOf("\t");
 
-
             // extract
             docno = line.substring(0, tab);
             text = line.substring(tab + 1);
@@ -257,9 +255,6 @@ class SpimiTest {
 
         return invIdexT;
     }
-
-
-
 
     private HashMap<String, VocabularyElem> buildVocaulary(BufferedReader bufferedReader) throws IOException {
 

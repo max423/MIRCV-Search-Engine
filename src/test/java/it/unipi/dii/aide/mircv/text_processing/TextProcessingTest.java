@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TextProcessingTest {
 
-
     @Test
     void tokenize() {
         // test 1
@@ -27,19 +26,19 @@ class TextProcessingTest {
     @Test
     void trouncateToken() {
         // MAX_TERM_LENGTH = 20;
-        // test 1: lunghezza del token è inferiore a MAX_TERM_LENGTH
+        // test 1: the length of the token is less than MAX_TERM_LENGTH
         String shortToken = "short";
         String resultShortToken = TextProcessing.trouncateToken(shortToken);
         assertEquals(shortToken, resultShortToken);
 
-        // test 2: lunghezza del token è uguale a MAX_TERM_LENGTH
+        // test 2: the length of the token is equal to MAX_TERM_LENGTH
         String maxToken = "thisisamaxtoken12345";
         String resultMaxToken = TextProcessing.trouncateToken(maxToken);
         assertEquals(maxToken, resultMaxToken);
         System.out.println("maxToken: " + maxToken);
         System.out.println("resultMaxToken: " + resultMaxToken);
 
-        // Caso in cui la lunghezza del token è superiore a MAX_TERM_LENGTH
+        // test 3: the length of the token is greater than MAX_TERM_LENGTH
         String longToken = "thisisaverylongtokenthisisaverylongtoken";
         String expectedResult = longToken.substring(0, FileUtils.MAX_TERM_LENGTH);
         String resultLongToken = TextProcessing.trouncateToken(longToken);
@@ -93,7 +92,5 @@ class TextProcessingTest {
         assertEquals(expectedText, resultText);
 
     }
-
-
 
 }

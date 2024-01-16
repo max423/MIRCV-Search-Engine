@@ -56,7 +56,7 @@ public class queryHandler {
         }
 
 
-        // retrive vocabulary entries
+        // retrieve vocabulary entries
         for (String token : tokensNoDuplicates) {
             VocabularyElem Velem;
             Velem = binarySearch(token);
