@@ -21,9 +21,6 @@ public class TextProcessing {
     // Regex for split string into tokens
     private static final String SPLIT_REGEX = "\\s+";
 
-    // Regex for removing 4 or more consecutive characters
-    // private static final String CONSECUTIVE_REGEX = "(.)\\1{3,}";
-
     // stemmer
     private static final PorterStemmer stemmer = new PorterStemmer();
 
@@ -38,11 +35,7 @@ public class TextProcessing {
         }
     }
 
-    /**
-     * Process a document
-     * @param doc document to process
-     * @return array of tokens
-     */
+    // Process a document
     public static String[] DocumentProcessing(String doc) throws IOException{
         // 1) preprocessing document
         doc = cleanText(doc);
@@ -58,6 +51,7 @@ public class TextProcessing {
         return tokens;
     }
 
+    // clean a document
     public static String cleanText(String doc) {
         // remove html tags
         doc = doc.replaceAll(HTML_REGEX, "");
@@ -71,11 +65,7 @@ public class TextProcessing {
         return doc;
     }
 
-    /**
-     * Tokenize a string
-     * @param Doc the string to tokenize
-     * @return an array of tokens
-     */
+    // split a document into tokens
     public static String[] tokenize(String Doc) {
         String[] tokens = Doc.split(SPLIT_REGEX);
         for(int i = 0; i < tokens.length; i++) {
@@ -84,7 +74,7 @@ public class TextProcessing {
         return tokens;
     }
 
-    // Trocare i token piu lunghi di MAX_TERM_LENGTH
+    // trouncate a token if it is too long (MAX_TERM_LENGTH)
     public static String trouncateToken(String token) {
         if (token.length() > FileUtils.MAX_TERM_LENGTH) {
             return token.substring(0,FileUtils.MAX_TERM_LENGTH );
@@ -92,6 +82,7 @@ public class TextProcessing {
         return token;
     }
 
+    // stem a list of tokens
     public static String[] stemming(String[] tokens) {
         //replace each word with its stem
         for (int i = 0; i < tokens.length; i++) {
@@ -100,6 +91,7 @@ public class TextProcessing {
         return tokens;
     }
 
+    // remove stop words from a list of tokens
     public static String[] removeStopWords(String[] tokens) {
         //remove stop words
         ArrayList<String> tokensList = new ArrayList<>(Arrays.asList(tokens));
