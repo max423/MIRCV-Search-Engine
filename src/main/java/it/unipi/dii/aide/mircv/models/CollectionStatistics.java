@@ -5,20 +5,19 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 public class CollectionStatistics {
+
     // # of documents = size of documnetIndex
     private static int docCount;
     // total number of terms
     private static long totalLength;
 
-
-
-
-
+    // default constructor
     public CollectionStatistics() {
         this.docCount = 0;
         this.totalLength = 0;
     }
 
+    // constructor
     public CollectionStatistics(int docCount, long totalLength) {
         this.docCount = docCount;
         this.totalLength = totalLength;
@@ -40,9 +39,7 @@ public class CollectionStatistics {
         this.totalLength = totalLength;
     }
 
-
-
-    // incremento numero di documenti
+    // increment the number of documents
     public void setDocCount(int lastDocId) {
         this.docCount = lastDocId +1;
     }
@@ -55,6 +52,7 @@ public class CollectionStatistics {
                 '}';
     }
 
+    // write the object into the channel
     public void writeToDisk(FileChannel channel) throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(4+8);
 
@@ -71,6 +69,7 @@ public class CollectionStatistics {
 
     }
 
+    // read the object from the channel
     public void readFromDisk(FileChannel channel, long offset) throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(4+8);
 

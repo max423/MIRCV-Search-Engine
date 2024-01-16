@@ -5,12 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Configuration {
+
     // compression reading
     private static boolean compressionON;
+
     // stemming and stopword removal
     private static boolean stemming_stopwordON;
 
-    // compressione index
+    // compression index
     private static boolean index_compressionON;
 
     // testing
@@ -19,7 +21,7 @@ public class Configuration {
     // score function : true = BM25 - false= TFIDF
     private static boolean scoreON;
 
-    // query retrival : true = conjunctive - false= disjunctive
+    // query retrieval : true = conjunctive - false= disjunctive
     private static boolean conjunctiveON;
 
     static {
@@ -39,15 +41,16 @@ public class Configuration {
             e.printStackTrace();
         }
     }
+
     public Configuration() {
     }
+
     public Configuration(boolean compressionON, boolean stemming_stopwordON, boolean index_compressionON, boolean testing_ON) {
         this.compressionON = compressionON;
         this.stemming_stopwordON = stemming_stopwordON;
         this.index_compressionON = index_compressionON;
         this.testing_ON = testing_ON;
     }
-
 
     public static boolean isCompressionON() {
         return compressionON;
@@ -79,7 +82,6 @@ public class Configuration {
     public void setScoreON(boolean scoreON) {
         this.scoreON = scoreON;
     }
-
 
     @Override
     public String toString() {

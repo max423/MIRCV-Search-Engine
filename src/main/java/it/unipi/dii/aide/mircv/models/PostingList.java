@@ -13,23 +13,21 @@ import java.util.Iterator;
 import static it.unipi.dii.aide.mircv.query.queryHandler.VocTerms;
 
 public class PostingList {
+    // term of the posting list
     private String term;
+
+    // list of posting
     private final ArrayList<Posting> postingList;
 
-    //private static SkipElem skipBlock;
-
+    // current posting list element
     private Posting currentPostingList;
 
-    // max BM25 score
-    private double BM25;
-
-    // max TF-IDF score
-    private double TFIDF;
-
-    //public static Iterator<SkipElem> skipElemIterator = null;
+    // iterator of the posting list
     public Iterator<Posting> postingListIterator = null;
 
+    // random access file for the docIds
     private RandomAccessFile docId_RAF;
+    // random access file for the termFreqs
     private RandomAccessFile termFreq_RAF;
 
     public PostingList(String term) {
@@ -72,15 +70,18 @@ public class PostingList {
                 '}';
     }
 
-
+    // write the posting list to disk
     public void writeToDisk(FileChannel channelDocID, FileChannel channelTermFreq) throws IOException {
 
+        // initialize the buffers
         ByteBuffer docsByteBuffer;
         ByteBuffer freqsByteBuffer;
 
+        // initialize the channels
         channelDocID.position(channelDocID.size());
         channelTermFreq.position(channelTermFreq.size());
 
+        // allocate the buffers
         docsByteBuffer = ByteBuffer.allocate(this.postingList.size() * 4);
         freqsByteBuffer = ByteBuffer.allocate(this.postingList.size() * 4);
 
@@ -90,6 +91,7 @@ public class PostingList {
             freqsByteBuffer.putInt(posting.getTermFreq());
         }
 
+        // reset the buffer position to 0
         docsByteBuffer = ByteBuffer.wrap(docsByteBuffer.array());
         freqsByteBuffer = ByteBuffer.wrap(freqsByteBuffer.array());
 
@@ -102,8 +104,10 @@ public class PostingList {
 
     }
 
-    public void readFromDisk( FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId , long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
+    // read the posting list from disk
+    public void readFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId, long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
         try {
+            // get the position of the docIds and termFreqs
             channelDocID.position(offsetDocId);
             channelTermFreq.position(offsetTermFreq);
 
@@ -134,10 +138,10 @@ public class PostingList {
     }
 
 
-    public void addPostingFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long docIdsOffset, long termFreqOffset, int docIdsLen, int termFreqLen) throws IOException{
-        // devo aggiungere un posting alla posting list, usata nel merger per aggiungere i posting delle posting list parziali
-
+    // add posting from disk to posting list (used in merger)
+    public void addPostingFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long docIdsOffset, long termFreqOffset, int docIdsLen, int termFreqLen) throws IOException {
         try {
+            // get the position of the docIds and termFreqs
             channelDocID.position(docIdsOffset);
             channelTermFreq.position(termFreqOffset);
 
@@ -159,7 +163,8 @@ public class PostingList {
             for (int i = 0; i < docIdsLen / 4; i++) {
                 int docId = bufferDocId.getInt();
                 int termFreq = bufferTermFreq.getInt();
-                this.postingList.add(new Posting(docId, termFreq));     // mantengo i posting vecchi e aggiungo quelli nuovi
+                // maintain old posting and add new posting
+                this.postingList.add(new Posting(docId, termFreq));
             }
 
         } catch (IOException e) {
@@ -167,17 +172,14 @@ public class PostingList {
         }
     }
 
-    //public void readPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+    // read the posting list from disk
     public void readPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId, long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
+
         // intialize one buffer for docIds and one for termFreqs
-        //ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
-        //ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
         ByteBuffer bufferDocId = ByteBuffer.allocate(docIdsLen);
         ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen);
 
         // get the position of the docIds and termFreqs
-        //channelDocID.position(skip.getOffsetDocID());
-        //channelTermFreq.position(skip.getOffsetFreq());
         channelDocID.position(offsetDocId);
         channelTermFreq.position(offsetTermFreq);
 
@@ -202,17 +204,14 @@ public class PostingList {
 
     }
 
-    //public void readCompressedPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, SkipElem skip) throws IOException {
+    // read the posting list compressed from disk
     public void readCompressedPostingListFromDisk(FileChannel channelDocID, FileChannel channelTermFreq, long offsetDocId, long offsetTermFreq, int docIdsLen, int termFreqLen) throws IOException {
+
         // intialize one buffer for docIds and one for termFreqs
-        //ByteBuffer bufferDocId = ByteBuffer.allocate(skip.getBlockDocIDLen());
-        //ByteBuffer bufferTermFreq = ByteBuffer.allocate(skip.getBlockFreqLen());
         ByteBuffer bufferDocId = ByteBuffer.allocate(docIdsLen);
         ByteBuffer bufferTermFreq = ByteBuffer.allocate(termFreqLen);
 
         // get the position of the docIds and termFreqs
-        //channelDocID.position(skip.getOffsetDocID());
-        //channelTermFreq.position(skip.getOffsetFreq());
         channelDocID.position(offsetDocId);
         channelTermFreq.position(offsetTermFreq);
 
@@ -232,9 +231,8 @@ public class PostingList {
 
         ArrayList<Integer> termFreqs = unary.decompress(bufferTermFreq.array());
 
-
         // create the posting list
-        for (int i = 0; i < docIds.size(); i++) {   // modificato da docIdsLen/4 a docIdsLen -> docIds.size()
+        for (int i = 0; i < docIds.size(); i++) {
             int docId = docIds.get(i);
             int termFreq = termFreqs.get(i);
 
@@ -242,7 +240,6 @@ public class PostingList {
         }
 
     }
-
 
     // load the posting list given the term
     public void getPostingList(String term) throws IOException {
@@ -254,224 +251,37 @@ public class PostingList {
         // get the vocabulary element of the term
         VocabularyElem vocabularyElem = VocTerms.get(term);
 
-        //VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
-
         if (vocabularyElem == null) {
-            System.out.println("Term "+ term + " not found in the vocabulary");
+            System.out.println("Term " + term + " not found in the vocabulary");
             return;
         }
 
-
-        // get the number of blocks of term
-        //ArrayList<SkipElem> blocks;
-        //if (vocabularyElem.getSkipLen() == 0){
-        // il termine ha una lista di posting più piccola di 1024, e quindi viene creato un unico blocco di skipping contenente l'intera lista di posting
-
-        // initialize a new ArrayList of blocks
-        //blocks = new ArrayList<>();
-
-        //skipBlock= new SkipElem(0, vocabularyElem.getDocIdsOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getTermFreqLen());
-        //blocks.add(skipBlock);
-
-        //skipElemIterator = blocks.iterator();
-        //skipElemIterator.next();
-
-        //if(Configuration.isIndex_compressionON()){
-        // compression On
-        //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-        //}
-        //else {
-        // compression Off
-        //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
-        //}
-
-        // set the last docID
-        //skipBlock.setDocID(this.getPostingList().get(this.getPostingList().size()-1).getDocID());
-        //}
-        //else{
-        //vengono recuperate le informazioni di skipping dal file
-
-        // size of step
-        //int step = 32;
-
-        // address to read the skip info
-        //long skipAddress = vocabularyElem.getSkipOffset();
-
-        // number of blocks
-        //int numBlocks = vocabularyElem.getSkipLen() / step;
-
-        // initialize a new ArrayList of blocks
-        //blocks = new ArrayList<>();
-
-        // read the skip info
-        //for (int i = 0; i < numBlocks; i++) {
-        //SkipElem skipElem = new SkipElem();
-        // read skipping element from disk
-        //skipElem.readFromDisk(skip_RAF.getChannel(), skipAddress + i * step);
-        // add the skip element to the list
-        //blocks.add(skipElem);
-        //}
-
-        // current block
-        //skipBlock = blocks.get(0);
-
-        // initialize the iterator
-        //skipElemIterator = blocks.iterator();
-        //skipElemIterator.next();
-
-        if(Configuration.isIndex_compressionON()) {
-            // compressione index On
-            //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+        if (Configuration.isIndex_compressionON()) {
+            // compression index On
             readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-        }else{
-            // compressione index Off
-            //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), blocks.get(0));
+        } else {
+            // compression index Off
             readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
         }
-        //}
 
-        // set posting list iterator ! serve !
+        // set posting list iterator
         postingListIterator = postingList.iterator();
         currentPostingList = postingListIterator.next();
-
-
 
     }
 
     public Posting getCurrentPostingList() {
-        //return this.currentPostingList;
         return currentPostingList;
-    }
-
-    public Double getMaxBM25() {
-        return BM25;
-    }
-
-    public Double getMaxTFIDF() {
-        return TFIDF;
     }
 
     // get the next posting of the posting list
     public void nextPosting(String term) throws IOException {
         // check if the posting list is empty
         if (postingListIterator.hasNext()) {
-            currentPostingList = postingListIterator.next();
-            /*
             // get the next posting
-
-            postingList.clear();
-
-            VocabularyElem vocabularyElem = FileUtils.vocabulary.get(term);
-            if (Configuration.isIndex_compressionON()) {
-                // compressione index On
-                readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-            } else {
-                // compressione index Off
-                readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), vocabularyElem.getDocIdsOffset(), vocabularyElem.getTermFreqOffset(), vocabularyElem.getDocIdsLen(), vocabularyElem.getTermFreqLen());
-            }
-
-            postingListIterator = postingList.iterator();
-*/
-        }else{
+            currentPostingList = postingListIterator.next();
+        } else {
             currentPostingList = null;
         }
-
-        //currentPostingList = postingListIterator.next();
     }
-        /*else {
-            // the posting list is empty and there are no more blocks
-
-            //if (skipElemIterator == null || !skipElemIterator.hasNext()) {
-                // the posting list is empty and there are no more blocks
-                this.currentPostingList = null;
-                return;
-            //}
-
-
-            // get the next block
-            //SkipElem nextBlock = skipElemIterator.next();
-
-            // clear the posting list
-            //postingList.clear();
-
-            // read the posting list from disk
-            //try {
-                //if(Configuration.isIndex_compressionON()) {
-                    // compressione index On
-                    //readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
-                //}else{
-                    // compressione index Off
-                    //readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), nextBlock);
-                //}
-            //} catch (IOException e) {
-                //e.printStackTrace();
-            //}
-
-            // set the posting list iterator
-            //postingListIterator = postingList.iterator();
-        }
-    }
-
-    // skip to the next posting
-    /*public void nextGEQ(int currentDocID) {
-
-        boolean blockChanged = false;
-
-        // check if the max docID of the block is greater than the current docID
-        while (skipBlock.getDocID() < currentDocID) {
-
-            // try to get the next block
-            if (skipElemIterator.hasNext()) {
-                skipBlock = skipElemIterator.next();
-                blockChanged = true;
-            } else {
-                // there are no more blocks
-                currentPostingList = null;
-                return;
-            }
-        }
-
-        // check if the block has changed
-        if (blockChanged) {
-            // clear the posting list
-            postingList.clear();
-
-            // read the posting list from disk
-            try {
-                if(Configuration.isIndex_compressionON()) {
-                    // compressione index On
-                    readCompressedPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), skipBlock);
-                }else{
-                    // compressione index Off
-                    readPostingListFromDisk(docId_RAF.getChannel(), termFreq_RAF.getChannel(), skipBlock);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // set the posting list iterator
-            postingListIterator = postingList.iterator();
-
-            // set the current posting list
-            currentPostingList = postingListIterator.next();
-        }
-
-        // get the next posting of the posting list until the docID is greater than the current docID or the posting list is empty
-        while (currentPostingList.getDocID() < currentDocID && postingListIterator.hasNext()) {
-            currentPostingList = postingListIterator.next();
-        }
-    }*/
-
-
-//    // TODO Possiamo eliminarla
-//    public int getMaxTermFreq() {
-//        int maxTermFreq = 0;
-//
-//        for (Posting posting : postingList) {
-//            if (posting.getTermFreq() > maxTermFreq)
-//                maxTermFreq = posting.getTermFreq();
-//        }
-//
-//        return maxTermFreq;
-//    }
 }

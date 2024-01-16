@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import static it.unipi.dii.aide.mircv.indexer.Spimi.lastDocId;
 
 public class VocabularyElem {
+    // term
     private String term;
 
     // number of documents in which the term appears
@@ -20,7 +21,7 @@ public class VocabularyElem {
     private int CollFreq;
 
     // used only in the indexer
-    private int lastDocIdInserted;
+    private int lastDocIdInserted; // last docId inserted in the posting list
 
     // offset of the first docId in docIds posting list
     protected long docIdsOffset;
@@ -36,19 +37,6 @@ public class VocabularyElem {
 
     // inverse document frequency
     private double idf;
-
-//    // max BM25
-//    private double maxBM25;
-//
-//    // max TFIDF
-//    private double maxTFIDF;
-
-
-//    public void setMaxBM25(double maxBM25) {
-//        this.maxBM25 = maxBM25;
-//    }
-
-
 
     public VocabularyElem(String term, int docFreq, int collFreq) {
         this.term = term;
@@ -102,8 +90,6 @@ public class VocabularyElem {
         return docIdsLen;
     }
 
-
-
     public void setDocIdsLen(int docIdsLen) {
         this.docIdsLen = docIdsLen;
     }
@@ -116,7 +102,6 @@ public class VocabularyElem {
         this.termFreqLen = termFreqLen;
     }
 
-
     public int getLastDocIdInserted() {
         return lastDocIdInserted;
     }
@@ -128,6 +113,7 @@ public class VocabularyElem {
     public void incDocFreq() {
         this.DocFreq++;
     }
+
     public void updateCollFreq(int AnotherCollFreq) {
         this.CollFreq += AnotherCollFreq;
     }
@@ -148,11 +134,9 @@ public class VocabularyElem {
         this.termFreqOffset = termFreqOffset;
     }
 
-
     public void incFreqLen(int len) {
         this.termFreqLen += len;
     }
-
 
     public void incDocLen(int len) {
         this.docIdsLen += len;
@@ -165,9 +149,6 @@ public class VocabularyElem {
     public void incCollFreq( int cf) {
         this.CollFreq += cf;
     }
-
-
-
 
     @Override
     public String toString() {
@@ -184,10 +165,14 @@ public class VocabularyElem {
                 '}';
     }
 
+    // write the vocabulary element on disk
     public void writeToDisk(FileChannel channelVoc) throws IOException {
-        ByteBuffer buffer = ByteBuffer.allocate(20 + 4 + 4 + 8 + 8 + 4 + 4  + 8  ); // stringa paddata 20 caratteri
+        // creating ByteBuffer for writing term (string of 20 characters)
+        ByteBuffer buffer = ByteBuffer.allocate(20 + 4 + 4 + 8 + 8 + 4 + 4  + 8  );
 
+        // setting the position
         channelVoc.position(channelVoc.size());
+        // allocating the buffer for the term
         CharBuffer charBuffer = CharBuffer.allocate(20);
 
         // writing into buffer
@@ -197,13 +182,13 @@ public class VocabularyElem {
         buffer.put(StandardCharsets.UTF_8.encode(charBuffer));
         buffer.putInt(this.DocFreq);
         buffer.putInt(this.CollFreq);
-        //buffer.putInt(this.lastDocIdInserted); // TODO Simo
         buffer.putLong(this.docIdsOffset);
         buffer.putLong(this.termFreqOffset);
         buffer.putInt(this.docIdsLen);
         buffer.putInt(this.termFreqLen);
         buffer.putDouble(this.idf);
 
+        // setting the position to 0
         buffer = ByteBuffer.wrap(buffer.array());
 
         // writing into channel
@@ -215,30 +200,24 @@ public class VocabularyElem {
             System.out.println("VocabularyElem written on disk: " + this);
         }
 
-
     }
 
-
+    // read the vocabulary element from disk
     public void readFromDisk(FileChannel channel, long currentOffset) throws IOException {
         try {
             // creating ByteBuffer for reading term
             ByteBuffer buffer = ByteBuffer.allocate(20);
             channel.position(currentOffset);
 
+            // reading into buffer
             while (buffer.hasRemaining())
                 channel.read(buffer);
 
+            // removing white spaces
             String term = new String(buffer.array(), StandardCharsets.UTF_8).trim();
 
             // creating ByteBuffer for reading df, cf, lastDocIdInserted, docIdsOffset, termFreqOffset, docIdsLen, termFreqLen
             buffer = ByteBuffer.allocate(4 + 4 + 8 + 8 + 4 + 4  + 8 );
-
-//            int skipLen;
-//            long skipOffset;
-//            double idf;
-//            double maxBM25;
-//            double maxTFIDF;
-//            8 + 8 + 8 = 24
 
             while (buffer.hasRemaining())
                 channel.read(buffer);
@@ -247,15 +226,11 @@ public class VocabularyElem {
             this.term = term;
             this.DocFreq = buffer.getInt();
             this.CollFreq = buffer.getInt();
-//            this.lastDocIdInserted = buffer.getInt();       // TODO SIMO
             this.docIdsOffset = buffer.getLong();
             this.termFreqOffset = buffer.getLong();
             this.docIdsLen = buffer.getInt();
             this.termFreqLen =  buffer.getInt();
             this.idf = buffer.getDouble();
-//            this.maxBM25 = buffer.getDouble();
-//            this.maxTFIDF = buffer.getDouble();
-
 
         }
         catch (IOException e) {
@@ -271,54 +246,9 @@ public class VocabularyElem {
         this.idf = idf;
     }
 
-
-//    public void setMaxTFIDF(double maxTFIDF) {
-//        this.maxTFIDF = maxTFIDF;
-//    }
-//
-//    public double getMaxBM25() {
-//        return maxBM25;
-//    }
-//
-//    public double getMaxTFIDF() {
-//        return maxTFIDF;
-//    }
-
     public void computeIDF() {
         // lastDocId at the end is the number of documents in the collection
         //System.out.println("lastDocId: " + lastDocId + " DocFreq: " + this.DocFreq);
         this.idf = Math.log10(lastDocId / (double)this.DocFreq);
-
     }
-
-//    public void setMaxTFIDF(int maxTermFreq){
-//        this.maxTFIDF = (1 + Math.log10(maxTermFreq)) * this.idf;
-//    }
-
-
-//    public void computeBM25andTFIDF(double avgDocLen, PostingList postingList) {
-//
-//        double b = 0.75;
-//        double k1 = 1.2;
-//
-//        double current_BM25 = 0;
-//        int dl = 0;
-//        int maxTermFreq = 0;
-//
-//        for (Posting p : postingList.getPostingList()) {
-//            dl = Spimi.docLen.get((int) (p.getDocID() - 1));         // doc len
-//
-//            current_BM25 = (p.getTermFreq() / ((k1 - b) + b * dl / avgDocLen) + p.getTermFreq()) * this.idf;
-//
-//            if (current_BM25 > this.getMaxBM25())
-//                this.setMaxBM25(current_BM25);
-//
-//            // search for max term freq
-//            if (p.getTermFreq() > maxTermFreq)
-//                maxTermFreq = p.getTermFreq();
-//        }
-//
-//        this.maxTFIDF = (1 + Math.log10(maxTermFreq)) * this.idf;
-//        //System.out.println("Term: " + this.term + " maxTFIDF: " + this.maxTFIDF  + "AND "+ this.idf);
-//    }
 }

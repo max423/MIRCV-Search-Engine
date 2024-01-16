@@ -7,8 +7,8 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 
 public class DocumentIndexElem {
-    private String docNo;   // dalla collection
-    private int docLen;  // lunghezza del documento
+    private String docNo;   // from the collection
+    private int docLen;  // length of the document
 
     public DocumentIndexElem(){
     }
@@ -36,6 +36,7 @@ public class DocumentIndexElem {
     public void setDocno(String docno) {
         this.docNo = docno;
     }
+
     public void setLength(int length) {
         this.docLen = length;
     }
@@ -48,7 +49,7 @@ public class DocumentIndexElem {
                 '}';
     }
 
-
+    // write the object into the channel
     public void writeToDisk(FileChannel channel) {
         // 20 (doc_no)  + 4 (length) = 24 bytes
         try {
@@ -65,7 +66,6 @@ public class DocumentIndexElem {
 
             buffer.putInt(this.docLen); // [start at position 20] writing length into buffer
 
-            // buffer.flip(); // flip the buffer to prepare for get operation
             buffer = ByteBuffer.wrap(buffer.array());
 
             // writing into channel
@@ -77,6 +77,7 @@ public class DocumentIndexElem {
         }
     }
 
+    // read the object from the channel
     public void readFromDisk(FileChannel channel, int position) {
         // 20 (doc_no)  + 4 (length) = 24 bytes
         try {
