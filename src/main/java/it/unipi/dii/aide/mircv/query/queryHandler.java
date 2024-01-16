@@ -24,11 +24,13 @@ public class queryHandler {
     // posting list with the tokens in the query
     public static ArrayList<PostingList> postingListQuery = new ArrayList<>();
 
+    // vocabulary entries of the tokens in the query
     public static HashMap<String, VocabularyElem> VocTerms = new HashMap<>();
 
     // LRU cache used to store query results
     public static final Cache<ArrayList<String>, PriorityQueue<scoreDoc>> queryCache = CacheBuilder.newBuilder().maximumSize(1000).initialCapacity(1000).build();
 
+    // flag used to enable/disable the cache
     public static boolean cacheFlag = true;
 
     // receive a query and return the top k (10 or 20) results
@@ -42,7 +44,7 @@ public class queryHandler {
             }
         }
 
-
+        // check if the query is in the cache
         if (cacheFlag == true) {
             PriorityQueue<scoreDoc> documentScores;
             // check if result are in cache and return them
@@ -54,7 +56,6 @@ public class queryHandler {
                 return;
             }
         }
-
 
         // retrieve vocabulary entries
         for (String token : tokensNoDuplicates) {
@@ -112,7 +113,7 @@ public class queryHandler {
             priorityQueue = utils.disjunctive(k);
         }
 
-
+        // check if the cache is enabled
         if (cacheFlag == true) {
             // copy priorityQueue into a new priorityQueue
             PriorityQueue<scoreDoc> priorityQueueCopy = new PriorityQueue<>(priorityQueue);
@@ -122,10 +123,6 @@ public class queryHandler {
 
         // print the results
         printResults(priorityQueue, k);
-
-
-
-
 
         // reset the data structures
         resetDataStructures();
@@ -266,7 +263,6 @@ public class queryHandler {
             VocTerms.put(token, Velem);
         }
 
-
         // process each token of the query
         for (String token : tokensNoDuplicates) {
 
@@ -314,8 +310,9 @@ public class queryHandler {
         return priorityQueue;
     }
 
-
+    // return the vocabulary entry of a term
     public static VocabularyElem binarySearch(String targetTerm) throws IOException {
+        // Get the total number of terms in the vocabulary
         FileChannel vocabularyChannel = FileUtils.GetCorrectChannel(-1, 0);
         long totalTerms = (vocabularyChannel.size() / 60);
 
@@ -361,6 +358,7 @@ public class queryHandler {
     }
 
 
+    // return the vocabulary entry of a term (used in the binary search)
     private static VocabularyElem getTermFromDisk(long from) throws IOException {
         from= from * 60;
         FileChannel channel = FileUtils.GetCorrectChannel(-1, 0);
@@ -374,7 +372,6 @@ public class queryHandler {
         String term = new String(buffer.array(), StandardCharsets.UTF_8).trim();
 
         buffer = ByteBuffer.allocate(4 + 4 + 8 + 8 + 4 + 4  + 8 );
-
 
         while (buffer.hasRemaining())
             channel.read(buffer);
@@ -394,6 +391,7 @@ public class queryHandler {
 
     }
 
+    // return the term (used in the binary search)
     private static String getOnlyTerm(long from) throws IOException {
         from= from * 60;
         FileChannel channel = FileUtils.GetCorrectChannel(-1, 0);
