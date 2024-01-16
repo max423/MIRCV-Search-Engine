@@ -153,7 +153,7 @@ public class FileUtils {
 
     // create temp files for spimi run
     public static void createTempFile(int blockNum) {
-        // temp file for data structure in spimi run : partial termlist, partial vocabulary, partial postings per block
+        // partial termlist, partial vocabulary, partial postings per block
 
         ArrayList<RandomAccessFile> array_RAF = new ArrayList<>();
         try {
@@ -188,7 +188,7 @@ public class FileUtils {
     public static void CreateFinalStructure() throws IOException {
         System.out.println("Creating final structure...");
         File dataFolder = new File("src/main/resources");
-        if (dataFolder.exists()) {// add Path_FinalVocabulary
+        if (dataFolder.exists()) {
 
             ArrayList<RandomAccessFile> array_RAF = new ArrayList<>();
             try {
@@ -210,7 +210,6 @@ public class FileUtils {
         return skeleton_RAF.get(blockNum).get(i).getChannel();
     }
 
-
     // save the time of execution of spimi and merger
     public static void saveLog(long elapsedTimeSpimi, long elapsedTimeMerger, Integer blockNumber) {
 
@@ -230,37 +229,16 @@ public class FileUtils {
         }
     }
 
-    // per query handler load document index
+    // load document index for query handler
     public static void loadFinalStructure() throws IOException {
         takeFinalRAF();
-        //loadVocabulary();
         loadDocumentIndex();
         collectionStatistics.readFromDisk(FileUtils.GetCorrectChannel(-1, 3), 0);
     }
 
-
-    private static void loadVocabulary() throws IOException {
-        // Initial offset
-        long currentOffset = 0;
-        int VOCABULARY_ELEM_SIZE = 60;
-
-        // Get the channel
-        FileChannel channelVocabulary = FileUtils.GetCorrectChannel(-1, 0);
-
-        // Read the vocabulary elements
-        while (currentOffset + VOCABULARY_ELEM_SIZE <= channelVocabulary.size()) {
-            VocabularyElem vocabularyElem = new VocabularyElem();
-            vocabularyElem.readFromDisk(channelVocabulary, currentOffset);
-
-            // Add the vocabulary element to the vocabulary map
-            vocabulary.put(vocabularyElem.getTerm(), vocabularyElem);
-
-            // Update the offset
-            currentOffset += VOCABULARY_ELEM_SIZE;
-        }
-    }
-
+    // load document index from disk
     private static void loadDocumentIndex() throws IOException {
+        // Initial offset
         int position = 0;
         int DOC_INDEX_ELEM_SIZE =24;
         int docId = 1;
@@ -272,7 +250,7 @@ public class FileUtils {
                 DocumentIndexElem docElem = new DocumentIndexElem();
                 docElem.readFromDisk(docIndexFC, position);
 
-                // Add the document index element to the document index hsshmap
+                // Add the document index element to the document index hashmap
                 documentIndex.put(docId, docElem);
 
                 position += DOC_INDEX_ELEM_SIZE;
