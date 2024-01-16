@@ -23,7 +23,6 @@ public class evaluation {
         takeFinalRAF();
         loadFinalStructure();
 
-
         while (true){
             ArrayList<String> tokens;
             long startTime, stopTime;
@@ -31,7 +30,7 @@ public class evaluation {
             String query;
             configureSearchEngine(scanner);
 
-            // setta k da tastiera
+            // set k parameter
             System.out.println("Set k:");
             while (true) {
                 try {
@@ -44,7 +43,7 @@ public class evaluation {
             }
             scanner.nextLine();
 
-
+            // read query from file
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(TestQueryPath), StandardCharsets.UTF_8));
             query = reader.readLine();
 
@@ -53,13 +52,12 @@ public class evaluation {
 
             while (query != null){
 
+                // split query in id and text
                 String[] queryTokens = query.split("\t");
 
-                // print query
-                //System.out.println("Query ID: " + queryTokens[0]);
-                //System.out.println("Query: " + queryTokens[1]);
-
+                // split query text in tokens
                 List<String> queryList = new ArrayList<>(Arrays.asList(queryTokens));
+                // remove id
                 queryList.remove(0);
 
                 // convert to document without id
@@ -68,6 +66,7 @@ public class evaluation {
                 // start timer
                 startTime = System.currentTimeMillis();
 
+                // preprocess query
                 tokens = queryHandler.QueryPreProcessing(finalQuery);
 
                 // execute query
@@ -79,6 +78,7 @@ public class evaluation {
                 // create a qrel file
                 writeResultOnFile(queryTokens[0], result);
 
+                // read next query
                 query = reader.readLine();
                 tokens.clear();
 
@@ -112,21 +112,27 @@ public class evaluation {
     // according to the format : <query_id Q0 doc_id rank score STANDARD>
     private static void writeResultOnFile(String queryId, PriorityQueue<scoreDoc> returnPriorityQueue) throws IOException {
 
+        // write on file the result of the query
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ResultQueryPath, true)))
         {
+            // rank of the document
             int rank = 1;
+            // number of document to write
             int g = k;
 
             // <query_id Q0 doc_id rank score STANDARD>
             while (!returnPriorityQueue.isEmpty() && g > 0){
+                // get the document
                 scoreDoc doc = returnPriorityQueue.poll();
+                // get the pid of the document
                 String pid = documentIndex.get(doc.getDocID()).getDocno();
+                // write the result on file according to the format <query_id Q0 doc_id rank score STANDARD>
                 String resultLine = queryId + " Q0 " + pid + " " + rank + " " + doc.getScore() + " STANDARD\n";
                 writer.write(resultLine);
+                // update rank and number of document to write
                 rank++;
                 g--;
 
-                //System.out.println(resultLine);
             }
 
         }
@@ -150,9 +156,10 @@ public class evaluation {
             // run the command
             Process process = Runtime.getRuntime().exec(command);
 
+            // write the evaluation result on file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/it/unipi/dii/aide/mircv/resources/evaluation.txt", true))) {
 
-                // scrivi il comafigurazione
+                // write the configuration
                 writer.write("--------------------------------------------------\n");
                 if (Configuration.isConjunctiveON())
                     writer.write("Conjunctive  \n");
@@ -164,7 +171,7 @@ public class evaluation {
                 else
                     writer.write("TFIDF \n");
 
-                // write the evaluation result pn file
+                // write the evaluation result on file
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
@@ -174,7 +181,7 @@ public class evaluation {
                     }
                 }
 
-                // check tutto ok
+                // check if there is an error
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
                     String line;
                     while ((line = reader.readLine()) != null) {

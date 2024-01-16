@@ -19,16 +19,15 @@ public class FileUtils {
     // path stop words
     public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
     // path Uncompressed collection
-    //public static String Path_Uncompressed_Collection = "/Users/massimo/Downloads/collection.tsv";
     public static String Path_Uncompressed_Collection = "/Volumes/S/collection.tsv"; //"src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
     // path Compressed collection
-    public static String Path_Compressed_Collection = "/Volumes/S/collection.tar.gz"; //"/Users/simonelandi/Desktop/collection/collection.tar.gz";
+    public static String Path_Compressed_Collection = "/Volumes/S/collection.tar.gz";
     //public static String Path_Compressed_Collection = "/Users/simonelandi/Desktop/collection/collection.tar.gz";
 
     // path to the configuration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
 
-    // log file per tempi di esecuzione indexer
+    // log file path (execution time) of spimi and merger
     public static String Path_Log = "src/main/resources/log.txt";
 
     // path to the document index
@@ -36,25 +35,30 @@ public class FileUtils {
 
     // path to the Partial Vocabulary
     public static String Path_PartialVocabulary = "src/main/resources/partial_vocabulary";
+
     // path to the Partial Posting-DocId
     public static String Path_PartialDocId = "src/main/resources/partial_docid";
+
     // path to the Partial Postings-TermFreq
     public static String Path_PartialTermFreq = "src/main/resources/partial_termfreq";
 
     // path to the Final Vocabulary
     public static String Path_FinalVocabulary = "src/main/resources/final_vocabulary";
+
     // path to the Final Posting-DocId
     public static String Path_FinalDocId = "src/main/resources/final_docid";
+
     // path to the Final Postings-TermFreq
     public static String Path_FinalTermFreq = "src/main/resources/final_termfreq";
+
     // path to the Final Collection Statistics
     public static String Path_FinalCollectionStatistics = "src/main/resources/final_collection_statistics";
 
+    // RAF of the document index
     public static RandomAccessFile docIndex_RAF;
 
+    // skeleton of RAF
     public static final HashMap<Integer, ArrayList<RandomAccessFile>> skeleton_RAF = new HashMap<>();
-
-    public static String Path_Skipping = "src/main/resources/skip";
 
     // path to collection test
     public static String Path_CollectionTest = "src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
@@ -72,7 +76,6 @@ public class FileUtils {
     static String TestQueryPath = "src/main/java/it/unipi/dii/aide/mircv/resources/msmarco-test2020-queries.tsv";
     static String ResultQueryPath ="src/main/java/it/unipi/dii/aide/mircv/resources/resultTrecQeury.txt";
     static String QrelPath = "src/main/java/it/unipi/dii/aide/mircv/resources/2020qrels-pass.txt";
-
 
 
     // clear data folder
@@ -99,7 +102,7 @@ public class FileUtils {
         }
     }
 
-    // compute the total dimension
+    // compute the total dimension of the folder
     public static double getTotalFolderSize() {
         File folder = new File("src/main/resources");
         long totalSizeInBytes = 0;
@@ -115,7 +118,6 @@ public class FileUtils {
         }
         return totalSizeInMB;
     }
-
 
 
     // read the collection according to the compression flag
@@ -144,11 +146,12 @@ public class FileUtils {
         return Files.newBufferedReader(Paths.get(FileUtils.Path_Uncompressed_Collection), StandardCharsets.UTF_8);
     }
 
-    // inizialize the docIndex_RAF
+    // initialize the docIndex_RAF
     public static void initDocIndex_RAF() throws IOException {
         docIndex_RAF = new RandomAccessFile(new File(Path_DocumentIndex), "rw");
     }
 
+    // create temp files for spimi run
     public static void createTempFile(int blockNum) {
         // temp file for data structure in spimi run : partial termlist, partial vocabulary, partial postings per block
 
