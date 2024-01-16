@@ -21,7 +21,7 @@ class queryHandlerTest {
     @Test
     void executeQuery() throws IOException {
 
-        //FileUtils.takeFinalRAF();
+        FileUtils.takeFinalRAF();
         loadFinalStructure();
 
         // create a String as a query
@@ -64,8 +64,8 @@ class queryHandlerTest {
         configuration.setScoreON(true); // BM25
         configuration.setConjunctiveON(false); // Disjunctive
 
-        // expected 11
-        //assertEquals(11, queryHandler.returnTopDoc(tokens1, 1));
+        // expected 3
+        //assertEquals(3, queryHandler.returnTopDoc(tokens1, 1));
         // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
         // expected 8
@@ -75,8 +75,8 @@ class queryHandlerTest {
         configuration.setScoreON(false); // TFIDF
         configuration.setConjunctiveON(false); // Disjunctive
 
-        // expected 11
-        //assertEquals(11, queryHandler.returnTopDoc(tokens1, 1));
+        // expected 3
+        //assertEquals(3, queryHandler.returnTopDoc(tokens1, 1));
         // expected 11
         //assertEquals(11, queryHandler.returnTopDoc(tokens2, 1));
         // expected 8

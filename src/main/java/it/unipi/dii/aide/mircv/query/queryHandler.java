@@ -192,6 +192,14 @@ public class queryHandler {
             }
         }
 
+        // retrieve vocabulary entries
+        for (String token : tokensNoDuplicates) {
+            VocabularyElem Velem;
+            Velem = binarySearch(token);
+
+            VocTerms.put(token, Velem);
+        }
+
         // process each token of the query
         for (String token : tokensNoDuplicates) {
 
@@ -241,6 +249,7 @@ public class queryHandler {
             return 0; // no results
         else {
             priorityQueue.clear();
+            VocTerms.clear();
             return scoreDoc.getDocID();
         }
     }
@@ -255,6 +264,7 @@ public class queryHandler {
                 tokensNoDuplicates.add(token);
             }
         }
+
         // retrive vocabulary
         for (String token : tokensNoDuplicates) {
             VocabularyElem Velem;
