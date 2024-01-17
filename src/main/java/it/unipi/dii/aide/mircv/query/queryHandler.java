@@ -8,7 +8,6 @@ import it.unipi.dii.aide.mircv.utils.FileUtils;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -342,7 +341,6 @@ public class queryHandler {
 
             previousMiddlePoint = middlePoint;
 
-            // Check if the term is in the cache
             String middleTermString = getOnlyTerm(middlePoint);
             VocabularyElem middleTerm = null;
 
