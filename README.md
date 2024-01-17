@@ -16,7 +16,7 @@ In this project, a search engine was developed based on the MSMARCO Passages col
 # Getting Started
 
 ###   Setup:
-Before running, the collection path should be added the Collection_Compressed_path or Collection_Uncompressed_path field of **Configuration JSON** file.
+Before running, the collection path should be added to the Collection_Compressed_path or Collection_Uncompressed_path field of **Configuration JSON** file.
 
 **Configuration JSON** file: `src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json`
 
@@ -46,6 +46,6 @@ and when launched, tests can be run iteratively by changing configurations from 
 
 The results are displayed both from the terminal and saved in `src/main/java/en/unipi/di/aide/mircv/resources/evaluation.txt`
 
-The evaluation results using a standard collection TREC DL 2020 queries and TREC DL 2020 qrels.
+The evaluation results were obtained using a standard collection TREC DL 2020 queries and TREC DL 2020 qrels.
 
  
