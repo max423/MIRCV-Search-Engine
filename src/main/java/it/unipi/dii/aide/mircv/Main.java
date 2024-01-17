@@ -1,16 +1,8 @@
 package it.unipi.dii.aide.mircv;
-import it.unipi.dii.aide.mircv.indexer.Indexer;
-import it.unipi.dii.aide.mircv.indexer.Spimi;
-import it.unipi.dii.aide.mircv.models.CollectionStatistics;
 import it.unipi.dii.aide.mircv.models.Configuration;
-import it.unipi.dii.aide.mircv.models.PostingList;
-import it.unipi.dii.aide.mircv.models.VocabularyElem;
 import it.unipi.dii.aide.mircv.utils.FileUtils;
-
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import static it.unipi.dii.aide.mircv.query.queryHandler.*;

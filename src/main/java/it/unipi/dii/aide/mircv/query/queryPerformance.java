@@ -22,7 +22,7 @@ public class queryPerformance {
 
     public static void main(String[] arg) throws IOException {
 
-        //takeFinalRAF();
+        takeFinalRAF();
         loadFinalStructure();
 
         System.out.println("Welcome to the MIRCV search engine!");
