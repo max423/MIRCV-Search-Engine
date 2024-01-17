@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static it.unipi.dii.aide.mircv.models.Configuration.Collection_Compressed_path;
+import static it.unipi.dii.aide.mircv.models.Configuration.Collection_Uncompressed_path;
+
 public class FileUtils {
     public static int MAX_TERM_LENGTH = 20; // in bytes
     // path stop words
@@ -131,7 +134,7 @@ public class FileUtils {
             //read from compressed collection
             TarArchiveInputStream tarInput = null;
             try {
-                tarInput = new TarArchiveInputStream(new GzipCompressorInputStream(new FileInputStream(FileUtils.Path_Compressed_Collection)));
+                tarInput = new TarArchiveInputStream(new GzipCompressorInputStream(new FileInputStream(Collection_Compressed_path)));
                 tarInput.getNextTarEntry();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -143,7 +146,7 @@ public class FileUtils {
             return new BufferedReader(new InputStreamReader(tarInput, StandardCharsets.UTF_8));
         }
         //read from uncompressed collection
-        return Files.newBufferedReader(Paths.get(FileUtils.Path_Uncompressed_Collection), StandardCharsets.UTF_8);
+        return Files.newBufferedReader(Paths.get(Collection_Uncompressed_path), StandardCharsets.UTF_8);
     }
 
     // initialize the docIndex_RAF

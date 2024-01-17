@@ -24,6 +24,9 @@ public class Configuration {
     // query retrieval : true = conjunctive - false= disjunctive
     private static boolean conjunctiveON;
 
+    public static String Collection_Compressed_path;
+    public static String Collection_Uncompressed_path;
+
     static {
 
         try {
@@ -34,6 +37,8 @@ public class Configuration {
             stemming_stopwordON = jsonObject.get("stemming_stopwordON").getAsBoolean();
             index_compressionON = jsonObject.get("index_compressionON").getAsBoolean();
             testing_ON = jsonObject.get("testing_ON").getAsBoolean();
+            Collection_Compressed_path = jsonObject.get("Collection_Compressed_path").getAsString();
+            Collection_Uncompressed_path = jsonObject.get("Collection_Uncompressed_path").getAsString();
             // print configuration
             System.out.println("Compressed Reading = " + compressionON + "\n" + "Stemming = " + stemming_stopwordON + "\n" + "Stopword = "+ stemming_stopwordON +  "\n" + "Index Compression = " + index_compressionON + "\n" + "Testing = " + testing_ON);
             System.out.println("--------------------------------------------------");
