@@ -1,6 +1,6 @@
-Block number: 3
-Total folder dimension: 1779.9384460449219
-Spimi execution time: 667882 ms
-Merger execution time: 61159 ms
-Total execution time: 729041 ms
+Block number: 1
+Total folder dimension: 0.002872467041015625
+Spimi execution time: 130 ms
+Merger execution time: 39 ms
+Total execution time: 169 ms
 

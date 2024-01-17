@@ -21,16 +21,11 @@ public class FileUtils {
     public static int MAX_TERM_LENGTH = 20; // in bytes
     // path stop words
     public static String Path_StopWords = "src/main/java/it/unipi/dii/aide/mircv/resources/stopwords.txt"; // https://gist.github.com/larsyencken/1440509
-    // path Uncompressed collection
-    public static String Path_Uncompressed_Collection = "/Volumes/S/collection.tsv"; //"src/main/java/it/unipi/dii/aide/mircv/resources/collection_prova.tsv";
-    // path Compressed collection
-    public static String Path_Compressed_Collection = "/Volumes/S/collection.tar.gz";
-    //public static String Path_Compressed_Collection = "/Users/simonelandi/Desktop/collection/collection.tar.gz";
 
     // path to the configuration json file
     public static String Path_Configuration = "src/main/java/it/unipi/dii/aide/mircv/resources/configuration.json";
 
-    // log file path (execution time) of spimi and merger
+    // log file for spimi and merger
     public static String Path_Log = "src/main/resources/log.txt";
 
     // path to the document index
